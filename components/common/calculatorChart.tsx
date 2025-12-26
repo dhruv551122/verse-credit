@@ -16,7 +16,7 @@ const CalculatorChart = ({
   data: any[];
 }) => {
   return (
-    <Card className="border-none shadow-none max-w-60 sm:max-w-100 p-0">
+    <Card className="border-none shadow-none max-w-70 sm:max-w-100 p-0">
       <CardHeader className="p-0">
         <CardTitle className="flex items-center justify-center gap-10">
           {data.map((data) => (
