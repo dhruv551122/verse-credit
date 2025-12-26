@@ -3,6 +3,7 @@
 import { useState } from "react";
 import CalculatoContainer from "@/components/common/calculator-container";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const DEFAULT_MONTHLY_INVESTMENT = 1000;
 const DEFAULT_RETURN_RATE = 3.8;
@@ -132,19 +133,27 @@ export default function Home() {
 
   return (
     <div>
-      <div className="max-width-container padding-container flex gap-2 items-center pb-0!">
-        <Button
-          className="cursor-pointer"
+      <div className="max-width-container padding-container flex items-center pb-0!">
+        <div
+          role="button"
+          className={cn(
+            "cursor-pointer py-2 px-4 text-white border-b border-black  duration-300",
+            sipType === "monthly" ? "bg-[#9a9a9a] " : "bg-[#2a2a2a]"
+          )}
           onClick={() => setSipType("monthly")}
         >
           Monthly
-        </Button>
-        <Button
-          className="cursor-pointer"
+        </div>
+        <div
+          role="button"
+          className={cn(
+            "cursor-pointer py-2 px-4 text-white border-b border-black duration-300",
+            sipType === "lumpsum" ? "bg-[#9a9a9a] " : "bg-[#2a2a2a] "
+          )}
           onClick={() => setSipType("lumpsum")}
         >
           Lumpsum
-        </Button>
+        </div>
       </div>
       <CalculatoContainer
         title="SIP Calculator"

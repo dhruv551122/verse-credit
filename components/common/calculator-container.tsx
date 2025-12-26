@@ -136,7 +136,7 @@ const CalculatoContainer = ({
                     <AccordionItem key={detail} value={detail}>
                       <AccordionTrigger>{detail}</AccordionTrigger>
                       <AccordionContent>
-                        <CalculatorTable data={groupedYearsDetail[detail]} />
+                        <CalculatorTable data={groupedYearsDetail[detail as any]} />
                       </AccordionContent>
                     </AccordionItem>
                   ))}
