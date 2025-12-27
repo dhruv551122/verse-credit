@@ -101,12 +101,12 @@ const CalculatoContainer = ({
         {canShowYearsDetail && (
           <div
             className={cn(
-              "flex flex-col gap-6 max-h-16 transition-all duration-300 overflow-hidden",
+              "flex flex-col gap-6 max-h-24 sm:max-h-16 transition-all duration-300 overflow-hidden",
               isAccordianOpen && "max-h-1000"
             )}
           >
             <div className="flex flex-col items-center justify-center gap-2">
-              <p className="font-bold">
+              <p className="font-bold text-center">
                 Detailed Amortization Schedule (Monthly and Yearly)
               </p>
 
@@ -136,7 +136,9 @@ const CalculatoContainer = ({
                     <AccordionItem key={detail} value={detail}>
                       <AccordionTrigger>{detail}</AccordionTrigger>
                       <AccordionContent>
-                        <CalculatorTable data={groupedYearsDetail[detail as any]} />
+                        <CalculatorTable
+                          data={groupedYearsDetail[detail as any]}
+                        />
                       </AccordionContent>
                     </AccordionItem>
                   ))}
