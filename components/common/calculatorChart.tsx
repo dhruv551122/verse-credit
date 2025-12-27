@@ -6,6 +6,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { capitalizeFirstLetter } from "@/lib/utils";
+import { useEffect, useState } from "react";
 import { Pie, PieChart } from "recharts";
 
 const CalculatorChart = ({
@@ -15,12 +16,23 @@ const CalculatorChart = ({
   chartConfig: ChartConfig;
   data: any[];
 }) => {
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth < 640);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
   return (
-    <Card className="border-none shadow-none max-w-70 sm:max-w-100 p-0">
+    <Card className="border-none shadow-none max-w-70 gap-0 sm:max-w-100 p-0">
       <CardHeader className="p-0">
-        <CardTitle className="flex items-center justify-center gap-10">
+        <CardTitle className="flex items-center justify-center gap-6 sm:gap-10">
           {data.map((data) => (
-            <div key={data.label} className="flex items-center gap-4">
+            <div key={data.label} className="flex items-center gap-2">
               <div className="size-4" style={{ backgroundColor: data.fill }} />{" "}
               <span>{capitalizeFirstLetter(data.label)}</span>
             </div>
@@ -34,7 +46,7 @@ const CalculatorChart = ({
             dataKey="value"
             nameKey="label"
             data={data}
-            innerRadius={80}
+            innerRadius={isSmallScreen ? 60 : 100}
             isAnimationActive={true}
           />
         </PieChart>
