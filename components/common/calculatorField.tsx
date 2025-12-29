@@ -68,7 +68,9 @@ const CalculatorField = ({
                 unitRightSide ? "pr-6" : "pl-5",
                 isError && "border-red-600! bg-red-300/50 ring-red-300! "
               )}
-              value={inputValue}
+              value={fieldValue}
+              type="number"
+              step="any"
               onChange={(e) => {
                 const input = Number(e.target.value);
 
@@ -76,21 +78,10 @@ const CalculatorField = ({
 
                 if (input > maxFieldValue) {
                   setFieldValue(maxFieldValue);
-                  setInputValue(maxFieldValue);
 
                   return;
                 }
-                setInputValue(input);
-                if (input < minFiledValue) {
-                  setError((prev) => [...prev, fieldLable]);
-                  setFieldValue(minFiledValue);
-                }
-                if (input >= minFiledValue) {
-                  setFieldValue(Number(e.target.value));
-                  setError((prev) =>
-                    prev.filter((item) => item !== fieldLable)
-                  );
-                }
+                setFieldValue(input);
               }}
             />
           </div>
@@ -104,10 +95,6 @@ const CalculatorField = ({
         max={maxFieldValue}
         onValueChange={(e) => {
           setFieldValue(e[0]);
-          setInputValue(e[0]);
-          if (e[0] >= minFiledValue) {
-            setError((prev) => prev.filter((item) => item !== fieldLable));
-          }
         }}
       />
     </div>
