@@ -69,16 +69,12 @@ const CalculatorField = ({
                 isError && "border-red-600! bg-red-300/50 ring-red-300! "
               )}
               value={fieldValue}
-              type="number"
-              step="any"
+              
               onChange={(e) => {
                 const input = Number(e.target.value);
-
                 if (Number.isNaN(input)) return;
-
                 if (input > maxFieldValue) {
                   setFieldValue(maxFieldValue);
-
                   return;
                 }
                 setFieldValue(input);

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import CalculatoContainer from "@/components/common/calculator-container";
-import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 const DEFAULT_MONTHLY_INVESTMENT = 1000;
@@ -19,7 +18,7 @@ const MIN_TENURE_YEARS = 1;
 
 // FV = P × ({[(1 + i)^n – 1] / i}) × (1 + i), while for Lumpsum it's FV = P * (1 + r/n)^(nt)
 
-export default function Home() {
+const SIPCalculator = () => {
   const [sipType, setSipType] = useState<"monthly" | "lumpsum">("monthly");
   const [monthlyInvestment, setMonthlyInvestment] = useState<number>(
     DEFAULT_MONTHLY_INVESTMENT
@@ -155,15 +154,21 @@ export default function Home() {
           Lumpsum
         </div>
       </div>
-      <CalculatoContainer
-        title="SIP Calculator"
-        fieldValues={fieldValues}
-        outputValues={outputValues}
-        outputLable="Estimated Investment Detail"
-        chartConfig={chartConfig}
-        chartData={chartData}
-        canShowYearsDetail={false}
-      />
+      <div className="max-width-container padding-container">
+        <div className="border border-gray-300 rounded-lg p-6 shadow-md flex flex-col gap-10">
+          <CalculatoContainer
+            title="SIP Calculator"
+            fieldValues={fieldValues}
+            outputValues={outputValues}
+            outputLable="Estimated Investment Detail"
+            chartConfig={chartConfig}
+            chartData={chartData}
+            canShowYearsDetail={false}
+          />
+        </div>
+      </div>
     </div>
   );
 }
+
+export default SIPCalculator

@@ -30,8 +30,8 @@ const CalculatorTable = ({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {data.map((detail) => (
-          <TableRow key={detail.month}>
+        {data.map((detail, index) => (
+          <TableRow key={index}>
             <TableCell>{detail.month}</TableCell>
             <TableCell>{detail.principlePaid}</TableCell>
             <TableCell>{detail.interestForMonth}</TableCell>
