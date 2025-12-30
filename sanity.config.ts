@@ -12,11 +12,16 @@ import { structureTool } from "sanity/structure";
 import { apiVersion, dataset, projectId } from "./sanity/env";
 import { schemaTypes, singletonType } from "./sanity/schemaTypes";
 import { structure } from "./sanity/structure";
-import {media} from "sanity-plugin-media";
+import { media } from "sanity-plugin-media";
+import { simplerColorInput } from "sanity-plugin-simpler-color-input";
 
 const singletonTypes = new Set<string>([...singletonType]);
 
-const singletonActions = new Set<string>(["publish", "discardChanges", "restore"]);
+const singletonActions = new Set<string>([
+  "publish",
+  "discardChanges",
+  "restore",
+]);
 
 export default defineConfig({
   name: "verse-credit",
@@ -27,18 +32,28 @@ export default defineConfig({
   schema: {
     types: schemaTypes,
     templates: (templates) =>
-      templates.filter(({schemaType}) => !singletonTypes.has(schemaType)),
+      templates.filter(({ schemaType }) => !singletonTypes.has(schemaType)),
   },
   document: {
     actions: (input, context) =>
       singletonTypes.has(context.schemaType)
-        ? input.filter(({action}) => action && singletonActions.has(action))
+        ? input.filter(({ action }) => action && singletonActions.has(action))
         : input,
   },
   plugins: [
     structureTool({ structure }),
-    visionTool({defaultApiVersion: apiVersion}),
-    media(),
     visionTool({ defaultApiVersion: apiVersion }),
+    media(),
+    simplerColorInput({
+      defaultColorFormat: "rgba",
+      defaultColorList: [
+        { label: "Dark Aquamarine Green", value: "#034540" },
+        { label: "Oracle", value: "#39726c" },
+        { label: "Isabelline", value: "#f4f2ec" },
+        { label: "Dull White", value: "#edeadf" },
+      ],
+      enableSearch: true,
+      showColorValue: true,
+    }),
   ],
 });

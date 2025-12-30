@@ -6,23 +6,39 @@ export const calculatorCategory = defineType({
   title: "Calculator Category",
   type: "document",
   icon: Blocks,
+  groups: [
+    {
+      name: "seo",
+      title: "Seo",
+    },
+    { name: "category", title: "Category" },
+  ],
   fields: [
+    defineField({
+      name: "seo",
+      title: "Seo",
+      type: "seo",
+      validation: (Rule) => Rule.required(),
+    }),
     defineField({
       name: "title",
       type: "string",
       title: "Title",
+      group: "category",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "tagLine",
       type: "string",
       title: "Tag Line",
+      group: "category",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "slug",
       title: "Slug",
       type: "string",
+      group: "category",
       validation: (Rule) => Rule.required(),
     }),
   ],
