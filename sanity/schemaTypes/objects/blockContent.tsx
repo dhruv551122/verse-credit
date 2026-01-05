@@ -83,6 +83,10 @@ const blockContent = defineType({
       },
       validation: (Rule) => Rule.required(),
     },
+    {
+      name: "table",
+      type: "styledTable",
+    },
   ],
 });
 

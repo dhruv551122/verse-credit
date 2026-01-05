@@ -1,6 +1,34 @@
 import groq from "groq";
 
-export const categoriesQuery = `
+export const homePageQuery = groq`
+    *[_type == 'home' && _id == 'home'][0]{
+        ...,
+        heroRightBlogs[] -> {
+        ...,
+        heroImage{
+            ...,    
+            asset -> 
+        },
+        author ->,
+        category -> 
+    },
+        categoryGroup[]{
+            ...,
+            categories[] ->,
+        },
+        newsBlogs[] -> {
+        ...,
+        heroImage{
+            ...,    
+            asset -> 
+        },
+        author ->,
+        category -> 
+    },
+    }
+`;
+
+export const categoriesQuery = groq`
     *[_type == 'calculatorCategory']{
         _id,
         title,
@@ -8,7 +36,7 @@ export const categoriesQuery = `
         slug
     }
 `;
-export const calculatorQuery = `
+export const calculatorQuery = groq`
     *[_type == 'calculator']{
         ...,
         icon {
@@ -18,16 +46,42 @@ export const calculatorQuery = `
         category ->
     }
 `;
-export const settingsQuery = `
-    *[_type == 'settings']{
+export const settingsQuery = groq`
+    *[_id == 'settings' && _type == 'settings'][0]{
         ...,
         headerLogo {
             ...,
-            asset ->
+            asset ->{
+                ...
+            },
         },
         footerLogo{
             ...,
-            asset ->
+            asset ->{
+                ...
+            },
         }
+    }
+`;
+
+export const blogCategoriesQuery = groq`
+    *[_id == 'blogCategory' && _type == 'blogCategory']{
+        ...,
+    }
+`;
+export const blogAuthorsQuery = groq`
+    *[_id == 'blogAuthor' && _type == 'blogAuthor']{
+        ...,
+    }
+`;
+export const blogsQuery = groq`
+    *[_id == 'blog' && _type == 'blog']{
+        ...,
+        heroImage{
+            ...,    
+            asset -> 
+        },
+        author ->,
+        category -> 
     }
 `;
