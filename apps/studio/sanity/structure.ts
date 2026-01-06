@@ -1,9 +1,14 @@
-import {File, LucideIcon} from "lucide-react";
-import type {StructureBuilder, StructureResolver} from "sanity/structure";
-import {multiTypes, SchemaType, singletonType, SingletonType, MultiType} from "./schemaTypes";
-import {documents} from "./schemaTypes/documents";
+import { BookOpen, File, LucideIcon } from "lucide-react";
+import type { StructureBuilder, StructureResolver } from "sanity/structure";
+import {
+  multiTypes,
+  SchemaType,
+  singletonType,
+  SingletonType,
+  MultiType,
+} from "./schemaTypes";
+import { documents } from "./schemaTypes/documents";
 import { getTitleCase } from "@/utils";
-
 
 type Base<T = SchemaType> = {
   id?: string;
@@ -23,7 +28,7 @@ const getSchemaIcon = (type: string): LucideIcon | undefined =>
 const getSchemaTitle = (type: string): string | undefined =>
   documents.find((doc) => doc.name === type)?.title;
 
-const createSingleTon = ({S, type, title, icon}: CreateSingleTon) => {
+const createSingleTon = ({ S, type, title, icon }: CreateSingleTon) => {
   const schemaTitle = getSchemaTitle(type);
   const schemaIcon = getSchemaIcon(type);
   const newTitle = title ?? schemaTitle ?? getTitleCase(type);
@@ -34,11 +39,27 @@ const createSingleTon = ({S, type, title, icon}: CreateSingleTon) => {
     .child(S.document().schemaType(type).documentId(type));
 };
 
+const blogsByCategory = (S: StructureBuilder) => {
+  return S.listItem()
+    .title("Blogs By category")
+    .icon(BookOpen)
+    .child(
+      S.documentTypeList("blogCategory")
+        .title("Categories")
+        .child((categoryId) =>
+          S.documentList()
+            .title("Blogs")
+            .filter(`_type == 'blog' && category._ref == $categoryId`)
+            .params({categoryId})
+        )
+    );
+};
+
 type CreateMultiType = {
   S: StructureBuilder;
 } & Base<MultiType>;
 
-const createMultiType = ({S, type, id, title, icon}: CreateMultiType) => {
+const createMultiType = ({ S, type, id, title, icon }: CreateMultiType) => {
   const schemaTitle = getSchemaTitle(type);
   const schemaIcon = getSchemaIcon(type);
   const newTitle = title ?? schemaTitle ?? getTitleCase(type);
@@ -53,7 +74,10 @@ export const structure: StructureResolver = (S) =>
   S.list()
     .title("Content Management")
     .items([
-      ...singletonType.map((type) => createSingleTon({S, type})),
+      ...singletonType.map((type) => createSingleTon({ S, type })),
       S.divider(),
-      ...multiTypes.map((type) => createMultiType({S, type})),
+      blogsByCategory(S),
+      createMultiType({S, type: 'blog',title: 'All blogs'}),
+      S.divider(),
+      ...multiTypes.filter(type => type !== 'blog').map((type) => createMultiType({ S, type })),
     ]);

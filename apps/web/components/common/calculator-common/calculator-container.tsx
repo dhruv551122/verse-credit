@@ -1,9 +1,9 @@
 "use client";
 
-import CalculatorChart from "@/components/common/calculatorChart";
-import CalculatorField from "@/components/common/calculatorField";
+import { ChartConfig } from "@/components/ui/chart";
 import { SetStateAction, useState } from "react";
-import { ChartConfig } from "../ui/chart";
+import CalculatorField from "./calculatorField";
+import CalculatorChart from "./calculatorChart";
 
 type CalculatorContainerProps = {
   title: string;

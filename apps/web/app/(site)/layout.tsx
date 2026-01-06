@@ -1,15 +1,16 @@
 import Header from "@/components/common/header";
-import { sanityFetch } from "@/sanity/lib/live";
-import { settingsQuery } from "@/sanity/lib/query";
-import { SettingsQueryResult } from "@sanity-types/sanity.types";
+import { SettingsQueryResult } from "@sanity-types/*";
+
 
 const SiteLayout = async ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const { data: settingsData }: { data: NonNullable<SettingsQueryResult> } =
-    await sanityFetch({ query: settingsQuery });
+
+  const data = await fetch(`${process.env.BACKEND_URL}/api/settings`)
+  const settingsData: NonNullable<SettingsQueryResult> = await data.json()
+
   return (
     <div>
       <Header data={settingsData} />

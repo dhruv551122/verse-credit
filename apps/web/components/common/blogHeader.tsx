@@ -1,12 +1,9 @@
 import { cn } from "@/lib/utils";
-import { BlogCategoriesQueryResult } from "@sanity-types/sanity.types";
-import Link from "next/link";
 
 const BlogHeader = ({
   category,
   title,
   author,
-  slug,
   date,
   headingClassname,
   titleClassname,
@@ -14,10 +11,9 @@ const BlogHeader = ({
   dateClassname,
   className,
 }: {
-  category: NonNullable<BlogCategoriesQueryResult>[number];
+  category: string;
   title: string;
   author: string;
-  slug: string;
   date: string;
   headingClassname?: string;
   titleClassname?: string;
@@ -27,24 +23,22 @@ const BlogHeader = ({
 }) => {
   return (
     <div className={cn("flex flex-col gap-2", className)}>
-      <Link
-        href={`/${category.slug.current}`}
+      <h4
         className={cn(
           "text-base font-bold uppercase text-chathams-blue",
           headingClassname
         )}
       >
-        {category.label}
-      </Link>
-      <Link
-        href={`/${category.slug.current}/${slug}`}
+        {category}
+      </h4>
+      <h2
         className={cn(
           "text-[22px] font-semibold text-tuatara leading-6",
           titleClassname
         )}
       >
         {title}
-      </Link>
+      </h2>
       <p className="text-sm ">
         <span
           className={cn(

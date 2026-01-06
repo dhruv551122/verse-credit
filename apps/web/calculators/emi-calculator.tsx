@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import CalculatorContainer from "@/components/common/calculator-container";
-import Amortization from "@/components/common/amortization";
+import Amortization from "@/components/common/calculator-common/amortization";
+import CalculatorContainer from "@/components/common/calculator-common/calculator-container";
 
 const DEFAULT_AMOUNT_VALUE = 100000;
 const DEFAULT_INTEREST_RATE = 3.8;

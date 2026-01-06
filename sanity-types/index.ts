@@ -250,6 +250,19 @@ export type Home = {
     _key: string;
   }>;
   newsTitle: string;
+  newsBackgroundImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
   newsBlogs: Array<{
     _ref: string;
     _type: "reference";
@@ -420,7 +433,7 @@ export type AllSanitySchemaTypes = StyledTable | BlockContent | Seo | Link | Blo
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/query.ts
 // Variable: homePageQuery
-// Query: *[_type == 'home' && _id == 'home'][0]{        ...,        heroRightBlogs[] -> {        ...,        heroImage{            ...,                asset ->         },        author ->,        category ->     },        categoryGroup[]{            ...,            categories[] ->,        },        newsBlogs[] -> {        ...,        heroImage{            ...,                asset ->         },        author ->,        category ->     },    }
+// Query: *[_type == 'home' && _id == 'home'][0]{        ...,        heroRightBlogs[] -> {         ...,            heroImage{               ...,                  asset ->           },          author ->,          category ->         },        categoryGroup[]{            ...,            categories[] ->,        },        newsBlogs[] -> {          ...,          heroImage{            ...,                asset ->           },          author ->,         category ->         },        newsBackgroundImage{            ...,            asset ->,        }    }
 export type HomePageQueryResult = {
   _id: string;
   _type: "home";
@@ -503,6 +516,35 @@ export type HomePageQueryResult = {
     _key: string;
   }>;
   newsTitle: string;
+  newsBackgroundImage: {
+    asset: {
+      _id: string;
+      _type: "sanity.imageAsset";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      originalFilename?: string;
+      label?: string;
+      title?: string;
+      description?: string;
+      altText?: string;
+      sha1hash?: string;
+      extension?: string;
+      mimeType?: string;
+      size?: number;
+      assetId?: string;
+      uploadId?: string;
+      path?: string;
+      url?: string;
+      metadata?: SanityImageMetadata;
+      source?: SanityAssetSourceData;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
   newsBlogs: Array<{
     _id: string;
     _type: "blog";
@@ -563,6 +605,128 @@ export type HomePageQueryResult = {
     uplodedAt?: string;
   }>;
 } | null;
+// Variable: blogsByCategoryQuery
+// Query: *[_type == 'blog' && category->slug.current == $categorySlug]{        ...,        heroImage{            ...,                asset ->         },        author ->,        category ->     }
+export type BlogsByCategoryQueryResult = Array<{
+  _id: string;
+  _type: "blog";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo: Seo;
+  slug: Slug;
+  title: string;
+  description: string;
+  heroImage: {
+    asset: {
+      _id: string;
+      _type: "sanity.imageAsset";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      originalFilename?: string;
+      label?: string;
+      title?: string;
+      description?: string;
+      altText?: string;
+      sha1hash?: string;
+      extension?: string;
+      mimeType?: string;
+      size?: number;
+      assetId?: string;
+      uploadId?: string;
+      path?: string;
+      url?: string;
+      metadata?: SanityImageMetadata;
+      source?: SanityAssetSourceData;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  content: BlockContent;
+  author: {
+    _id: string;
+    _type: "blogAuthor";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    authorName: string;
+  };
+  category: {
+    _id: string;
+    _type: "blogCategory";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    label: string;
+    slug: Slug;
+  };
+  uplodedAt?: string;
+}>;
+// Variable: blogBySlugQuery
+// Query: *[_type == 'blog' && category->slug.current == $categorySlug && slug.current == $blogSlug]{        ...,        heroImage{            ...,                asset ->         },        author ->,        category ->     }
+export type BlogBySlugQueryResult = Array<{
+  _id: string;
+  _type: "blog";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo: Seo;
+  slug: Slug;
+  title: string;
+  description: string;
+  heroImage: {
+    asset: {
+      _id: string;
+      _type: "sanity.imageAsset";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      originalFilename?: string;
+      label?: string;
+      title?: string;
+      description?: string;
+      altText?: string;
+      sha1hash?: string;
+      extension?: string;
+      mimeType?: string;
+      size?: number;
+      assetId?: string;
+      uploadId?: string;
+      path?: string;
+      url?: string;
+      metadata?: SanityImageMetadata;
+      source?: SanityAssetSourceData;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  content: BlockContent;
+  author: {
+    _id: string;
+    _type: "blogAuthor";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    authorName: string;
+  };
+  category: {
+    _id: string;
+    _type: "blogCategory";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    label: string;
+    slug: Slug;
+  };
+  uplodedAt?: string;
+}>;
 // Variable: categoriesQuery
 // Query: *[_type == 'calculatorCategory']{        _id,        title,        tagLine,        slug    }
 export type CategoriesQueryResult = Array<{
@@ -721,7 +885,7 @@ export type BlogAuthorsQueryResult = Array<{
   authorName: string;
 }>;
 // Variable: blogsQuery
-// Query: *[_id == 'blog' && _type == 'blog']{        ...,        heroImage{            ...,                asset ->         },        author ->,        category ->     }
+// Query: *[ _type == 'blog']{        ...,        heroImage{            ...,                asset ->         },        author ->,        category ->     }
 export type BlogsQueryResult = Array<{
   _id: string;
   _type: "blog";
@@ -786,12 +950,14 @@ export type BlogsQueryResult = Array<{
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n    *[_type == 'home' && _id == 'home'][0]{\n        ...,\n        heroRightBlogs[] -> {\n        ...,\n        heroImage{\n            ...,    \n            asset -> \n        },\n        author ->,\n        category -> \n    },\n        categoryGroup[]{\n            ...,\n            categories[] ->,\n        },\n        newsBlogs[] -> {\n        ...,\n        heroImage{\n            ...,    \n            asset -> \n        },\n        author ->,\n        category -> \n    },\n    }\n": HomePageQueryResult;
+    "\n    *[_type == 'home' && _id == 'home'][0]{\n        ...,\n        heroRightBlogs[] -> {\n         ...,\n            heroImage{\n               ...,    \n              asset -> \n          },\n          author ->,\n          category -> \n        },\n        categoryGroup[]{\n            ...,\n            categories[] ->,\n        },\n        newsBlogs[] -> {\n          ...,\n          heroImage{\n            ...,    \n            asset -> \n          },\n          author ->,\n         category -> \n        },\n        newsBackgroundImage{\n            ...,\n            asset ->,\n        }\n    }\n": HomePageQueryResult;
+    "\n    *[_type == 'blog' && category->slug.current == $categorySlug]{\n        ...,\n        heroImage{\n            ...,    \n            asset -> \n        },\n        author ->,\n        category -> \n    }\n": BlogsByCategoryQueryResult;
+    "\n    *[_type == 'blog' && category->slug.current == $categorySlug && slug.current == $blogSlug]{\n        ...,\n        heroImage{\n            ...,    \n            asset -> \n        },\n        author ->,\n        category -> \n    }\n": BlogBySlugQueryResult;
     "\n    *[_type == 'calculatorCategory']{\n        _id,\n        title,\n        tagLine,\n        slug\n    }\n": CategoriesQueryResult;
     "\n    *[_type == 'calculator']{\n        ...,\n        icon {\n            ...,\n            asset ->\n        },\n        category ->\n    }\n": CalculatorQueryResult;
     "\n    *[_id == 'settings' && _type == 'settings'][0]{\n        ...,\n        headerLogo {\n            ...,\n            asset ->{\n                ...\n            },\n        },\n        footerLogo{\n            ...,\n            asset ->{\n                ...\n            },\n        }\n    }\n": SettingsQueryResult;
     "\n    *[_id == 'blogCategory' && _type == 'blogCategory']{\n        ...,\n    }\n": BlogCategoriesQueryResult;
     "\n    *[_id == 'blogAuthor' && _type == 'blogAuthor']{\n        ...,\n    }\n": BlogAuthorsQueryResult;
-    "\n    *[_id == 'blog' && _type == 'blog']{\n        ...,\n        heroImage{\n            ...,    \n            asset -> \n        },\n        author ->,\n        category -> \n    }\n": BlogsQueryResult;
+    "\n    *[ _type == 'blog']{\n        ...,\n        heroImage{\n            ...,    \n            asset -> \n        },\n        author ->,\n        category -> \n    }\n": BlogsQueryResult;
   }
 }

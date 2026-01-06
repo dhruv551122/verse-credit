@@ -89,6 +89,21 @@ const home = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "newsBackgroundImage",
+      title: "New Background Image",
+      type: "image",
+      group: "news",
+      fields: [
+        defineField({
+          name: "alt",
+          title: "Alt Text",
+          type: "string",
+          validation: (Rule) => Rule.required(),
+        }),
+      ],
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "newsBlogs",
       title: "News blogs",
       type: "array",

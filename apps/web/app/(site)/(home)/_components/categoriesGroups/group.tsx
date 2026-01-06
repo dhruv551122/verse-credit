@@ -3,7 +3,6 @@
 import BlogHeader from "@/components/common/blogHeader";
 import Title from "@/components/common/title";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Carousel,
   CarouselContent,
@@ -13,10 +12,8 @@ import {
 } from "@/components/ui/carousel";
 import { cn, formatDate } from "@/lib/utils";
 import { SanityImage } from "@/sanity/sanityImage";
-import {
-  BlogsQueryResult,
-  HomePageQueryResult,
-} from "@sanity-types/sanity.types";
+import { BlogsQueryResult, HomePageQueryResult } from "@sanity-types/*";
+import Link from "next/link";
 import { useState } from "react";
 
 const Group = ({
@@ -62,25 +59,26 @@ const Group = ({
                   .map((blog) => (
                     <CarouselItem
                       key={blog._id}
-                      className="flex flex-col gap-6 duration-300 basis-2/7 group"
+                      className="flex flex-col gap-6 duration-300 basis-2/7 group pl-0 ml-4"
                     >
-                      <div className="w-full">
-                        <SanityImage
-                          src={blog.heroImage}
-                          alt={blog.heroImage.alt}
-                          width={100}
-                          height={100}
-                          className="object-cover w-full rounded-xl"
+                      <Link href={`/${blog.category.slug.current}/${blog.slug.current}`} >
+                        <div className="w-full">
+                          <SanityImage
+                            src={blog.heroImage}
+                            alt={blog.heroImage.alt}
+                            width={100}
+                            height={100}
+                            className="object-cover w-full rounded-xl"
+                          />
+                        </div>
+                        <BlogHeader
+                          author={blog.author.authorName}
+                          date={formatDate(blog.uplodedAt || blog._updatedAt)}
+                          category={blog.category.label}
+                          title={blog.title}
+                          titleClassname="group-hover:text-chathams-blue"
                         />
-                      </div>
-                      <BlogHeader
-                        author={blog.author.authorName}
-                        date={formatDate(blog.uplodedAt || blog._updatedAt)}
-                        category={blog.category}
-                        title={blog.title}
-                        slug={blog.slug.current}
-                        titleClassname="group-hover:text-chathams-blue"
-                      />
+                      </Link>
                     </CarouselItem>
                   ))}
               </CarouselContent>

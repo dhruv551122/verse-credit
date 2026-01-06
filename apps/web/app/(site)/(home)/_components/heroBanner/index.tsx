@@ -1,7 +1,7 @@
 import {
   BlogsQueryResult,
   HomePageQueryResult,
-} from "@sanity-types/sanity.types";
+} from "@sanity-types/*";
 import HeroLeft from "./heroLeft";
 import HeroRight from "./heroRight";
 

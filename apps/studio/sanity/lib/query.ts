@@ -4,19 +4,36 @@ export const homePageQuery = groq`
     *[_type == 'home' && _id == 'home'][0]{
         ...,
         heroRightBlogs[] -> {
-        ...,
-        heroImage{
-            ...,    
-            asset -> 
+         ...,
+            heroImage{
+               ...,    
+              asset -> 
+          },
+          author ->,
+          category -> 
         },
-        author ->,
-        category -> 
-    },
         categoryGroup[]{
             ...,
             categories[] ->,
         },
         newsBlogs[] -> {
+          ...,
+          heroImage{
+            ...,    
+            asset -> 
+          },
+          author ->,
+         category -> 
+        },
+        newsBackgroundImage{
+            ...,
+            asset ->,
+        }
+    }
+`;
+
+export const blogsByCategoryQuery = groq`
+    *[_type == 'blog' && category->slug.current == $categorySlug]{
         ...,
         heroImage{
             ...,    
@@ -24,9 +41,20 @@ export const homePageQuery = groq`
         },
         author ->,
         category -> 
-    },
     }
-`;
+`
+
+export const blogBySlugQuery = groq`
+    *[_type == 'blog' && category->slug.current == $categorySlug && slug.current == $blogSlug]{
+        ...,
+        heroImage{
+            ...,    
+            asset -> 
+        },
+        author ->,
+        category -> 
+    }
+`
 
 export const categoriesQuery = groq`
     *[_type == 'calculatorCategory']{
@@ -46,6 +74,7 @@ export const calculatorQuery = groq`
         category ->
     }
 `;
+
 export const settingsQuery = groq`
     *[_id == 'settings' && _type == 'settings'][0]{
         ...,
@@ -75,7 +104,7 @@ export const blogAuthorsQuery = groq`
     }
 `;
 export const blogsQuery = groq`
-    *[_id == 'blog' && _type == 'blog']{
+    *[ _type == 'blog']{
         ...,
         heroImage{
             ...,    

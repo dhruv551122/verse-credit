@@ -1,4 +1,7 @@
 module.exports = {
+   plugins: [
+    require("@tailwindcss/line-clamp"),
+  ],
   theme: {
     extend: {
       transitionDuration: {
@@ -7,3 +10,5 @@ module.exports = {
     },
   },
 };
+
+

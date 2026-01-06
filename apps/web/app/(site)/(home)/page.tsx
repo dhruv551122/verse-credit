@@ -1,26 +1,20 @@
-import { sanityFetch } from "@/sanity/lib/live";
-import { blogsQuery, homePageQuery } from "@/sanity/lib/query";
-import {
-  BlogsQueryResult,
-  HomePageQueryResult,
-} from "@sanity-types/sanity.types";
 import HeroBanner from "./_components/heroBanner";
 import CategoriesGroup from "./_components/categoriesGroups";
+import { BlogsQueryResult, HomePageQueryResult } from "@sanity-types/*";
+import NewsBlogs from "./_components/newsBlogs";
 
 const HomePage = async () => {
-  const { data: homePage }: { data: NonNullable<HomePageQueryResult> } =
-    await sanityFetch({
-      query: homePageQuery,
-    });
+  const homeData = await fetch(`${process.env.BACKEND_URL}/api/home`);
+  const homePage: NonNullable<HomePageQueryResult> = await homeData.json();
 
-  const { data: blogData }: { data: NonNullable<BlogsQueryResult> } =
-    await sanityFetch({
-      query: blogsQuery,
-    });
+  const blogsData = await fetch(`${process.env.BACKEND_URL}/api/blogs`);
+  const blogsPage: NonNullable<BlogsQueryResult> = await blogsData.json();
+
   return (
     <div className="mt-[67px] font-inter">
-      <HeroBanner homePage={homePage} blogData={blogData} />
-      <CategoriesGroup homePage={homePage} blogData={blogData} />
+      <HeroBanner homePage={homePage} blogData={blogsPage} />
+      <CategoriesGroup homePage={homePage} blogData={blogsPage} />
+      <NewsBlogs homePage={homePage}/>
     </div>
   );
 };

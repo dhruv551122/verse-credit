@@ -2,20 +2,21 @@ import BlogHeader from "@/components/common/blogHeader";
 import Title from "@/components/common/title";
 import { cn, formatDate } from "@/lib/utils";
 import { SanityImage } from "@/sanity/sanityImage";
-import { HomePageQueryResult } from "@sanity-types/sanity.types";
+import { HomePageQueryResult } from "@sanity-types/*";
+import Link from "next/link";
 
 const HeroRight = ({
   homePage,
 }: {
   homePage: NonNullable<HomePageQueryResult>;
 }) => {
-  console.log(homePage.heroRightBlogs);
   return (
     <div className="flex flex-col gap-6 lg:py-10">
       <Title title={homePage.heroRightTitle} />
       <div className="flex flex-col gap-4">
         {homePage.heroRightBlogs.map((blog, index) => (
-          <div
+          <Link
+          href={`/${blog.category.slug.current}/${blog.slug.current}`}
             key={blog._id}
             className={cn(
               "grid gap-2  sm:grid-cols-6 group",
@@ -26,9 +27,8 @@ const HeroRight = ({
             <BlogHeader
               author={blog.author.authorName}
               date={formatDate(blog.uplodedAt || blog._updatedAt)}
-              category={blog.category}
+              category={blog.category.label}
               title={blog.title}
-              slug={blog.slug.current}
               className="sm:col-span-4"
               titleClassname="group-hover:text-chathams-blue"
             />
@@ -41,7 +41,7 @@ const HeroRight = ({
                 className="object-cover w-full min-h-25 lg:w-auto lg:h-25 rounded-xl"
               />
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

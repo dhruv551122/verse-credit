@@ -1,7 +1,4 @@
-import {
-  BlogsQueryResult,
-  HomePageQueryResult,
-} from "@sanity-types/sanity.types";
+import { BlogsQueryResult, HomePageQueryResult } from "@sanity-types/*";
 import Group from "./group";
 
 const CategoriesGroup = ({
