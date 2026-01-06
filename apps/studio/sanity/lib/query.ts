@@ -42,7 +42,7 @@ export const blogsByCategoryQuery = groq`
         author ->,
         category -> 
     }
-`
+`;
 
 export const blogBySlugQuery = groq`
     *[_type == 'blog' && category->slug.current == $categorySlug && slug.current == $blogSlug]{
@@ -54,7 +54,12 @@ export const blogBySlugQuery = groq`
         author ->,
         category -> 
     }
-`
+`;
+export const categoriesBySlugQuery = groq`
+    *[_type == 'blogCategory' && slug.current == $categorySlug][0]{
+        ...,
+    }
+`;
 
 export const categoriesQuery = groq`
     *[_type == 'calculatorCategory']{

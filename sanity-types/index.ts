@@ -727,6 +727,17 @@ export type BlogBySlugQueryResult = Array<{
   };
   uplodedAt?: string;
 }>;
+// Variable: categoriesBySlugQuery
+// Query: *[_type == 'blogCategory' && slug.current == $categorySlug][0]{        ...,    }
+export type CategoriesBySlugQueryResult = {
+  _id: string;
+  _type: "blogCategory";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  label: string;
+  slug: Slug;
+} | null;
 // Variable: categoriesQuery
 // Query: *[_type == 'calculatorCategory']{        _id,        title,        tagLine,        slug    }
 export type CategoriesQueryResult = Array<{
@@ -953,6 +964,7 @@ declare module "@sanity/client" {
     "\n    *[_type == 'home' && _id == 'home'][0]{\n        ...,\n        heroRightBlogs[] -> {\n         ...,\n            heroImage{\n               ...,    \n              asset -> \n          },\n          author ->,\n          category -> \n        },\n        categoryGroup[]{\n            ...,\n            categories[] ->,\n        },\n        newsBlogs[] -> {\n          ...,\n          heroImage{\n            ...,    \n            asset -> \n          },\n          author ->,\n         category -> \n        },\n        newsBackgroundImage{\n            ...,\n            asset ->,\n        }\n    }\n": HomePageQueryResult;
     "\n    *[_type == 'blog' && category->slug.current == $categorySlug]{\n        ...,\n        heroImage{\n            ...,    \n            asset -> \n        },\n        author ->,\n        category -> \n    }\n": BlogsByCategoryQueryResult;
     "\n    *[_type == 'blog' && category->slug.current == $categorySlug && slug.current == $blogSlug]{\n        ...,\n        heroImage{\n            ...,    \n            asset -> \n        },\n        author ->,\n        category -> \n    }\n": BlogBySlugQueryResult;
+    "\n    *[_type == 'blogCategory' && slug.current == $categorySlug][0]{\n        ...,\n    }\n": CategoriesBySlugQueryResult;
     "\n    *[_type == 'calculatorCategory']{\n        _id,\n        title,\n        tagLine,\n        slug\n    }\n": CategoriesQueryResult;
     "\n    *[_type == 'calculator']{\n        ...,\n        icon {\n            ...,\n            asset ->\n        },\n        category ->\n    }\n": CalculatorQueryResult;
     "\n    *[_id == 'settings' && _type == 'settings'][0]{\n        ...,\n        headerLogo {\n            ...,\n            asset ->{\n                ...\n            },\n        },\n        footerLogo{\n            ...,\n            asset ->{\n                ...\n            },\n        }\n    }\n": SettingsQueryResult;
