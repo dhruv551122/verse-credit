@@ -12,9 +12,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "composite": true,
-    // "declaration": true,
     "declarationMap": true,
-    // "jsx": "react-jsx",
     "outDir": "./dist",
     "jsx": "preserve",
     "incremental": true,
@@ -23,7 +21,6 @@
         "name": "next"
       }
     ],
-    // "baseUrl": "./",
     "paths": {
       "studio/*": ["./*"]
     }

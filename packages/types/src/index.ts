@@ -957,19 +957,19 @@ export type BlogsQueryResult = Array<{
   uplodedAt?: string;
 }>;
 
-// // Query TypeMap
-// import "@sanity/client";
-// declare module "@sanity/client" {
-//   interface SanityQueries {
-//     "\n    *[_type == 'home' && _id == 'home'][0]{\n        ...,\n        heroRightBlogs[] -> {\n         ...,\n            heroImage{\n               ...,    \n              asset -> \n          },\n          author ->,\n          category -> \n        },\n        categoryGroup[]{\n            ...,\n            categories[] ->,\n        },\n        newsBlogs[] -> {\n          ...,\n          heroImage{\n            ...,    \n            asset -> \n          },\n          author ->,\n         category -> \n        },\n        newsBackgroundImage{\n            ...,\n            asset ->,\n        }\n    }\n": HomePageQueryResult;
-//     "\n    *[_type == 'blog' && category->slug.current == $categorySlug]{\n        ...,\n        heroImage{\n            ...,    \n            asset -> \n        },\n        author ->,\n        category -> \n    }\n": BlogsByCategoryQueryResult;
-//     "\n    *[_type == 'blog' && category->slug.current == $categorySlug && slug.current == $blogSlug]{\n        ...,\n        heroImage{\n            ...,    \n            asset -> \n        },\n        author ->,\n        category -> \n    }\n": BlogBySlugQueryResult;
-//     "\n    *[_type == 'blogCategory' && slug.current == $categorySlug][0]{\n        ...,\n    }\n": CategoriesBySlugQueryResult;
-//     "\n    *[_type == 'calculatorCategory']{\n        _id,\n        title,\n        tagLine,\n        slug\n    }\n": CategoriesQueryResult;
-//     "\n    *[_type == 'calculator']{\n        ...,\n        icon {\n            ...,\n            asset ->\n        },\n        category ->\n    }\n": CalculatorQueryResult;
-//     "\n    *[_id == 'settings' && _type == 'settings'][0]{\n        ...,\n        headerLogo {\n            ...,\n            asset ->{\n                ...\n            },\n        },\n        footerLogo{\n            ...,\n            asset ->{\n                ...\n            },\n        }\n    }\n": SettingsQueryResult;
-//     "\n    *[_id == 'blogCategory' && _type == 'blogCategory']{\n        ...,\n    }\n": BlogCategoriesQueryResult;
-//     "\n    *[_id == 'blogAuthor' && _type == 'blogAuthor']{\n        ...,\n    }\n": BlogAuthorsQueryResult;
-//     "\n    *[ _type == 'blog']{\n        ...,\n        heroImage{\n            ...,    \n            asset -> \n        },\n        author ->,\n        category -> \n    }\n": BlogsQueryResult;
-//   }
-// }
+// Query TypeMap
+import "@sanity/client";
+declare module "@sanity/client" {
+  interface SanityQueries {
+    "\n    *[_type == 'home' && _id == 'home'][0]{\n        ...,\n        heroRightBlogs[] -> {\n         ...,\n            heroImage{\n               ...,    \n              asset -> \n          },\n          author ->,\n          category -> \n        },\n        categoryGroup[]{\n            ...,\n            categories[] ->,\n        },\n        newsBlogs[] -> {\n          ...,\n          heroImage{\n            ...,    \n            asset -> \n          },\n          author ->,\n         category -> \n        },\n        newsBackgroundImage{\n            ...,\n            asset ->,\n        }\n    }\n": HomePageQueryResult;
+    "\n    *[_type == 'blog' && category->slug.current == $categorySlug]{\n        ...,\n        heroImage{\n            ...,    \n            asset -> \n        },\n        author ->,\n        category -> \n    }\n": BlogsByCategoryQueryResult;
+    "\n    *[_type == 'blog' && category->slug.current == $categorySlug && slug.current == $blogSlug]{\n        ...,\n        heroImage{\n            ...,    \n            asset -> \n        },\n        author ->,\n        category -> \n    }\n": BlogBySlugQueryResult;
+    "\n    *[_type == 'blogCategory' && slug.current == $categorySlug][0]{\n        ...,\n    }\n": CategoriesBySlugQueryResult;
+    "\n    *[_type == 'calculatorCategory']{\n        _id,\n        title,\n        tagLine,\n        slug\n    }\n": CategoriesQueryResult;
+    "\n    *[_type == 'calculator']{\n        ...,\n        icon {\n            ...,\n            asset ->\n        },\n        category ->\n    }\n": CalculatorQueryResult;
+    "\n    *[_id == 'settings' && _type == 'settings'][0]{\n        ...,\n        headerLogo {\n            ...,\n            asset ->{\n                ...\n            },\n        },\n        footerLogo{\n            ...,\n            asset ->{\n                ...\n            },\n        }\n    }\n": SettingsQueryResult;
+    "\n    *[_id == 'blogCategory' && _type == 'blogCategory']{\n        ...,\n    }\n": BlogCategoriesQueryResult;
+    "\n    *[_id == 'blogAuthor' && _type == 'blogAuthor']{\n        ...,\n    }\n": BlogAuthorsQueryResult;
+    "\n    *[ _type == 'blog']{\n        ...,\n        heroImage{\n            ...,    \n            asset -> \n        },\n        author ->,\n        category -> \n    }\n": BlogsQueryResult;
+  }
+}
