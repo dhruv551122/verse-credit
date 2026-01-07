@@ -33,13 +33,13 @@ const BlogHeader = ({
       </h4>
       <h2
         className={cn(
-          "text-[22px] font-semibold text-tuatara leading-6",
+          "text-xl sm:text-[22px] font-semibold text-tuatara leading-6",
           titleClassname
         )}
       >
         {title}
       </h2>
-      <p className="text-sm ">
+      <p className="text-xs sm:text-sm ">
         <span
           className={cn(
             "pr-2 font-semibold text-gray-600 border-r-2 border-gray-600",
