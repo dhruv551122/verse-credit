@@ -1,7 +1,7 @@
-import { sanityFetch } from "@/sanity/lib/live";
-import { settingsQuery } from "@/sanity/lib/query";
-import { SettingsQueryResult } from "@sanity-types/index";
 import { NextRequest, NextResponse } from "next/server";
+import { sanityFetch } from "studio/sanity/lib/live";
+import { settingsQuery } from "studio/sanity/lib/query";
+import { SettingsQueryResult } from "../../../../../packages/types/src";
 
 export const GET = async (req: NextRequest) => {
   try {

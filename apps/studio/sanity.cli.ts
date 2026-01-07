@@ -10,6 +10,6 @@ const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
 export default defineCliConfig({
   api: { projectId, dataset },
   typegen: {
-    generates: "../../sanity-types/index.ts", // Specify the desired output file and path
+    generates: "../../packages/types/src/index.ts", // Specify the desired output file and path
   },
 });

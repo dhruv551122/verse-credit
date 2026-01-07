@@ -1,7 +1,7 @@
-import { sanityFetch } from "@/sanity/lib/live";
-import { homePageQuery } from "@/sanity/lib/query";
-import { HomePageQueryResult } from "@sanity-types/index";
 import { NextResponse } from "next/server";
+import { HomePageQueryResult } from "../../../../../packages/types/src";
+import { homePageQuery } from "studio/sanity/lib/query";
+import { sanityFetch } from "studio/sanity/lib/live";
 
 export const GET = async (req: Request) => {
   try {

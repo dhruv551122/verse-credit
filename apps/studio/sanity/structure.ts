@@ -1,5 +1,4 @@
 import { BookOpen, File, LucideIcon } from "lucide-react";
-import type { StructureBuilder, StructureResolver } from "sanity/structure";
 import {
   multiTypes,
   SchemaType,
@@ -8,7 +7,8 @@ import {
   MultiType,
 } from "./schemaTypes";
 import { documents } from "./schemaTypes/documents";
-import { getTitleCase } from "@/utils";
+import { getTitleCase } from "../utils";
+import { StructureBuilder, StructureResolver } from "sanity/structure";
 
 type Base<T = SchemaType> = {
   id?: string;

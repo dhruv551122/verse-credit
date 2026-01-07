@@ -1,7 +1,7 @@
-import { StyledTable } from "@/sanity.types";
 import { Card } from "@sanity/ui";
 import { PortableText } from "next-sanity";
 import { PreviewProps } from "sanity";
+import { StyledTable } from "../../../../packages/types/src";
 
 export default function StyledTablePreview(
   value: PreviewProps & {

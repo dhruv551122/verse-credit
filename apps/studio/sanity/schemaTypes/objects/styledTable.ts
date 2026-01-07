@@ -1,5 +1,5 @@
-import StyledTablePreview from "@/sanity/components/styledTablePreview";
 import { defineType } from "sanity";
+import StyledTablePreview from "../../components/styledTablePreview";
 
 const styledTable = defineType({
   name: "styledTable",

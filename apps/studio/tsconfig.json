@@ -11,18 +11,27 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
+    "composite": true,
+    // "declaration": true,
+    "declarationMap": true,
+    // "jsx": "react-jsx",
+    "outDir": "./dist",
+    "jsx": "preserve",
     "incremental": true,
     "plugins": [
       {
         "name": "next"
       }
     ],
+    // "baseUrl": "./",
     "paths": {
-      "@/*": ["./*"],
-      "@sanity-types/*": ["../../sanity-types/*"]
+      "studio/*": ["./*"]
     }
   },
+  "references": [{
+    "path": "../../packages/types",
+  }],
+  "extends": "../../tsconfig.base.json",
   "include": [
     "next-env.d.ts",
     "**/*.ts",
@@ -30,7 +39,9 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts",
-    "../../sanity-types/**/*.ts"
+    "../../packages/types/src/**/*.ts",
+    "../../packages/types/src/**/*.tsx"
+    // "../../sanity-types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }

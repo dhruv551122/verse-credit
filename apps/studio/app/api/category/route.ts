@@ -1,7 +1,7 @@
-import { sanityFetch } from "@/sanity/lib/live";
-import { categoriesBySlugQuery, categoriesQuery } from "@/sanity/lib/query";
-import { BlogsQueryResult } from "@sanity-types/index";
 import { NextRequest, NextResponse } from "next/server";
+import { sanityFetch } from "studio/sanity/lib/live";
+import { categoriesBySlugQuery, categoriesQuery } from "studio/sanity/lib/query";
+import { BlogsQueryResult } from "../../../../../packages/types/src";
 
 export const GET = async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);

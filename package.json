@@ -1,11 +1,19 @@
 {
   "name": "verse-credit",
+  "version": "0.1.0",
   "private": true,
-  "packageManager": "pnpm@10.27.0",
   "scripts": {
-    "dev:web": "pnpm --filter web dev",
-    "dev:studio": "pnpm --filter studio dev",
-    "build:web": "pnpm --filter web build",
-    "build:studio": "pnpm --filter studio build"
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+  },
+  "devDependencies": {
+    "prettier": "^3.2.5",
+    "turbo": "^2.3.3"
+  },
+  "packageManager": "pnpm@9.1.0",
+  "engines": {
+    "node": ">=20.9.0"
   }
 }
