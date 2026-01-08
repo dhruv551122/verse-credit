@@ -1,9 +1,9 @@
 import { CirclePlus } from "lucide-react";
 import { Dispatch, SetStateAction, useState } from "react";
 import MonthPicker from "./month-picker";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "../ui/accordion";
 import CalculatorTable from "./claculatorTable";
 import { cn } from "@/lib/utils";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 
 const Amortization = ({
   groupedYearsDetail,

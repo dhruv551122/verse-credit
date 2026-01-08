@@ -1,9 +1,9 @@
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { SetStateAction, useState } from "react";
 import { cn, formatDateToMonth } from "@/lib/utils";
-import { Button } from "../ui/button";
 import { CalendarIcon } from "lucide-react";
-import { Calendar } from "../ui/calendar";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 
 const MonthPicker = ({
   date,

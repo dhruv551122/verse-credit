@@ -20,7 +20,7 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@sanity-types/*": ["../../sanity-types"]
+      "@sanity-types/*": ["../../packages/types/src/index.ts"]
     }
   },
   "include": [

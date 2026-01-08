@@ -22,7 +22,7 @@ const getTextFromChildren = (children: any): string => {
 
   if (Array.isArray(children)) {
     return children
-      .map((child) => (typeof child === "string" ? child : child?.text ?? ""))
+      .map((child) => (typeof child === "string" ? child : (child?.text ?? "")))
       .join("");
   }
 
@@ -121,12 +121,12 @@ const RichText: React.FC<Props> = ({
         );
       },
     },
-    styledTable: ({ value }) => (
+    styledTable: ({ value }: any) => (
       <table>
         <tbody>
-          {value.rows?.map((row, i) => (
+          {value.rows?.map((row: any, i: number) => (
             <tr key={i}>
-              {row.cells?.map((cellValue, j) => (
+              {row.cells?.map((cellValue: any, j: number) => (
                 <td
                   key={j}
                   style={{

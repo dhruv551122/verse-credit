@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import CalculatoContainer from "@/components/common/calculator-container";
 import { cn } from "@/lib/utils";
+import CalculatorContainer from "@/components/common/calculator-common/calculator-container";
 
 const DEFAULT_MONTHLY_INVESTMENT = 1000;
 const DEFAULT_RETURN_RATE = 3.8;
@@ -156,7 +156,7 @@ const SIPCalculator = () => {
       </div>
       <div className="max-width-container padding-container">
         <div className="border border-gray-300 rounded-lg p-6 shadow-md flex flex-col gap-10">
-          <CalculatoContainer
+          <CalculatorContainer
             title="SIP Calculator"
             fieldValues={fieldValues}
             outputValues={outputValues}
