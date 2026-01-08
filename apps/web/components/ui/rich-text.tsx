@@ -109,7 +109,7 @@ const RichText: React.FC<Props> = ({
                 alt={value.alt || "Bar "}
                 width={1000}
                 height={1000}
-                className="m-0 max-h-[500px] w-full object-contain"
+                className="m-0 max-h-125 w-full object-contain"
               />
             )}
             {value.alt && (

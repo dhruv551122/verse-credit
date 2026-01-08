@@ -13,8 +13,8 @@ const BlogHeader = ({
 }: {
   category: string;
   title: string;
-  author: string;
-  date: string;
+  author?: string;
+  date?: string;
   headingClassname?: string;
   titleClassname?: string;
   authorClassname?: string;
@@ -39,17 +39,21 @@ const BlogHeader = ({
       >
         {title}
       </h2>
-      <p className="text-xs sm:text-sm ">
-        <span
-          className={cn(
-            "pr-2 font-semibold text-gray-600 border-r-2 border-gray-600",
-            authorClassname
-          )}
-        >
-          {author}
-        </span>
-        <span className={cn("text-gray-500 pl-2", dateClassname)}>{date}</span>
-      </p>
+      {author && date && (
+        <p className="text-xs sm:text-sm ">
+          <span
+            className={cn(
+              "pr-2 font-semibold text-gray-600 border-r-2 border-gray-600",
+              authorClassname
+            )}
+          >
+            {author}
+          </span>
+          <span className={cn("text-gray-500 pl-2", dateClassname)}>
+            {date}
+          </span>
+        </p>
+      )}
     </div>
   );
 };

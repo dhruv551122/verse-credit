@@ -1,6 +1,12 @@
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { URLSearchParams } from "url";
+import CategoryBlogs from "./_components/categoryBlogs";
+import {
+  BlogsByCategoryQueryResult,
+  CategoriesBySlugQueryResult,
+} from "@sanity-types/*";
+import { notFound } from "next/navigation";
 
 const CategoriesPage = async ({
   params,
@@ -15,9 +21,12 @@ const CategoriesPage = async ({
   const categoryData = await fetch(
     `${process.env.BACKEND_URL}/api/category?${searchParams}`
   );
-  const blogs = await blogsData.json();
-  const category = await categoryData.json();
-  console.log(category, blogs);
+  const blogs: NonNullable<BlogsByCategoryQueryResult> = await blogsData.json();
+  const category: NonNullable<CategoriesBySlugQueryResult> =
+    await categoryData.json();
+  if (!blogs || !category) {
+    return notFound();
+  }
   return (
     <div className="mt-[67px] font-inter">
       <div className="py-6! max-width-container padding-container">
@@ -30,6 +39,9 @@ const CategoriesPage = async ({
             {category.label}
           </Link>
         </div>
+      </div>
+      <div className="max-width-container padding-container">
+      <CategoryBlogs blogs={blogs} title={category.label} />
       </div>
     </div>
   );
