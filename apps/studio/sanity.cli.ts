@@ -11,5 +11,6 @@ export default defineCliConfig({
   api: { projectId, dataset },
   typegen: {
     generates: "../../packages/types/src/index.ts", // Specify the desired output file and path
+    overloadClientMethods: false,
   },
 });
