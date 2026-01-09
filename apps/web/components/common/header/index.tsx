@@ -22,8 +22,8 @@ const Header = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
     return () => removeEventListener("resize", handleResize);
   }, []);
   return (
-    <div className="fixed top-0 left-0 w-full p-4 z-100 md:px-10 bg-chathams-blue">
-      <div className="flex items-center justify-between max-width-container text-Sandstone font-inter">
+    <div className="fixed top-0 left-0 w-full z-100 bg-chathams-blue">
+      <div className="flex items-center justify-between max-width-container p-4 md:px-10 text-Sandstone font-inter">
         <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
           <SanityImage
             src={data.headerLogo}

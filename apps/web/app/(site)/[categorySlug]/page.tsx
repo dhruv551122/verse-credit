@@ -3,10 +3,12 @@ import Link from "next/link";
 import { URLSearchParams } from "url";
 import CategoryBlogs from "./_components/categoryBlogs";
 import {
+  BlogCategoriesQueryResult,
+  BlogCategoryBySlugQueryResult,
+  BlogCategoryPageQueryResult,
   BlogsByCategoryQueryResult,
-  CategoriesBySlugQueryResult,
 } from "@sanity-types/*";
-import { notFound } from "next/navigation";
+import CategoryPageRight from "./_components/categoryPageRight";
 
 const CategoriesPage = async ({
   params,
@@ -18,30 +20,35 @@ const CategoriesPage = async ({
   const blogsData = await fetch(
     `${process.env.BACKEND_URL}/api/blogs?${searchParams}`
   );
-  const categoryData = await fetch(
-    `${process.env.BACKEND_URL}/api/category?${searchParams}`
+
+  const categoryPageData = await fetch(
+    `${process.env.BACKEND_URL}/api/blogs/categoryPage?${searchParams}`
   );
+
+  const categoryPage: NonNullable<{category: NonNullable<BlogCategoryBySlugQueryResult>, categoryPage: NonNullable<BlogCategoryPageQueryResult>
+  }> = await categoryPageData.json()
+  
   const blogs: NonNullable<BlogsByCategoryQueryResult> = await blogsData.json();
-  const category: NonNullable<CategoriesBySlugQueryResult> =
-    await categoryData.json();
-  if (!blogs || !category) {
-    return notFound();
-  }
+
+  
   return (
-    <div className="mt-[67px] font-inter">
+    <div className="mt-16.75 font-inter">
       <div className="py-6! max-width-container padding-container">
         <div className="flex items-center gap-2 text-gray-500">
           <Link href="/" className="duration-300 hover:text-gray-700">
             Home
           </Link>
           <ChevronRight />
-          <Link href={`/${category.slug.current}`} className="text-gray-700">
-            {category.label}
-          </Link>
+          <div className="text-gray-700">{categoryPage.category.label}</div>
         </div>
       </div>
       <div className="max-width-container padding-container">
-      <CategoryBlogs blogs={blogs} title={category.label} />
+        <div className="grid grid-cols-3 ">
+          <div className="col-span-2 pr-8 border-r border-gray-300">
+            <CategoryBlogs blogs={blogs} title={categoryPage.category.label} />
+          </div>
+          <CategoryPageRight categories={categoryPage.categoryPage.otherCategories} />
+        </div>
       </div>
     </div>
   );

@@ -55,20 +55,22 @@ export const blogBySlugQuery = groq`
         category -> 
     }
 `;
-export const categoriesBySlugQuery = groq`
+
+export const blogCategoryBySlugQuery = groq`
     *[_type == 'blogCategory' && slug.current == $categorySlug][0]{
         ...,
     }
 `;
 
-export const categoriesQuery = groq`
+export const claculatorCategoriesQuery = groq`
     *[_type == 'calculatorCategory']{
         _id,
         title,
         tagLine,
-        slug
+        slug,
     }
 `;
+
 export const calculatorQuery = groq`
     *[_type == 'calculator']{
         ...,
@@ -99,15 +101,36 @@ export const settingsQuery = groq`
 `;
 
 export const blogCategoriesQuery = groq`
-    *[_id == 'blogCategory' && _type == 'blogCategory']{
+    *[_type == 'blogCategory']{
         ...,
     }
 `;
+
 export const blogAuthorsQuery = groq`
     *[_id == 'blogAuthor' && _type == 'blogAuthor']{
         ...,
     }
 `;
+
+export const blogCategoryPageQuery = groq`
+    *[_type == 'blogCategoryPage'][0]{
+        ...,
+        recommandedBlogs[] -> {
+            ...,
+            heroImage{
+            ...,    
+            asset -> 
+            },
+            author ->,
+            category -> 
+        },
+        otherCategories[] -> {
+            ...,
+            'blogCount': count(*[_type == 'blog' && references(^._id)])
+        }
+    }
+`;
+
 export const blogsQuery = groq`
     *[ _type == 'blog']{
         ...,

@@ -43,13 +43,13 @@ const BlogHeader = ({
         <p className="text-xs sm:text-sm ">
           <span
             className={cn(
-              "pr-2 font-semibold text-gray-600 border-r-2 border-gray-600",
+              "pr-2 font-semibold text-gray-500 border-r-2 border-gray-600",
               authorClassname
             )}
           >
             {author}
           </span>
-          <span className={cn("text-gray-500 pl-2", dateClassname)}>
+          <span className={cn("text-gray-400 pl-2 font-medium", dateClassname)}>
             {date}
           </span>
         </p>

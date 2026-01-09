@@ -16,14 +16,14 @@ function CategoryBlogs({
   return (
     <div className="">
       <Title title={title} />
-      <div className="flex gap-4">
-        {blogs.slice(0, 2).map((blog, index) => (
+      <div className="flex gap-4 border-b border-gray-300 py-8">
+        {blogs.slice(0, 2).map((blog) => (
           <Link
             href={`/${blog.category.slug.current}/${blog.slug.current}`}
             className="duration-300 group flex-1"
             key={blog._id}
           >
-            <div className="w-full mb-6">
+            <div className="w-full mb-6 flex flex-col gap-6">
               <BlogHeader
                 author={blog.author.authorName}
                 date={formatDate(blog.uplodedAt || blog._updatedAt)}
