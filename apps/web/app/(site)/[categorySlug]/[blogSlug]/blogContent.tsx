@@ -1,0 +1,74 @@
+"use client";
+
+import RichText from "@/components/ui/rich-text";
+import useActiveHeading from "@/hooks/useActiveHeading";
+import { cn, slugify } from "@/lib/utils";
+import { BlockContent, BlogBySlugQueryResult } from "@sanity-types/*";
+import Link from "next/link";
+import BlogTop from "./blogTop";
+
+const extractTableContentData = (content: BlockContent) => {
+  return content
+    .filter((block) => block._type === "block" && block.style === "h2")
+    .map((block: BlockContent[number]) => {
+      const title = block.children?.map((child) => child.text).join("") ?? "";
+      return {
+        title,
+        id: slugify(title),
+      };
+    });
+};
+
+const BlogContent = ({
+  blog,
+}: {
+  blog: NonNullable<BlogBySlugQueryResult>;
+}) => {
+  const tableOfContent = extractTableContentData(blog.content);
+
+  const activeId = useActiveHeading(tableOfContent);
+
+  const handleScroll = (id: string) => {
+    const element = document.getElementById(id);
+    if (!element) return null;
+    const y = element?.getBoundingClientRect().top + window.scrollY - 80;
+    scrollTo({ top: y, behavior: "smooth" });
+  };
+
+  return (
+    <div>
+      <BlogTop blog={blog} />
+      <div className="max-width-container padding-container text-tuatara">
+        <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+          <div className="md:col-span-2 ">
+            <div className="sticky top-20 pb-2 border-b border-gray-300">
+              <h4 className="py-2 mb-2 border-b border-gray-300 text-xl font-semibold">
+                Table of Content
+              </h4>
+              <ul className="flex flex-col gap-2 py-1 ">
+                {tableOfContent.map((tableIndex) => (
+                  <li
+                    role="button"
+                    key={tableIndex.id}
+                    onClick={(e) => handleScroll(tableIndex.id)}
+                    className={cn(
+                      "duration-300 hover:text-chathams-blue cursor-pointer font-medium",
+                      activeId === tableIndex.id && "text-chathams-blue"
+                    )}
+                  >
+                    {tableIndex.title}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+          <div className="md:col-span-4 md:pl-6 md:border-l md:border-gray-300">
+            <RichText content={blog.content} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BlogContent;

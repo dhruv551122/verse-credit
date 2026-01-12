@@ -157,4 +157,13 @@ input[type="number"] {
   .padding-container {
     @apply p-4 md:p-10 lg:py-16;
   }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
 }

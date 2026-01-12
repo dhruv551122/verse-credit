@@ -47,13 +47,13 @@ const RichText: React.FC<Props> = ({
         const text = getTextFromChildren(children);
         const id = slugify(text);
         return (
-          <h2 id={id} className="my-4 text-3xl font-semibold">
+          <h2 id={id} className="my-4 text-2xl md:text-3xl font-semibold scroll-m-20">
             {children}
           </h2>
         );
       },
       h3: ({ children }: any) => (
-        <h3 className="my-4 text-2xl font-semibold">{children}</h3>
+        <h3 className="my-4 text-xl md:text-2xl font-semibold">{children}</h3>
       ),
       h4: ({ children }: any) => <h4 className="my-4 ">{children}</h4>,
       h5: ({ children }: any) => <h5 className="my-4 ">{children}</h5>,

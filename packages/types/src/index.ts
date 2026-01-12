@@ -1001,6 +1001,61 @@ export type BlogCategoryPageQueryResult = {
     blogCount: number;
   }>;
 } | null;
+// Variable: blogsByTitleSlug
+// Query: *[_type == 'blog' && title match $titleSlug] | order(_score desc){        _id,        title,        author->,        category->,        heroImage{            ...,            asset->        },        uploadedAt,        _updatedAt,        _score    }
+export type BlogsByTitleSlugResult = Array<{
+  _id: string;
+  title: string;
+  author: {
+    _id: string;
+    _type: "blogAuthor";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    authorName: string;
+  };
+  category: {
+    _id: string;
+    _type: "blogCategory";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    label: string;
+    slug: Slug;
+  };
+  heroImage: {
+    asset: {
+      _id: string;
+      _type: "sanity.imageAsset";
+      _createdAt: string;
+      _updatedAt: string;
+      _rev: string;
+      originalFilename?: string;
+      label?: string;
+      title?: string;
+      description?: string;
+      altText?: string;
+      sha1hash?: string;
+      extension?: string;
+      mimeType?: string;
+      size?: number;
+      assetId?: string;
+      uploadId?: string;
+      path?: string;
+      url?: string;
+      metadata?: SanityImageMetadata;
+      source?: SanityAssetSourceData;
+    } | null;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  uploadedAt: null;
+  _updatedAt: string;
+  _score: null;
+}>;
 // Variable: blogsQuery
 // Query: *[ _type == 'blog']{        ...,        heroImage{            ...,                asset ->         },        author ->,        category ->     }
 export type BlogsQueryResult = Array<{

@@ -131,6 +131,22 @@ export const blogCategoryPageQuery = groq`
     }
 `;
 
+export const blogsByTitleSlug = groq`
+    *[_type == 'blog' && title match $titleSlug] | order(_score desc){
+        _id,
+        title,
+        author->,
+        category->,
+        heroImage{
+            ...,
+            asset->
+        },
+        uploadedAt,
+        _updatedAt,
+        _score
+    } 
+`;
+
 export const blogsQuery = groq`
     *[ _type == 'blog']{
         ...,

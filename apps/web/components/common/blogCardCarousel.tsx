@@ -1,12 +1,9 @@
 import {
   Carousel,
   CarouselContent,
-  CarouselItem,
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { BlogsQueryResult } from "@sanity-types/sanity.types";
-import Link from "next/link";
 import { ReactNode } from "react";
 
 const BlogCardCarousel = ({
@@ -16,13 +13,7 @@ const BlogCardCarousel = ({
   
   children: ReactNode;
 }) => {
-  // if (blogs.length === 0) {
-  //   return (
-  //     <div className="max-width-container px-4 md:px-10 pb-4 md:pb-10 lg:pb-16">
-  //       No blog found
-  //     </div>
-  //   );
-  // }
+  
   return (
     <div className="pl-4 md:pl-10 2xl:w-[calc(100%-(100%-1440px)/2)] 2xl:ml-auto pb-4 md:pb-10 lg:pb-16">
       <Carousel className="overflow-hidden left-0">

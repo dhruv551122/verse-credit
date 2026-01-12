@@ -1,35 +1,42 @@
 import { useEffect, useState } from "react";
 
-const useActiveHeading = (ids: string[]) => {
+const OFFSET = 180;
+
+const useActiveHeading = (
+  headings: { id: string; title: string }[]
+) => {
   const [activeId, setActiveId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (!ids.length) return;
+    if (!headings?.length) return;
 
-    const headings = ids
-      .map((id) => document.getElementById(id))
+    const elements = headings
+      .map((h) => document.getElementById(h.id))
       .filter(Boolean) as HTMLElement[];
 
-    if (!headings.length) return;
+    if (!elements.length) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveId(entry.target.id);
-          }
-        });
-      },
-      {
-        rootMargin: "-30% 0px -60% 0px",
-        threshold: 0,
+    const handleScroll = () => {
+      let currentId: string | null = null;
+
+      for (const el of elements) {
+        if (el.getBoundingClientRect().top <= OFFSET) {
+          currentId = el.id;
+        } else {
+          break;
+        }
       }
-    );
 
-    headings.forEach((el) => observer.observe(el));
+      setActiveId((prev) => (prev === currentId ? prev : currentId));
+    };
 
-    return () => observer.disconnect();
-  }, [ids.join(",")]); // IMPORTANT
+    handleScroll(); 
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [headings]);
 
   return activeId;
 };
