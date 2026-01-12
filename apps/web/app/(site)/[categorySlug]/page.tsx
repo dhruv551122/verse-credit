@@ -3,7 +3,6 @@ import Link from "next/link";
 import { URLSearchParams } from "url";
 import CategoryBlogs from "./_components/categoryBlogs";
 import {
-  BlogCategoriesQueryResult,
   BlogCategoryBySlugQueryResult,
   BlogCategoryPageQueryResult,
   BlogsByCategoryQueryResult,
@@ -25,12 +24,13 @@ const CategoriesPage = async ({
     `${process.env.BACKEND_URL}/api/blogs/categoryPage?${searchParams}`
   );
 
-  const categoryPage: NonNullable<{category: NonNullable<BlogCategoryBySlugQueryResult>, categoryPage: NonNullable<BlogCategoryPageQueryResult>
-  }> = await categoryPageData.json()
-  
+  const categoryPage: NonNullable<{
+    category: NonNullable<BlogCategoryBySlugQueryResult>;
+    categoryPage: NonNullable<BlogCategoryPageQueryResult>;
+  }> = await categoryPageData.json();
+
   const blogs: NonNullable<BlogsByCategoryQueryResult> = await blogsData.json();
 
-  
   return (
     <div className="mt-16.75 font-inter">
       <div className="py-6! max-width-container padding-container">
@@ -43,11 +43,11 @@ const CategoriesPage = async ({
         </div>
       </div>
       <div className="max-width-container padding-container">
-        <div className="grid grid-cols-3 ">
-          <div className="col-span-2 pr-8 border-r border-gray-300">
+        <div className="grid grid-cols-1 lg:grid-cols-3">
+          <div className="lg:border-r lg:border-gray-300 lg:pr-8 lg:col-span-2">
             <CategoryBlogs blogs={blogs} title={categoryPage.category.label} />
           </div>
-          <CategoryPageRight categories={categoryPage.categoryPage.otherCategories} />
+          <CategoryPageRight categoryPage={categoryPage.categoryPage} />
         </div>
       </div>
     </div>

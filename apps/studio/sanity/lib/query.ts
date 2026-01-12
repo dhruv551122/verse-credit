@@ -45,7 +45,7 @@ export const blogsByCategoryQuery = groq`
 `;
 
 export const blogBySlugQuery = groq`
-    *[_type == 'blog' && category->slug.current == $categorySlug && slug.current == $blogSlug]{
+    *[_type == 'blog' && category->slug.current == $categorySlug && slug.current == $blogSlug][0]{
         ...,
         heroImage{
             ...,    

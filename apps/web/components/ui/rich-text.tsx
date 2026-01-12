@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn, slugify } from "@/lib/utils";
 import { SanityImage } from "@/sanity/sanityImage";
 import { PortableText } from "next-sanity";
 import Link from "next/link";
@@ -9,13 +9,6 @@ interface Props {
   className?: string;
   highlightedTextClassName?: string;
 }
-
-const slugify = (text: string) =>
-  text
-    .toLowerCase()
-    .trim()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, "-");
 
 const getTextFromChildren = (children: any): string => {
   if (typeof children === "string") return children;
@@ -35,32 +28,40 @@ const RichText: React.FC<Props> = ({
   highlightedTextClassName,
 }) => {
   const combinedClassNames = cn(
-    "prose max-w-none text-black/50 font-zilla  prose-h2:text-[30px] sm:prose-h2:text-[55px] prose-h2:leading-[1] lg:prose-h2:text-[70px] xl:prose-h2:text-[100px] ",
+    "prose max-w-none text-tuatara font-inter",
     className
   );
 
   const myPortableTextComponents: any = {
     list: {
       bullet: ({ children }: { children: React.ReactNode }) => (
-        <ul className="list-disc">{children}</ul>
+        <ul className="list-disc mb-4 pl-8">{children}</ul>
       ),
       number: ({ children }: { children: React.ReactNode }) => (
-        <ol className="list-decimal">{children}</ol>
+        <ol className="list-decimal mb-4 pl-8">{children}</ol>
       ),
     },
     block: {
-      h1: ({ children }: any) => <h1>{children}</h1>,
+      h1: ({ children }: any) => <h1 className="my-4 text-4xl">{children}</h1>,
       h2: ({ children }: any) => {
         const text = getTextFromChildren(children);
         const id = slugify(text);
-        return <h2 id={id}>{children}</h2>;
+        return (
+          <h2 id={id} className="my-4 text-3xl font-semibold">
+            {children}
+          </h2>
+        );
       },
-      h3: ({ children }: any) => <h3>{children}</h3>,
-      h4: ({ children }: any) => <h4>{children}</h4>,
-      h5: ({ children }: any) => <h5>{children}</h5>,
-      h6: ({ children }: any) => <h6>{children}</h6>,
+      h3: ({ children }: any) => (
+        <h3 className="my-4 text-2xl font-semibold">{children}</h3>
+      ),
+      h4: ({ children }: any) => <h4 className="my-4 ">{children}</h4>,
+      h5: ({ children }: any) => <h5 className="my-4 ">{children}</h5>,
+      h6: ({ children }: any) => <h6 className="my-4 ">{children}</h6>,
       normal: ({ children }: any) => (
-        <p className="text-lg font-inter sm:text-2xl">{children}</p>
+        <p className="text-base font-inter mb-4 leading-relaxed min-h-px">
+          {children}
+        </p>
       ),
     },
     marks: {
@@ -90,10 +91,7 @@ const RichText: React.FC<Props> = ({
       }) => <span style={{ color: value.value }}>{children}</span>,
       highlightedText: ({ children }: { children: React.ReactNode }) => (
         <span
-          className={cn(
-            "text-xl font-bold sm:text-3xl",
-            highlightedTextClassName
-          )}
+          className={cn("font-semibold! text-[22px]", highlightedTextClassName)}
         >
           {children}
         </span>
@@ -106,7 +104,7 @@ const RichText: React.FC<Props> = ({
             {value && (
               <SanityImage
                 src={value}
-                alt={value.alt || "Bar "}
+                alt={value.alt || "VerseCredit"}
                 width={1000}
                 height={1000}
                 className="m-0 max-h-125 w-full object-contain"
@@ -120,28 +118,35 @@ const RichText: React.FC<Props> = ({
           </figure>
         );
       },
+      styledTable: ({ value }: any) => {
+        return (
+          <table className="w-full mb-4">
+            <tbody>
+              {value.rows?.map((row: any, i: number) => {
+                return (
+                  <tr key={i}>
+                    {row.cells?.map((cellValue: any, j: number) => {
+                      return (
+                        <td
+                          key={j}
+                          style={{
+                            backgroundColor: cellValue?.bgColor?.value,
+                            color: cellValue?.textColor?.value,
+                          }}
+                          className="border border-gray-300 p-2"
+                        >
+                          <PortableText value={cellValue.content} />
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        );
+      },
     },
-    styledTable: ({ value }: any) => (
-      <table>
-        <tbody>
-          {value.rows?.map((row: any, i: number) => (
-            <tr key={i}>
-              {row.cells?.map((cellValue: any, j: number) => (
-                <td
-                  key={j}
-                  style={{
-                    backgroundColor: cellValue?.cellColor?.value,
-                    color: cellValue?.textColor?.value,
-                  }}
-                >
-                  <PortableText value={cellValue} />
-                </td>
-              ))}
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    ),
   };
 
   return (

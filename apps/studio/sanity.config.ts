@@ -36,9 +36,9 @@ export default defineConfig({
   },
   document: {
     actions: (input, context) =>
-      singletonTypes.has(context.schemaType)
-        ? input.filter(({ action }) => action && singletonActions.has(action))
-        : input,
+      singletonTypes.has(context.schemaType) ?
+        input.filter(({ action }) => action && singletonActions.has(action))
+      : input,
   },
   plugins: [
     structureTool({ structure }),
@@ -55,9 +55,10 @@ export default defineConfig({
         { label: "green", value: "#3baa60" },
         { label: "black", value: "#000" },
         { label: "white", value: "#fff" },
+        { label: "tuatara", value: "#363636" },
       ],
       enableSearch: true,
       showColorValue: true,
     }),
-  ]
+  ],
 });

@@ -1,7 +1,7 @@
 import Title from "@/components/common/title";
 import { BlogsByCategoryQueryResult } from "@sanity-types/*";
 import CategoryPageBlogCard from "./categoryPageBlogCard";
-import { formatDate } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import BlogHeader from "@/components/common/blogHeader";
 import Link from "next/link";
 import { SanityImage } from "@/sanity/sanityImage";
@@ -14,16 +14,21 @@ function CategoryBlogs({
   title: string;
 }) {
   return (
-    <div className="">
+    <>
       <Title title={title} />
-      <div className="flex gap-4 border-b border-gray-300 py-8">
+      <div
+        className={cn(
+          "flex flex-col sm:flex-row gap-6 py-4 md:py-8",
+          blogs.length > 2 && "border-b border-gray-300"
+        )}
+      >
         {blogs.slice(0, 2).map((blog) => (
           <Link
             href={`/${blog.category.slug.current}/${blog.slug.current}`}
-            className="duration-300 group flex-1"
+            className="flex-1 duration-300 group"
             key={blog._id}
           >
-            <div className="w-full mb-6 flex flex-col gap-6">
+            <div className="flex flex-col w-full gap-4 mb-4 sm:gap-6 sm:mb-6">
               <BlogHeader
                 author={blog.author.authorName}
                 date={formatDate(blog.uplodedAt || blog._updatedAt)}
@@ -43,10 +48,18 @@ function CategoryBlogs({
           </Link>
         ))}
       </div>
-      {blogs.slice(2).map((blog) => (
-        <CategoryPageBlogCard blog={blog} key={blog._id} />
+      {blogs.slice(2).map((blog, index) => (
+        <div
+          key={blog._id}
+          className={cn(
+            "py-6",
+            index !== blogs.length - 3 && "border-b border-gray-300"
+          )}
+        >
+          <CategoryPageBlogCard blog={blog} />
+        </div>
       ))}
-    </div>
+    </>
   );
 }
 

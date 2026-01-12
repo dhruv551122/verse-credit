@@ -24,3 +24,10 @@ export function formatDate(isoString: string) {
   });
   return formatted;
 }
+
+export const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-");

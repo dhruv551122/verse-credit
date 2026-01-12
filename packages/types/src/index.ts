@@ -692,8 +692,8 @@ export type BlogsByCategoryQueryResult = Array<{
   uplodedAt?: string;
 }>;
 // Variable: blogBySlugQuery
-// Query: *[_type == 'blog' && category->slug.current == $categorySlug && slug.current == $blogSlug]{        ...,        heroImage{            ...,                asset ->         },        author ->,        category ->     }
-export type BlogBySlugQueryResult = Array<{
+// Query: *[_type == 'blog' && category->slug.current == $categorySlug && slug.current == $blogSlug][0]{        ...,        heroImage{            ...,                asset ->         },        author ->,        category ->     }
+export type BlogBySlugQueryResult = {
   _id: string;
   _type: "blog";
   _createdAt: string;
@@ -751,7 +751,7 @@ export type BlogBySlugQueryResult = Array<{
     slug: Slug;
   };
   uplodedAt?: string;
-}>;
+} | null;
 // Variable: blogCategoryBySlugQuery
 // Query: *[_type == 'blogCategory' && slug.current == $categorySlug][0]{        ...,    }
 export type BlogCategoryBySlugQueryResult = {
