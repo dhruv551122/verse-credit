@@ -11,12 +11,14 @@ const extractTableContentData = (content: BlockContent) => {
   return content
     .filter((block) => block._type === "block" && block.style === "h2")
     .map((block: BlockContent[number]) => {
-      const title = block.children?.map((child) => child.text).join("") ?? "";
-      return {
-        title,
-        id: slugify(title),
-      };
-    });
+      if (block._type === "block") {
+        const title = block.children?.map((child) => child.text).join("") ?? "";
+        return {
+          title,
+          id: slugify(title),
+        };
+      }
+    }).filter(block => typeof block !== 'undefined');
 };
 
 const BlogContent = ({
@@ -46,7 +48,7 @@ const BlogContent = ({
                 Table of Content
               </h4>
               <ul className="flex flex-col gap-2 py-1 ">
-                {tableOfContent.map((tableIndex) => (
+                {tableOfContent.length > 0 && tableOfContent.map((tableIndex) => (
                   <li
                     role="button"
                     key={tableIndex.id}
