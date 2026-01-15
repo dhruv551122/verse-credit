@@ -87,7 +87,7 @@ const Header = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
 
   return (
     <div className="fixed top-0 left-0 w-full z-100 bg-chathams-blue">
-      <div className="flex items-center justify-between max-width-container p-4 md:px-10 text-Sandstone font-inter">
+      <div className="flex items-center justify-between p-4 max-width-container md:px-10 text-Sandstone font-inter">
         <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
           <SanityImage
             src={data.headerLogo}
@@ -103,7 +103,7 @@ const Header = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
               <Link
                 href={`/${link.url}`}
                 key={link._key}
-                className="duration-300 text-white hover:text-white/80 "
+                className="text-white duration-300 hover:text-white/80 "
               >
                 {link.label}
               </Link>
@@ -117,7 +117,7 @@ const Header = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
             modal={false}
           >
             <DialogTrigger>
-              <SearchIcon className="text-white hover:text-white/80  duration-300 cursor-pointer" />
+              <SearchIcon className="text-white duration-300 cursor-pointer hover:text-white/80" />
             </DialogTrigger>
             <DialogContent
               onCloseAutoFocus={() => {
@@ -130,9 +130,9 @@ const Header = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
                 isMobile && "rounded-none"
               )}
             >
-              <div className="md:w-2/3 lg:w-1/2 p-4 md:p-6 bg-white h-fit rounded-lg mt-18 shadow-lg">
-                <DialogHeader className="text-left gap-4 h-fit">
-                  <div className="border-b border-gray-300 pb-2">
+              <div className="p-4 bg-white rounded-lg shadow-lg md:w-2/3 lg:w-1/2 md:p-6 h-fit mt-18">
+                <DialogHeader className="gap-4 text-left h-fit">
+                  <div className="pb-2 border-b border-gray-300">
                     <div className="flex items-center justify-between">
                       <DialogTitle className="text-2xl font-semibold text-chathams-blue">
                         Search a Topic
@@ -147,7 +147,7 @@ const Header = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
                       you’re looking for.
                     </DialogDescription>
                   </div>
-                  <div className="flex gap-2  items-center border-b border-gray-300">
+                  <div className="flex items-center gap-2 border-b border-gray-300">
                     <SearchIcon size={isMobile ? 20 : 30} />
                     <Input
                       onChange={(e) => handleInputChange(e)}
@@ -156,8 +156,8 @@ const Header = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
                     />
                   </div>
                 </DialogHeader>
-                {resultBlogs.length > 0 ? (
-                  <div className="flex flex-col gap-4 h-full md:min-h-80 md:max-h-80 overflow-y-scroll py-2 mt-4">
+                {resultBlogs.length > 0 ?
+                  <div className="flex flex-col h-full gap-4 py-2 mt-4 overflow-y-scroll md:min-h-80 md:max-h-80">
                     {resultBlogs.map((blog, index) => (
                       <DialogClose key={blog._id} asChild>
                         <Link
@@ -188,11 +188,10 @@ const Header = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
                       </DialogClose>
                     ))}
                   </div>
-                ) : (
-                  <div className="h-full md:max-h-80 md:min-h-80 mt-4">
+                : <div className="h-full mt-4 md:max-h-80 md:min-h-80">
                     <p>No match found.</p>
                   </div>
-                )}
+                }
               </div>
             </DialogContent>
           </Dialog>

@@ -24,7 +24,15 @@ export type StyledTable = {
           _type: "span";
           _key: string;
         }>;
-        style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+        style?:
+          | "normal"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "blockquote";
         listItem?: "bullet" | "number";
         markDefs?: Array<{
           href?: string;
@@ -43,40 +51,47 @@ export type StyledTable = {
   }>;
 };
 
-export type BlockContent = Array<{
-  children?: Array<{
-    marks?: Array<string>;
-    text?: string;
-    _type: "span";
-    _key: string;
-  }>;
-  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-  listItem?: "bullet" | "number";
-  markDefs?: Array<{
-    _key: string;
-  } & TextColor | {
-    href?: string;
-    _type: "link";
-    _key: string;
-  }>;
-  level?: number;
-  _type: "block";
-  _key: string;
-} | {
-  asset?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-  };
-  media?: unknown;
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  _type: "image";
-  _key: string;
-} | {
-  _key: string;
-} & StyledTable>;
+export type BlockContent = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<
+        | ({
+            _key: string;
+          } & TextColor)
+        | {
+            href?: string;
+            _type: "link";
+            _key: string;
+          }
+      >;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }
+  | {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+      _key: string;
+    }
+  | ({
+      _key: string;
+    } & StyledTable)
+>;
 
 export type Seo = {
   _type: "seo";
@@ -316,9 +331,11 @@ export type Settings = {
     alt: string;
     _type: "image";
   };
-  headerLinks: Array<{
-    _key: string;
-  } & Link>;
+  headerLinks: Array<
+    {
+      _key: string;
+    } & Link
+  >;
   footerLogo: {
     asset?: {
       _ref: string;
@@ -348,9 +365,11 @@ export type Settings = {
     url: Link;
     _key: string;
   }>;
-  footerLinks: Array<{
-    _key: string;
-  } & Link>;
+  footerLinks: Array<
+    {
+      _key: string;
+    } & Link
+  >;
 };
 
 export type HighlightColor = {
@@ -470,7 +489,34 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = StyledTable | BlockContent | Seo | Link | Blog | SanityImageCrop | SanityImageHotspot | Slug | BlogAuthor | BlogCategory | Calculator | TextColor | CalculatorCategory | BlogCategoryPage | Home | Settings | HighlightColor | SimplerColor | MediaTag | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes =
+  | StyledTable
+  | BlockContent
+  | Seo
+  | Link
+  | Blog
+  | SanityImageCrop
+  | SanityImageHotspot
+  | Slug
+  | BlogAuthor
+  | BlogCategory
+  | Calculator
+  | TextColor
+  | CalculatorCategory
+  | BlogCategoryPage
+  | Home
+  | Settings
+  | HighlightColor
+  | SimplerColor
+  | MediaTag
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageMetadata
+  | SanityFileAsset
+  | SanityAssetSourceData
+  | SanityImageAsset
+  | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/query.ts
 // Variable: homePageQuery
@@ -879,9 +925,11 @@ export type SettingsQueryResult = {
     alt: string;
     _type: "image";
   };
-  headerLinks: Array<{
-    _key: string;
-  } & Link>;
+  headerLinks: Array<
+    {
+      _key: string;
+    } & Link
+  >;
   footerLogo: {
     asset: {
       _id: string;
@@ -943,9 +991,11 @@ export type SettingsQueryResult = {
     url: Link;
     _key: string;
   }>;
-  footerLinks: Array<{
-    _key: string;
-  } & Link>;
+  footerLinks: Array<
+    {
+      _key: string;
+    } & Link
+  >;
 } | null;
 // Variable: blogCategoriesQuery
 // Query: *[_type == 'blogCategory']{        ...,    }
@@ -1166,4 +1216,3 @@ export type BlogsQueryResult = Array<{
   };
   uplodedAt?: string;
 }>;
-

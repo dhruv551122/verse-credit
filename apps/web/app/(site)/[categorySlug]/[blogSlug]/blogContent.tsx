@@ -41,10 +41,10 @@ const BlogContent = ({
     <>
       <BlogTop blog={blog} />
       <div className="max-width-container padding-container text-tuatara">
-        <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-6">
           <div className="md:col-span-2 ">
-            <div className="sticky top-20 pb-2 border-b border-gray-300">
-              <h4 className="py-2 mb-2 border-b border-gray-300 text-xl font-semibold">
+            <div className="sticky pb-2 border-b border-gray-300 top-20">
+              <h4 className="py-2 mb-2 text-xl font-semibold border-b border-gray-300">
                 Table of Content
               </h4>
               <ul className="flex flex-col gap-2 py-1 ">
