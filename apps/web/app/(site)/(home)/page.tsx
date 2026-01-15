@@ -11,7 +11,7 @@ const HomePage = async () => {
   const blogsPage: NonNullable<BlogsQueryResult> = await blogsData.json();
 
   return (
-    <div className="mt-[67px] font-inter">
+    <div className="mt-16.75 font-inter">
       <HeroBanner homePage={homePage} blogData={blogsPage} />
       <CategoriesGroup homePage={homePage} blogData={blogsPage} />
       <NewsBlogs homePage={homePage}/>

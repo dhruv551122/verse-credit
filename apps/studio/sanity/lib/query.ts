@@ -96,6 +96,13 @@ export const settingsQuery = groq`
             asset ->{
                 ...
             },
+        },
+        socialMediaLinks[]{
+            ...,
+            logo{
+                ...,
+                asset ->
+            }
         }
     }
 `;
@@ -132,11 +139,12 @@ export const blogCategoryPageQuery = groq`
 `;
 
 export const blogsByTitleSlug = groq`
-    *[_type == 'blog' && title match $titleSlug] | order(_score desc){
+    *[_type == 'blog' && title match $titleSlug + '*'] | order(_score desc){
         _id,
         title,
         author->,
         category->,
+        slug,
         heroImage{
             ...,
             asset->

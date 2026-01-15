@@ -28,7 +28,7 @@ const Sidebar = ({
               setIsSidebarOpen(false);
               timerRef.current = setTimeout(() => setIsMounted(false), 500);
             }}
-            className="duration-300 cursor-pointer hover:text-white"
+            className="duration-300 cursor-pointer text-white hover:text-white/80"
           />
         ) : (
           <Menu
@@ -40,7 +40,7 @@ const Sidebar = ({
               timerRef.current = setTimeout(() => setIsSidebarOpen(true), 10);
               setIsMounted(true);
             }}
-            className="duration-300 cursor-pointer hover:text-white"
+            className="duration-300 cursor-pointer text-white hover:text-white/80"
           />
         )}
       </div>

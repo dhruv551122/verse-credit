@@ -1,3 +1,4 @@
+import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import { SettingsQueryResult } from "@sanity-types/*";
 
@@ -15,6 +16,7 @@ const SiteLayout = async ({
     <div>
       <Header data={settingsData} />
       {children}
+      <Footer data={settingsData}/>
     </div>
   );
 };

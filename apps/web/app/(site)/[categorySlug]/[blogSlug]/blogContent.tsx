@@ -4,7 +4,6 @@ import RichText from "@/components/ui/rich-text";
 import useActiveHeading from "@/hooks/useActiveHeading";
 import { cn, slugify } from "@/lib/utils";
 import { BlockContent, BlogBySlugQueryResult } from "@sanity-types/*";
-import Link from "next/link";
 import BlogTop from "./blogTop";
 
 const extractTableContentData = (content: BlockContent) => {
@@ -18,7 +17,8 @@ const extractTableContentData = (content: BlockContent) => {
           id: slugify(title),
         };
       }
-    }).filter(block => typeof block !== 'undefined');
+    })
+    .filter((block) => typeof block !== "undefined");
 };
 
 const BlogContent = ({
@@ -38,7 +38,7 @@ const BlogContent = ({
   };
 
   return (
-    <div>
+    <>
       <BlogTop blog={blog} />
       <div className="max-width-container padding-container text-tuatara">
         <div className="grid grid-cols-1 md:grid-cols-6 gap-6">
@@ -48,19 +48,20 @@ const BlogContent = ({
                 Table of Content
               </h4>
               <ul className="flex flex-col gap-2 py-1 ">
-                {tableOfContent.length > 0 && tableOfContent.map((tableIndex) => (
-                  <li
-                    role="button"
-                    key={tableIndex.id}
-                    onClick={(e) => handleScroll(tableIndex.id)}
-                    className={cn(
-                      "duration-300 hover:text-chathams-blue cursor-pointer font-medium",
-                      activeId === tableIndex.id && "text-chathams-blue"
-                    )}
-                  >
-                    {tableIndex.title}
-                  </li>
-                ))}
+                {tableOfContent.length > 0 &&
+                  tableOfContent.map((tableIndex) => (
+                    <li
+                      role="button"
+                      key={tableIndex.id}
+                      onClick={(e) => handleScroll(tableIndex.id)}
+                      className={cn(
+                        "duration-300 hover:text-chathams-blue cursor-pointer font-medium",
+                        activeId === tableIndex.id && "text-chathams-blue"
+                      )}
+                    >
+                      {tableIndex.title}
+                    </li>
+                  ))}
               </ul>
             </div>
           </div>
@@ -69,7 +70,7 @@ const BlogContent = ({
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

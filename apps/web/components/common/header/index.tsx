@@ -8,16 +8,19 @@ import {
 import Link from "next/link";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Sidebar from "./sidebar";
-import { SearchIcon } from "lucide-react";
+import { SearchIcon, X } from "lucide-react";
 import {
   Dialog,
   DialogTrigger,
   DialogContent,
   DialogHeader,
-  DialogOverlay,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { DialogTitle } from "@radix-ui/react-dialog";
+import {
+  DialogClose,
+  DialogDescription,
+  DialogTitle,
+} from "@radix-ui/react-dialog";
 import BlogHeader from "../blogHeader";
 import { cn, formatDate } from "@/lib/utils";
 
@@ -25,6 +28,7 @@ const Header = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [screenSize, setScreenSize] = useState<number>(0);
   const [inputText, setInputText] = useState<string>("");
+  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
   const [resultBlogs, setResultBlogs] = useState<
     NonNullable<BlogsByTitleSlugResult>
   >([]);
@@ -76,8 +80,10 @@ const Header = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
       clearTimeout(timerRef.current);
     }
 
-    timerRef.current = setTimeout(() => setInputText(e.target.value), 500);
+    timerRef.current = setTimeout(() => setInputText(e.target.value), 300);
   };
+
+  const isMobile = screenSize <= 768;
 
   return (
     <div className="fixed top-0 left-0 w-full z-100 bg-chathams-blue">
@@ -91,11 +97,11 @@ const Header = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
             className="object-contain"
           />
         </Link>
-        {screenSize > 768 && (
+        {typeof window !== "undefined" && !isMobile && (
           <div className="flex gap-10">
             {data.headerLinks.map((link) => (
               <Link
-                href={link.url}
+                href={`/${link.url}`}
                 key={link._key}
                 className="duration-300 text-white hover:text-white/80 "
               >
@@ -104,53 +110,93 @@ const Header = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
             ))}
           </div>
         )}
-        <div className="flex items-center">
-          <Dialog>
+        <div className="flex items-center gap-4">
+          <Dialog
+            onOpenChange={setIsDialogOpen}
+            open={isDialogOpen}
+            modal={false}
+          >
             <DialogTrigger>
               <SearchIcon className="text-white hover:text-white/80  duration-300 cursor-pointer" />
             </DialogTrigger>
-            <DialogContent showCloseButton={false} className="text-tuatara top-80 sm:max-w-none w-1/2">
-              <DialogHeader>
-                <DialogTitle className="text-2xl  font-semibold">
-                  Search a Topic
-                </DialogTitle>
-                <div className="flex gap-2 items-center">
-                  <SearchIcon size={30} />
-                  <Input
-                    onChange={(e) => handleInputChange(e)}
-                    placeholder="Write here...."
-                  />
-                </div>
-              </DialogHeader>
-              <div className="flex flex-col gap-4 max-h-80 overflow-y-scroll no-scrollbar">
-                {resultBlogs.map((blog, index) => (
-                  <div
-                    className={cn(
-                      "flex items-center gap-4 pb-4",
-                      resultBlogs.length - 1 !== index &&
-                        "border-b border-gray-300"
-                    )}
-                    key={blog._id}
-                  >
-                    <BlogHeader
-                      category={blog.category.label}
-                      title={blog.title}
-                      author={blog.author.authorName}
-                      date={formatDate(blog.uploadedAt || blog._updatedAt)}
-                    />
-                    <SanityImage
-                      src={blog.heroImage}
-                      alt={blog.heroImage.alt}
-                      width={120}
-                      height={80}
-                      className="object-cover rounded-xl"
+            <DialogContent
+              onCloseAutoFocus={() => {
+                setInputText("");
+                setResultBlogs([]);
+              }}
+              showCloseButton={false}
+              className={cn(
+                "text-tuatara top-0 z-50 h-0  translate-y-0  backdrop-blur-xs rounded-none shadow-none border-none sm:max-w-none max-w-none  data-[state=open]:h-screen   w-screen  flex justify-center bg-black/50",
+                isMobile && "rounded-none"
+              )}
+            >
+              <div className="md:w-2/3 lg:w-1/2 p-4 md:p-6 bg-white h-fit rounded-lg mt-18 shadow-lg">
+                <DialogHeader className="text-left gap-4 h-fit">
+                  <div className="border-b border-gray-300 pb-2">
+                    <div className="flex items-center justify-between">
+                      <DialogTitle className="text-2xl font-semibold text-chathams-blue">
+                        Search a Topic
+                      </DialogTitle>
+                      <DialogClose className="cursor-pointer" asChild>
+                        <X />
+                      </DialogClose>
+                    </div>
+
+                    <DialogDescription className="text-gray-500">
+                      Search articles, topics, or keywords to quickly find what
+                      you’re looking for.
+                    </DialogDescription>
+                  </div>
+                  <div className="flex gap-2  items-center border-b border-gray-300">
+                    <SearchIcon size={isMobile ? 20 : 30} />
+                    <Input
+                      onChange={(e) => handleInputChange(e)}
+                      placeholder="Write here...."
+                      className="border-none outline-none ring-0 focus-visible:ring-0 p-0 text-base md:text-[20px]!"
                     />
                   </div>
-                ))}
+                </DialogHeader>
+                {resultBlogs.length > 0 ? (
+                  <div className="flex flex-col gap-4 h-full md:min-h-80 md:max-h-80 overflow-y-scroll py-2 mt-4">
+                    {resultBlogs.map((blog, index) => (
+                      <DialogClose key={blog._id} asChild>
+                        <Link
+                          href={`/${blog.category.slug.current}/${blog.slug.current}`}
+                          className={cn(
+                            "flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4",
+                            resultBlogs.length - 1 !== index &&
+                              "border-b border-gray-300"
+                          )}
+                        >
+                          <BlogHeader
+                            category={blog.category.label}
+                            title={blog.title}
+                            author={blog.author.authorName}
+                            date={formatDate(
+                              blog.uploadedAt || blog._updatedAt
+                            )}
+                            titleClassname="md:text-[22px] text-[18px]"
+                          />
+                          <SanityImage
+                            src={blog.heroImage}
+                            alt={blog.heroImage.alt}
+                            width={120}
+                            height={80}
+                            className="object-cover rounded-xl"
+                          />
+                        </Link>
+                      </DialogClose>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="h-full md:max-h-80 md:min-h-80 mt-4">
+                    <p>No match found.</p>
+                  </div>
+                )}
               </div>
             </DialogContent>
           </Dialog>
-          {screenSize <= 768 && (
+          {typeof window !== "undefined" && isMobile && (
             <Sidebar
               data={data}
               isSidebarOpen={isMobileMenuOpen}

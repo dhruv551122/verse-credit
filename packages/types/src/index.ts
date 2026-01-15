@@ -332,6 +332,22 @@ export type Settings = {
     alt: string;
     _type: "image";
   };
+  socialMediaLinks: Array<{
+    logo: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    url: Link;
+    _key: string;
+  }>;
   footerLinks: Array<{
     _key: string;
   } & Link>;
@@ -827,7 +843,7 @@ export type CalculatorQueryResult = Array<{
   aboutCalculator?: BlockContent;
 }>;
 // Variable: settingsQuery
-// Query: *[_id == 'settings' && _type == 'settings'][0]{        ...,        headerLogo {            ...,            asset ->{                ...            },        },        footerLogo{            ...,            asset ->{                ...            },        }    }
+// Query: *[_id == 'settings' && _type == 'settings'][0]{        ...,        headerLogo {            ...,            asset ->{                ...            },        },        footerLogo{            ...,            asset ->{                ...            },        },        socialMediaLinks[]{            ...,            logo{                ...,                asset ->            }        }    }
 export type SettingsQueryResult = {
   _id: string;
   _type: "settings";
@@ -895,6 +911,38 @@ export type SettingsQueryResult = {
     alt: string;
     _type: "image";
   };
+  socialMediaLinks: Array<{
+    logo: {
+      asset: {
+        _id: string;
+        _type: "sanity.imageAsset";
+        _createdAt: string;
+        _updatedAt: string;
+        _rev: string;
+        originalFilename?: string;
+        label?: string;
+        title?: string;
+        description?: string;
+        altText?: string;
+        sha1hash?: string;
+        extension?: string;
+        mimeType?: string;
+        size?: number;
+        assetId?: string;
+        uploadId?: string;
+        path?: string;
+        url?: string;
+        metadata?: SanityImageMetadata;
+        source?: SanityAssetSourceData;
+      } | null;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    };
+    url: Link;
+    _key: string;
+  }>;
   footerLinks: Array<{
     _key: string;
   } & Link>;
@@ -1002,7 +1050,7 @@ export type BlogCategoryPageQueryResult = {
   }>;
 } | null;
 // Variable: blogsByTitleSlug
-// Query: *[_type == 'blog' && title match $titleSlug] | order(_score desc){        _id,        title,        author->,        category->,        heroImage{            ...,            asset->        },        uploadedAt,        _updatedAt,        _score    }
+// Query: *[_type == 'blog' && title match $titleSlug + '*'] | order(_score desc){        _id,        title,        author->,        category->,        slug,        heroImage{            ...,            asset->        },        uploadedAt,        _updatedAt,        _score    }
 export type BlogsByTitleSlugResult = Array<{
   _id: string;
   title: string;
@@ -1023,6 +1071,7 @@ export type BlogsByTitleSlugResult = Array<{
     label: string;
     slug: Slug;
   };
+  slug: Slug;
   heroImage: {
     asset: {
       _id: string;

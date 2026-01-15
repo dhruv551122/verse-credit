@@ -55,6 +55,44 @@ export const settings = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "socialMediaLinks",
+      title: "Social Media Links",
+      type: "array",
+      group: "footer",
+      of: [
+        {
+          type: "object",
+          fields: [
+            defineField({
+              name: "logo",
+              title: "Logo",
+              type: "image",
+              validation: (Rule) => Rule.required(),
+            }),
+            defineField({
+              name: "url",
+              title: "URL",
+              type: "link",
+              validation: (Rule) => Rule.required(),
+            }),
+          ],
+          preview: {
+            select: {
+              title: "url.label",
+              media: "logo",
+            },
+            prepare({ title, media }) {
+              return {
+                title: title || "Social media link.",
+                media,
+              };
+            },
+          },
+        },
+      ],
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "footerLinks",
       type: "array",
       title: "Footer Links",

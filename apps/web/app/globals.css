@@ -51,6 +51,7 @@
   --color-sandstone: var(--color-sandstone);
   --color-subtle-white: var(--color-subtle-white);
   --color-tuatara: var(--color-tuatara);
+  --color-casual-navy: var(--color-casual-navy)
 }
 
 :root {
@@ -93,6 +94,7 @@
   --color-sandstone: #7d6f5f;
   --color-subtle-white: #eeeeee;
   --color-tuatara: #363636;
+  --color-casual-navy: #060c1b;
 }
 
 .dark {
