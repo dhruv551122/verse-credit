@@ -11,7 +11,7 @@ const HeroRight = ({
   homePage: NonNullable<HomePageQueryResult>;
 }) => {
   return (
-    <div className="flex flex-col gap-6 lg:py-10">
+    <div className="flex flex-col gap-6 pt-10 lg:py-10">
       <Title title={homePage.heroRightTitle} />
       <div className="flex flex-col gap-4">
         {homePage.heroRightBlogs.map((blog, index) => (

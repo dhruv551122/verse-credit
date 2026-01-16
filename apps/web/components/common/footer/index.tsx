@@ -15,7 +15,7 @@ const Footer = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
             className="object-contain"
           />
         </Link>
-        <div className="flex flex-col gap-20 mt-10 lg:flex-row">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-20 mt-10 ">
           <div className="flex flex-col gap-2 shrink-0 ">
             <h4 className="text-subtle-white text-[22px] font-medium">
               Follow us on
@@ -42,7 +42,7 @@ const Footer = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
             <h4 className="text-subtle-white text-[22px] font-medium">
               Quick Links
             </h4>
-            <div className="flex gap-4">
+            <div className="flex flex-col gap-4">
               {data.footerLinks.map((link) => (
                 <Link
                   key={link.label}
