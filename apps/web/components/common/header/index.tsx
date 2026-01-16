@@ -2,6 +2,7 @@
 
 import { SanityImage } from "@/sanity/sanityImage";
 import {
+  BlogCategoriesQueryResult,
   BlogsByTitleSlugResult,
   SettingsQueryResult,
 } from "@sanity-types/sanity.types";
@@ -24,11 +25,18 @@ import {
 import BlogHeader from "../blogHeader";
 import { cn, formatDate } from "@/lib/utils";
 
-const Header = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
+const Header = ({
+  data,
+  categoriesData,
+}: {
+  data: NonNullable<SettingsQueryResult>;
+  categoriesData: NonNullable<BlogCategoriesQueryResult>;
+}) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [screenSize, setScreenSize] = useState<number>(0);
   const [inputText, setInputText] = useState<string>("");
-  const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+  const [isTopicsOpen, setIsTopicsOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [resultBlogs, setResultBlogs] = useState<
     NonNullable<BlogsByTitleSlugResult>
   >([]);
@@ -108,12 +116,69 @@ const Header = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
                 {link.label}
               </Link>
             ))}
+            {!isMobile && (
+              <Dialog
+                onOpenChange={setIsTopicsOpen}
+                open={isTopicsOpen}
+                modal={false}
+              >
+                <DialogTrigger className="text-white duration-300 cursor-pointer hover:text-white/80">
+                  Topics
+                </DialogTrigger>
+                <DialogContent
+                  onCloseAutoFocus={() => {
+                    setInputText("");
+                    setResultBlogs([]);
+                  }}
+                  showCloseButton={false}
+                  className={cn(
+                    "text-tuatara top-0 z-50 h-0  translate-y-0  backdrop-blur-xs rounded-none shadow-none border-none sm:max-w-none max-w-none  data-[state=open]:h-screen   w-screen  flex justify-center bg-black/50",
+                    isMobile && "rounded-none"
+                  )}
+                >
+                  <div className="p-4 bg-white rounded-lg shadow-lg md:w-2/3 lg:w-1/2 md:p-6 h-fit mt-18">
+                    <DialogHeader className="gap-4 text-left h-fit">
+                      <div className="pb-2 border-b border-gray-300">
+                        <div className="flex items-center justify-between">
+                          <DialogTitle className="text-2xl font-semibold text-chathams-blue">
+                            All Topics
+                          </DialogTitle>
+                          <DialogClose className="cursor-pointer" asChild>
+                            <X />
+                          </DialogClose>
+                        </div>
+
+                        <DialogDescription className="text-gray-500">
+                          Explore every topic available across the site.
+                        </DialogDescription>
+                      </div>
+                    </DialogHeader>
+                    <div className="grid grid-cols-3 gap-4 py-2 mt-4 ">
+                      {categoriesData.map((category, index) => (
+                        <DialogClose key={category._id} asChild>
+                          <Link
+                            href={`/${category.slug.current}`}
+                            className={cn(
+                              "flex flex-col sm:flex-row sm:items-center hover:text-chathams-blue justify-between gap-4",
+                              resultBlogs.length - 1 !== index &&
+                                "border-b border-gray-300"
+                            )}
+                          >
+                            {category.label}
+                          </Link>
+                        </DialogClose>
+                      ))}
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
+            )}
           </div>
         )}
         <div className="flex items-center gap-4">
           <Dialog
-            onOpenChange={setIsDialogOpen}
-            open={isDialogOpen}
+            onOpenChange={setIsSearchOpen}
+            open={isSearchOpen}
             modal={false}
           >
             <DialogTrigger>

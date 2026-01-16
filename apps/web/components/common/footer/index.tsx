@@ -15,8 +15,8 @@ const Footer = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
             className="object-contain"
           />
         </Link>
-        <div className="flex gap-20 mt-10">
-          <div className="flex flex-col gap-2 ">
+        <div className="flex flex-col gap-20 mt-10 lg:flex-row">
+          <div className="flex flex-col gap-2 shrink-0 ">
             <h4 className="text-subtle-white text-[22px] font-medium">
               Follow us on
             </h4>
@@ -32,7 +32,7 @@ const Footer = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
                     alt={link.logo.asset?.altText || link.url.label}
                     width={20}
                     height={20}
-                    className="object-contain h-6 w-auto"
+                    className="object-contain w-auto h-6"
                   />
                 </Link>
               ))}
@@ -42,12 +42,12 @@ const Footer = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
             <h4 className="text-subtle-white text-[22px] font-medium">
               Quick Links
             </h4>
-            <div className="flex gap-4 ">
+            <div className="flex gap-4">
               {data.footerLinks.map((link) => (
                 <Link
                   key={link.label}
                   href={`/${link.url}`}
-                  className="text-subtle-white text-[18px] hover:text-subtle-white/80"
+                  className="text-subtle-white shrink-0 text-[18px] hover:text-subtle-white/80"
                 >
                   {link.label}
                 </Link>
