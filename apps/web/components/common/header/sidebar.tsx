@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { cn } from "@/lib/utils";
 import { SettingsQueryResult } from "@sanity-types/sanity.types";
@@ -18,7 +18,7 @@ const Sidebar = ({
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const [isMounted, setIsMounted] = useState<boolean>(false);
   return (
-    <div>
+    <>
       <div>
         {isSidebarOpen ? (
           <X
@@ -61,19 +61,16 @@ const Sidebar = ({
                 className="duration-300 text-white hover:text-white/80 py-2 text-xl group flex otems-center gap-10"
                 onClick={() => setIsSidebarOpen(false)}
               >
+                <span>{link.label}</span>
                 <span>
-
-                {link.label}
-                </span>
-                <span>
-                  <ArrowRight className="text-white/80 duration-300 -translate-x-10 group-hover:translate-x-0 group-hover:opacity-100 opacity-0"/>
+                  <ArrowRight className="text-white/80 duration-300 -translate-x-10 group-hover:translate-x-0 group-hover:opacity-100 opacity-0" />
                 </span>
               </Link>
             ))}
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

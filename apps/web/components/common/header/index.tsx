@@ -7,7 +7,11 @@ import {
 } from "@sanity-types/sanity.types";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import Sidebar from "./sidebar";
+import dynamic from "next/dynamic";
+
+const Sidebar = dynamic(() => import("./sidebar"), {
+  ssr: false,
+});
 
 import TopicsDialog from "./topicsDialog";
 import SearchDialog from "./searchDialog";
@@ -82,7 +86,7 @@ const Header = ({
             isMobileMenuOpen={isMobileMenuOpen}
             setIsMobileMenuOpen={setIsMobileMenuOpen}
           />
-          {typeof window !== "undefined" && isMobile && (
+          {isMobile && (
             <Sidebar
               data={data}
               isSidebarOpen={isMobileMenuOpen}

@@ -7,7 +7,6 @@ export const GET = async (req: NextRequest) => {
   try {
     const { data }: { data: NonNullable<ContactPageQueryResult> } =
       await sanityFetch({ query: contactPageQuery });
-    console.log(data);
     if (!data) {
       return new NextResponse("Data not found", { status: 401 });
     }
