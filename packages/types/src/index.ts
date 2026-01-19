@@ -222,6 +222,18 @@ export type CalculatorCategory = {
   slug: string;
 };
 
+export type Contact_us = {
+  _id: string;
+  _type: "contact_us";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo: Seo;
+  contactTitle: string;
+  contactDescription: string;
+  formTitle: string;
+};
+
 export type BlogCategoryPage = {
   _id: string;
   _type: "blogCategoryPage";
@@ -470,7 +482,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = StyledTable | BlockContent | Seo | Link | Blog | SanityImageCrop | SanityImageHotspot | Slug | BlogAuthor | BlogCategory | Calculator | TextColor | CalculatorCategory | BlogCategoryPage | Home | Settings | HighlightColor | SimplerColor | MediaTag | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = StyledTable | BlockContent | Seo | Link | Blog | SanityImageCrop | SanityImageHotspot | Slug | BlogAuthor | BlogCategory | Calculator | TextColor | CalculatorCategory | Contact_us | BlogCategoryPage | Home | Settings | HighlightColor | SimplerColor | MediaTag | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/query.ts
 // Variable: homePageQuery
@@ -1166,13 +1178,26 @@ export type BlogsQueryResult = Array<{
   };
   uplodedAt?: string;
 }>;
+// Variable: contactPageQuery
+// Query: *[_type == 'contact_us' && _id == 'contact_us'][0]{        ...,    }
+export type ContactPageQueryResult = {
+  _id: string;
+  _type: "contact_us";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo: Seo;
+  contactTitle: string;
+  contactDescription: string;
+  formTitle: string;
+} | null;
 // Variable: siteMapQuery
-// Query: *[_type == 'blogCategory']{        _id,        title,        "slug": slug.current,        "posts": *[_type == "blog" && references(^._id)]{            title,            "slug": slug.current,            "categorySlug": category->slug.current,            _updatedAt        }    }
+// Query: *[_type == 'blogCategory']{        _id,        "title": label,        "slug": slug.current,        "blogs": *[_type == "blog" && references(^._id)]{            title,            "slug": slug.current,            "categorySlug": category->slug.current,            _updatedAt        }    }
 export type SiteMapQueryResult = Array<{
   _id: string;
-  title: null;
+  title: string;
   slug: string;
-  posts: Array<{
+  blogs: Array<{
     title: string;
     slug: string;
     categorySlug: string;

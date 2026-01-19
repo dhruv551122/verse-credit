@@ -8,6 +8,7 @@ import {
   BlogsByCategoryQueryResult,
 } from "@sanity-types/*";
 import CategoryPageRight from "./_components/categoryPageRight";
+import { notFound } from "next/navigation";
 
 const CategoriesPage = async ({
   params,
@@ -17,19 +18,23 @@ const CategoriesPage = async ({
   const param = await params;
   const searchParams = new URLSearchParams(param).toString();
   const blogsData = await fetch(
-    `${process.env.BACKEND_URL}/api/blogs?${searchParams}`
+    `${process.env.BACKEND_URL}/api/blogs?${searchParams}`,
   );
-
-  const categoryPageData = await fetch(
-    `${process.env.BACKEND_URL}/api/blogs/categoryPage?${searchParams}`
-  );
-
-  const categoryPage: NonNullable<{
-    category: NonNullable<BlogCategoryBySlugQueryResult>;
-    categoryPage: NonNullable<BlogCategoryPageQueryResult>;
-  }> = await categoryPageData.json();
 
   const blogs: NonNullable<BlogsByCategoryQueryResult> = await blogsData.json();
+  let categoryPage: NonNullable<{
+    category: NonNullable<BlogCategoryBySlugQueryResult>;
+    categoryPage: NonNullable<BlogCategoryPageQueryResult>;
+  }>;
+  try {
+    const categoryPageData = await fetch(
+      `${process.env.BACKEND_URL}/api/blogs/categoryPage?${searchParams}`,
+    );
+
+    categoryPage = await categoryPageData.json();
+  } catch (error) {
+    return notFound();
+  }
 
   return (
     <div className="mt-16.75 font-inter">

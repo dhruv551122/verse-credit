@@ -51,7 +51,9 @@
   --color-sandstone: var(--color-sandstone);
   --color-subtle-white: var(--color-subtle-white);
   --color-tuatara: var(--color-tuatara);
-  --color-casual-navy: var(--color-casual-navy)
+  --color-casual-navy: var(--color-casual-navy);
+  --color-bright-royal-blue: var(--color-bright-royal-blue);
+  --color-strong-amber: var(--color-strong-amber);
 }
 
 :root {
@@ -95,6 +97,8 @@
   --color-subtle-white: #eeeeee;
   --color-tuatara: #363636;
   --color-casual-navy: #060c1b;
+  --color-bright-royal-blue: #101b43;
+  --color-strong-amber: #ef9309;
 }
 
 .dark {
@@ -165,7 +169,7 @@ input[type="number"] {
 
   /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
   }
 }

@@ -2,11 +2,11 @@ import { SiteMapQueryResult } from "@sanity-types/*";
 import type { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const res = await fetch(`${process.env.BACKEND_URL}/api/site-map`)
+  const res = await fetch(`${process.env.BACKEND_URL}/api/site-map`);
 
-  const data: NonNullable<SiteMapQueryResult> = await res.json()
+  const data: NonNullable<SiteMapQueryResult> = await res.json();
 
-  const baseUrl = "https://yourdomain.com";
+  const baseUrl = "http://localhost:3001";
 
   const staticRoutes = [
     {
@@ -15,7 +15,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1,
     },
     {
-      url: `${baseUrl}/blog`,
+      url: `${baseUrl}/about-us`,
+      lastModified: new Date(),
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/contact-us`,
+      lastModified: new Date(),
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/calculators`,
       lastModified: new Date(),
       priority: 0.9,
     },
@@ -33,16 +43,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }));
 
   const blogRoutes = data.flatMap((category) =>
-    category.posts.map((post) => ({
-      url: `${baseUrl}/${post.categorySlug}/${post.slug}`,
-      lastModified: new Date(post._updatedAt),
-      priority: 0.6,
-    }))
+    category.blogs.map((blog) => ({
+      url: `${baseUrl}/${blog.categorySlug}/${blog.slug}`,
+      lastModified: new Date(blog._updatedAt),
+      priority: 0.8,
+    })),
   );
 
-  return [
-    ...staticRoutes,
-    ...categoryRoutes,
-    ...blogRoutes,
-  ];
+  return [...staticRoutes, ...categoryRoutes, ...blogRoutes];
 }

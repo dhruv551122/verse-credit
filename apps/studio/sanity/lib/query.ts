@@ -167,12 +167,18 @@ export const blogsQuery = groq`
     }
 `;
 
+export const contactPageQuery = groq`
+    *[_type == 'contact_us' && _id == 'contact_us'][0]{
+        ...,
+    }
+`;
+
 export const siteMapQuery = groq`
     *[_type == 'blogCategory']{
         _id,
-        title,
+        "title": label,
         "slug": slug.current,
-        "posts": *[_type == "blog" && references(^._id)]{
+        "blogs": *[_type == "blog" && references(^._id)]{
             title,
             "slug": slug.current,
             "categorySlug": category->slug.current,
