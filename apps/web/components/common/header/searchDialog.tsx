@@ -12,7 +12,13 @@ import { cn, formatDate } from "@/lib/utils";
 import { Link, SearchIcon, X } from "lucide-react";
 import BlogHeader from "../blogHeader";
 import { SanityImage } from "@/sanity/sanityImage";
-import { ChangeEvent, SetStateAction, useEffect, useRef, useState } from "react";
+import {
+  ChangeEvent,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { BlogsByTitleSlugResult } from "@sanity-types/*";
 
 const SearchDialog = ({
@@ -31,7 +37,7 @@ const SearchDialog = ({
   const [isSearchMounted, setIsSearchMounted] = useState<boolean>(false);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
 
-  const timerRef = useRef<ReturnType<typeof setTimeout>>(null);       
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
   const searchDialogTimeRef = useRef<NodeJS.Timeout>(undefined);
 
   if (typeof document !== "undefined") {
@@ -62,7 +68,7 @@ const SearchDialog = ({
         const controller = new AbortController();
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs?titleSlug=${inputText}`,
-          { signal: controller.signal }
+          { signal: controller.signal },
         );
 
         if (!res.ok) return null;
@@ -79,7 +85,9 @@ const SearchDialog = ({
     fetchData();
   }, [inputText]);
 
-   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
+  ) => {
     if (timerRef.current) {
       clearTimeout(timerRef.current);
     }
@@ -110,13 +118,13 @@ const SearchDialog = ({
         showCloseButton={false}
         className={cn(
           "text-tuatara top-0 z-111 md:z-50 h-0 p-0 md:p-6  translate-y-0  backdrop-blur-xs rounded-none shadow-none border-none sm:max-w-none max-w-none  data-[state=open]:h-screen   w-screen  flex justify-center bg-black/50",
-          isMobile && "rounded-none"
+          isMobile && "rounded-none",
         )}
       >
         <div
           className={cn(
             "p-4 bg-white -translate-y-full w-full md:rounded-lg shadow-lg md:w-2/3 py-6 lg:w-1/2 md:p-6 max-h-screen md:h-fit md:mt-14 transition-transform ease-in-out duration-300",
-            isSearchOpen && "translate-y-0"
+            isSearchOpen && "translate-y-0",
           )}
         >
           <DialogHeader className="gap-4 text-left h-fit">
@@ -144,7 +152,7 @@ const SearchDialog = ({
               />
             </div>
           </DialogHeader>
-          {resultBlogs.length > 0 ? (
+          {resultBlogs.length > 0 ?
             <div className="flex flex-col gap-4 py-2 md:mt-4 overflow-y-scroll max-h-150 w-full md:min-h-80 md:max-h-80">
               {resultBlogs.map((blog, index) => (
                 <DialogClose key={blog._id} asChild>
@@ -153,7 +161,7 @@ const SearchDialog = ({
                     className={cn(
                       "flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4",
                       resultBlogs.length - 1 !== index &&
-                        "border-b border-gray-300"
+                        "border-b border-gray-300",
                     )}
                   >
                     <BlogHeader
@@ -174,11 +182,10 @@ const SearchDialog = ({
                 </DialogClose>
               ))}
             </div>
-          ) : (
-            <div className="h-full mt-4 md:max-h-80 md:min-h-80">
+          : <div className="h-full mt-4 md:max-h-80 md:min-h-80">
               <p>No match found.</p>
             </div>
-          )}
+          }
         </div>
       </DialogContent>
     </Dialog>

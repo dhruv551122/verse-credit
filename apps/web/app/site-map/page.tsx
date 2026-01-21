@@ -18,7 +18,6 @@ export default async function SitemapPage() {
   const res = await fetch(`${process.env.BACKEND_URL}/api/site-map`);
 
   const data: NonNullable<SiteMapQueryResult> = await res.json();
-  console.log(data);
   return (
     <div className="">
       <section className="sticky top-0 z-10 bg-bright-royal-blue rounded-b-2xl">

@@ -9,7 +9,7 @@ export const POST = async (req: NextRequest) => {
     if (!formData) {
       return NextResponse.json(
         { success: false, message: "Couldn't recieve any data " },
-        { status: 401 }
+        { status: 401 },
       );
     }
     const { firstName, lastName, email, phoneNo, message } = formData;
@@ -22,7 +22,7 @@ export const POST = async (req: NextRequest) => {
           success: false,
           message: "Configuration for email sending is not set properly.",
         },
-        { status: 501 }
+        { status: 501 },
       );
     }
 
@@ -59,11 +59,9 @@ export const POST = async (req: NextRequest) => {
     if (error?.message) {
       return NextResponse.json(
         { success: false, message: error?.message },
-        { status: 500 }
+        { status: 500 },
       );
     }
-
-    console.log(data);
 
     return NextResponse.json({
       success: true,
@@ -79,7 +77,7 @@ export const POST = async (req: NextRequest) => {
 
     return NextResponse.json(
       { success: false, message: errorMessage },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };
