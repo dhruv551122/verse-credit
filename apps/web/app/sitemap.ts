@@ -6,7 +6,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const data: NonNullable<SiteMapQueryResult> = await res.json();
 
-  const baseUrl = "http://localhost:3001";
+  const baseUrl = "https://verse-credit-web.vercel.app";
 
   const staticRoutes = [
     {
