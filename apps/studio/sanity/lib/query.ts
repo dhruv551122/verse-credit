@@ -174,7 +174,7 @@ export const blogsRssQuery = groq`
         uplodedAt,
         slug,
         _createdAt,
-        heroImage -> {
+        heroImage {
             ...,
             asset -> {
                 url,
@@ -183,7 +183,7 @@ export const blogsRssQuery = groq`
             }
         }
     }
-`
+`;
 
 export const contactPageQuery = groq`
     *[_type == 'contact_us' && _id == 'contact_us'][0]{
