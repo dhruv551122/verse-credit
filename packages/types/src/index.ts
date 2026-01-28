@@ -1178,6 +1178,16 @@ export type BlogsQueryResult = Array<{
   };
   uplodedAt?: string;
 }>;
+// Variable: blogsRssQuery
+// Query: *[_type == 'blog']{        title,        description,        uplodedAt,        slug,        _createdAt,        heroImage -> {            ...,            asset -> {                url,                altText,                title            }        }    }
+export type BlogsRssQueryResult = Array<{
+  title: string;
+  description: string;
+  uplodedAt: string | null;
+  slug: Slug;
+  _createdAt: string;
+  heroImage: null;
+}>;
 // Variable: contactPageQuery
 // Query: *[_type == 'contact_us' && _id == 'contact_us'][0]{        ...,    }
 export type ContactPageQueryResult = {

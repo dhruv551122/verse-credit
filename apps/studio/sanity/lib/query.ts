@@ -167,6 +167,24 @@ export const blogsQuery = groq`
     }
 `;
 
+export const blogsRssQuery = groq`
+    *[_type == 'blog']{
+        title,
+        description,
+        uplodedAt,
+        slug,
+        _createdAt,
+        heroImage -> {
+            ...,
+            asset -> {
+                url,
+                altText,
+                title
+            }
+        }
+    }
+`
+
 export const contactPageQuery = groq`
     *[_type == 'contact_us' && _id == 'contact_us'][0]{
         ...,
