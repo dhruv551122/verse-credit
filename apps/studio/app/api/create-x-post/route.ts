@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { client } from "studio/sanity/lib/client";
 import { twitterOAuth } from "studio/utils";
 
-const uploadMediaToX = async (mediaUrl: string) => {
+export const uploadMediaToX = async (mediaUrl: string) => {
   const imageResponse = await fetch(mediaUrl);
   const buffer = Buffer.from(await imageResponse.arrayBuffer());
 
