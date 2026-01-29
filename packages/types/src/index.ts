@@ -1179,13 +1179,22 @@ export type BlogsQueryResult = Array<{
   uplodedAt?: string;
 }>;
 // Variable: blogsRssQuery
-// Query: *[_type == 'blog']{        title,        description,        uplodedAt,        slug,        _createdAt,        heroImage {            ...,            asset -> {                url,                altText,                title            }        }    }
+// Query: *[_type == 'blog']{        title,        description,        uplodedAt,        slug,        _createdAt,        category -> ,        heroImage {            ...,            asset -> {                url,                altText,                title            }        },        "siteLogo": *[_type == 'settings' && _id == 'settings'][0]{            headerLogo{                ...,                asset -> {                    url,                    altText,                    title                }            }        }            }
 export type BlogsRssQueryResult = Array<{
   title: string;
   description: string;
   uplodedAt: string | null;
   slug: Slug;
   _createdAt: string;
+  category: {
+    _id: string;
+    _type: "blogCategory";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    label: string;
+    slug: Slug;
+  };
   heroImage: {
     asset: {
       url: string | null;
@@ -1198,6 +1207,20 @@ export type BlogsRssQueryResult = Array<{
     alt: string;
     _type: "image";
   };
+  siteLogo: {
+    headerLogo: {
+      asset: {
+        url: string | null;
+        altText: string | null;
+        title: string | null;
+      } | null;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+  } | null;
 }>;
 // Variable: contactPageQuery
 // Query: *[_type == 'contact_us' && _id == 'contact_us'][0]{        ...,    }

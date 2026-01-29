@@ -3,6 +3,24 @@ import { blogsRssQuery } from "studio/sanity/lib/query";
 import { BlogsRssQueryResult } from "../../../../../packages/types/src";
 import { NextResponse } from "next/server";
 
+const escapeXml = (unsafe: string = "") =>
+  unsafe.replace(/[<>&'"]/g, (c) => {
+    switch (c) {
+      case "<":
+        return "&lt;";
+      case ">":
+        return "&gt;";
+      case "&":
+        return "&amp;";
+      case "'":
+        return "&apos;";
+      case '"':
+        return "&quot;";
+      default:
+        return c;
+    }
+  });
+
 export const GET = async () => {
   const { data }: { data: NonNullable<BlogsRssQueryResult> } =
     await sanityFetch({ query: blogsRssQuery });
@@ -10,30 +28,37 @@ export const GET = async () => {
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-<title>Your Blog</title>
-<link>${process.env.FRONTEND_URL}</link>
-<description>Latest blog posts</description>
-<language>en-us</language>
+  <title>${escapeXml(
+    "VerseCredit: Global & Indian Financial News at a Glance",
+  )}</title>
+  <link>${process.env.FRONTEND_URL}</link>
+  <description>${escapeXml(
+    "Latest finance, market, and economic news delivered clearly and accurately.",
+  )}</description>
+  <language>en-us</language>
 
-${data
-  .map((blog) => {
-    const postUrl = `${process.env.FRONTEND_URL}/blog/${blog.slug.current}?utm_source=rss&utm_medium=social`;
-    const imageUrl = blog.heroImage.asset?.url;
+  ${data
+    .map((blog) => {
+      const postUrl = `${process.env.FRONTEND_URL}/${blog.category.slug.current}/${blog.slug.current}`;
+      const imageUrl = blog.heroImage.asset?.url;
 
-    return `<item>
-<title><![CDATA[${blog.title}]]></title>
-<link>${postUrl}</link>
-<description><![CDATA[
-${imageUrl ? `<img src="${imageUrl}" alt="${blog.title}" />` : ""}
-<p>${blog.description}</p>
-]]></description>
-${imageUrl ? `<enclosure url="${imageUrl}" type="image/jpeg" />` : ""}
-<pubDate>${new Date(blog.uplodedAt || blog._createdAt).toUTCString()}</pubDate>
-<guid isPermaLink="true">${postUrl}</guid>
-</item>`;
-  })
-  .join("")}
-
+      return `<item>
+        <title>${escapeXml(blog.title)}</title>
+        <link>${postUrl}</link>
+        <description>${escapeXml(blog.description)}</description>
+        <category>${escapeXml(blog.category.label)}</category>
+        ${
+          imageUrl
+            ? `<enclosure url="${imageUrl}" length="100000" type="image/jpeg" />`
+            : ""
+        }
+        <pubDate>${new Date(
+          blog.uplodedAt || blog._createdAt,
+        ).toUTCString()}</pubDate>
+        <guid>${postUrl}</guid>
+      </item>`;
+    })
+    .join("")}
 </channel>
 </rss>`;
 

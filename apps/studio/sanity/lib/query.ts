@@ -174,6 +174,7 @@ export const blogsRssQuery = groq`
         uplodedAt,
         slug,
         _createdAt,
+        category -> ,
         heroImage {
             ...,
             asset -> {
@@ -181,7 +182,7 @@ export const blogsRssQuery = groq`
                 altText,
                 title
             }
-        }
+        },
     }
 `;
 
