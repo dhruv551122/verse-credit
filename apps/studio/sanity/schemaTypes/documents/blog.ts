@@ -86,6 +86,12 @@ const blog = defineType({
       type: "datetime",
       group: "blog",
     }),
+    defineField({
+      name: "postedToX",
+      title: "Posted To X",
+      type: "boolean",
+      group: "blog",
+    }),
   ],
   preview: {
     select: {
