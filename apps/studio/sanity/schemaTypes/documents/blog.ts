@@ -92,6 +92,12 @@ const blog = defineType({
       type: "boolean",
       group: "blog",
     }),
+    defineField({
+      name: "xPostStatus",
+      title: "Posted To X",
+      type: "string",
+      group: "blog",
+    }),
   ],
   preview: {
     select: {

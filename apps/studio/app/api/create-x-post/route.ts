@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { TweetV2PostTweetResult, TwitterApi } from "twitter-api-v2";
-import { client } from 'studio/sanity/lib/client'
+import { client } from "studio/sanity/lib/client";
 
 /* -------------------- CONSTANTS -------------------- */
 const MAX_TWEET_RETRIES = 3;
@@ -83,7 +83,9 @@ const uploadTweetOnX = async (
 /* -------------------- WEBHOOK HANDLER -------------------- */
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
-
+  if (body.xPostStatus === "pending" || body.xPostStatus === "success") {
+    return NextResponse.json({ skipped: true });
+  }
   if (
     req.headers.get("x-sanity-secret") !== process.env.SANITY_WEBHOOK_SECRET
   ) {
@@ -109,7 +111,7 @@ export const POST = async (req: NextRequest) => {
 
   const blogUrl = `${process.env.FRONTEND_URL}/${body.category.slug.current}/${body.slug.current}`;
   const p = await client.patch(body._id);
-    p.set({ xPostStatus: "failed" }).commit();
+  p.set({ xPostStatus: "failed" }).commit();
   try {
     const mediaId = body.heroImage?.url
       ? await uploadMediaToX(body.heroImage.url)
