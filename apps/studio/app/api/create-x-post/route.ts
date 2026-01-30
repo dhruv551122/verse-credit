@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { TweetV2PostTweetResult, TwitterApi } from "twitter-api-v2";
 
+/* -------------------- CONSTANTS -------------------- */
+const MAX_TWEET_RETRIES = 3;
+const RETRY_DELAY_MS = 2000;
+
+/* -------------------- TWITTER CLIENT -------------------- */
 const client = new TwitterApi({
   appKey: process.env.TWITTER_CONSUMER_KEY!,
   appSecret: process.env.TWITTER_CONSUMER_SECRET!,
@@ -10,53 +15,71 @@ const client = new TwitterApi({
 
 const rwClient = client.readWrite;
 
-export const uploadMediaToX = async (mediaUrl: string) => {
+/* -------------------- MEDIA UPLOAD -------------------- */
+export const uploadMediaToX = async (mediaUrl: string): Promise<string> => {
   const res = await fetch(mediaUrl);
   if (!res.ok) {
     throw new Error("Image fetch failed");
   }
+
   const buffer = Buffer.from(await res.arrayBuffer());
 
-  console.log(res.headers.get("type"));
-
-  // Upload image
   try {
     const mediaId = await rwClient.v1.uploadMedia(buffer, {
       mimeType: "image/png",
     });
 
     return mediaId;
-  } catch (err: any) {
-    console.error(err.data);
-    console.error(err.data?.errors);
-    return err;
+  } catch (error: any) {
+    console.error("Media upload error:", error?.data || error);
+    throw new Error("Media upload failed");
   }
 };
 
-const uploadTweetOnX = async (mediaId: string | undefined, text: string) => {
+/* -------------------- TWEET WITH RETRY -------------------- */
+const uploadTweetOnX = async (
+  mediaId: string | undefined,
+  text: string,
+  attempt = 1,
+): Promise<TweetV2PostTweetResult> => {
   try {
+    console.log(`Tweet attempt ${attempt}`);
+
     const body: any = {
       reply_settings: "verified",
       share_with_followers: false,
-      text: text,
+      text,
     };
 
     if (mediaId?.trim()) {
-      body.media = {
-        media_ids: [mediaId],
-      };
+      body.media = { media_ids: [mediaId] };
     }
 
-    const data = await client.v2.tweet({
-      ...body,
-    });
+    const data = await client.v2.tweet(body);
+    return data; // ✅ SUCCESS → EXIT
+  } catch (error: any) {
+    console.error("Tweet error:", error?.data || error);
 
-    return data;
-  } catch (error) {
-    throw new Error("Error creating tweet");
+    // ❌ Stop retrying after limit
+    if (attempt >= MAX_TWEET_RETRIES) {
+      throw new Error("Tweet failed after max retries");
+    }
+
+    // ❌ Permanent errors → do not retry
+    const status = error?.code || error?.data?.status;
+    if ([400, 401, 403].includes(status)) {
+      throw new Error("Permanent Twitter error");
+    }
+
+    // ⏳ Wait before retry
+    await new Promise((r) => setTimeout(r, RETRY_DELAY_MS));
+
+    // 🔁 Retry
+    return uploadTweetOnX(mediaId, text, attempt + 1);
   }
 };
 
+/* -------------------- WEBHOOK HANDLER -------------------- */
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
 
@@ -66,46 +89,28 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json("Unauthorized access!", { status: 401 });
   }
 
-  if (!body) {
+  if (!body?.title || !body?.description || !body?.slug || !body?.category) {
     return NextResponse.json(
-      { success: false, message: "Body is missing" },
-      { status: 401 },
+      { success: false, message: "Invalid payload" },
+      { status: 400 },
     );
   }
 
-  if (!body.title) {
-    return NextResponse.json(
-      { success: false, message: "Title is missing" },
-      { status: 401 },
-    );
-  }
-  if (!body.description) {
-    return NextResponse.json(
-      { success: false, message: "Description is missing" },
-      { status: 401 },
-    );
-  }
-  if (!body.slug) {
-    return NextResponse.json(
-      { success: false, message: "Slug is missing" },
-      { status: 401 },
-    );
-  }
-  if (!body.category) {
-    return NextResponse.json(
-      { success: false, message: "Category is missing" },
-      { status: 401 },
-    );
-  }
-
+  // Scheduled blog → skip
   if (body.publishedAt && new Date(body.publishedAt) > new Date()) {
     return NextResponse.json({ scheduled: true });
   }
 
+  // Duplicate protection
+  if (body.postedToX) {
+    return NextResponse.json({ skipped: true });
+  }
+
   const blogUrl = `${process.env.FRONTEND_URL}/${body.category.slug.current}/${body.slug.current}`;
+
   try {
     const mediaId = body.heroImage?.url
-      ? await uploadMediaToX(body.heroImage?.url)
+      ? await uploadMediaToX(body.heroImage.url)
       : undefined;
 
     const description =
@@ -123,33 +128,34 @@ export const POST = async (req: NextRequest) => {
       "Read here 👇",
       blogUrl,
       "",
-      `#${body.category.label.replaceAll(" ", "")} #Investing #StockMarket #InvestSmart #MarketTrends`,
+      `#${body.category.label.replaceAll(
+        " ",
+        "",
+      )} #Investing #StockMarket #InvestSmart`,
     ].join("\n");
 
-    const res: TweetV2PostTweetResult = await uploadTweetOnX(mediaId, text);
+    const res = await uploadTweetOnX(mediaId, text);
 
-    if (!res.data.id) {
-      console.log("Error creating tweet");
-      return Response.json(
-        { success: false, erros: res.errors },
-        { status: 500 },
-      );
+    if (!res?.data?.id) {
+      throw new Error("Tweet creation failed");
     }
 
+    // Mark as posted in Sanity
     const p = await client.patch(body._id);
     p.set({ postedToX: true }).commit();
-
     return NextResponse.json({
       ok: true,
       tweeted: true,
       blogId: body._id,
-      data: res.data,
+      tweetId: res.data.id,
     });
-  } catch (err: any) {
+  } catch (error: any) {
+    console.error(error);
+
     return NextResponse.json(
       {
         ok: false,
-        error: err.message,
+        error: error.message,
         blogId: body._id,
       },
       { status: 500 },
