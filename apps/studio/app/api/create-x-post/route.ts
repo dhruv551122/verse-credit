@@ -1,19 +1,20 @@
 import { NextRequest, NextResponse } from "next/server";
 import { TweetV2PostTweetResult, TwitterApi } from "twitter-api-v2";
+import { client } from 'studio/sanity/lib/client'
 
 /* -------------------- CONSTANTS -------------------- */
 const MAX_TWEET_RETRIES = 3;
 const RETRY_DELAY_MS = 2000;
 
 /* -------------------- TWITTER CLIENT -------------------- */
-const client = new TwitterApi({
+const xClient = new TwitterApi({
   appKey: process.env.TWITTER_CONSUMER_KEY!,
   appSecret: process.env.TWITTER_CONSUMER_SECRET!,
   accessToken: process.env.TWITTER_ACCESS_TOKEN!,
   accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET!,
 });
 
-const rwClient = client.readWrite;
+const rwClient = xClient.readWrite;
 
 /* -------------------- MEDIA UPLOAD -------------------- */
 export const uploadMediaToX = async (mediaUrl: string): Promise<string> => {
@@ -55,7 +56,7 @@ const uploadTweetOnX = async (
       body.media = { media_ids: [mediaId] };
     }
 
-    const data = await client.v2.tweet(body);
+    const data = await rwClient.v2.tweet(body);
     return data; // ✅ SUCCESS → EXIT
   } catch (error: any) {
     console.error("Tweet error:", error?.data || error);
@@ -107,7 +108,8 @@ export const POST = async (req: NextRequest) => {
   }
 
   const blogUrl = `${process.env.FRONTEND_URL}/${body.category.slug.current}/${body.slug.current}`;
-
+  const p = await client.patch(body._id);
+    p.set({ xPostStatus: "failed" }).commit();
   try {
     const mediaId = body.heroImage?.url
       ? await uploadMediaToX(body.heroImage.url)
@@ -142,7 +144,8 @@ export const POST = async (req: NextRequest) => {
 
     // Mark as posted in Sanity
     const p = await client.patch(body._id);
-    p.set({ postedToX: true }).commit();
+    p.set({ postedToX: true, xPostStatus: "success" }).commit();
+
     return NextResponse.json({
       ok: true,
       tweeted: true,
@@ -150,15 +153,14 @@ export const POST = async (req: NextRequest) => {
       tweetId: res.data.id,
     });
   } catch (error: any) {
-    console.error(error);
+    const p = await client.patch(body._id);
+    p.set({ xPostStatus: "failed" }).commit();
 
-    return NextResponse.json(
-      {
-        ok: false,
-        error: error.message,
-        blogId: body._id,
-      },
-      { status: 500 },
-    );
+    // ⚠️ RETURN 200 SO SANITY DOES NOT RETRY
+    return NextResponse.json({
+      ok: false,
+      error: error.message,
+      blogId: body._id,
+    });
   }
 };
