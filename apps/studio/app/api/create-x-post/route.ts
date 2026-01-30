@@ -1,41 +1,36 @@
 import { NextRequest, NextResponse } from "next/server";
-import { client } from "studio/sanity/lib/client";
-import { twitterOAuth } from "studio/utils";
+import { TweetV2PostTweetResult, TwitterApi } from "twitter-api-v2";
+
+const client = new TwitterApi({
+  appKey: process.env.TWITTER_CONSUMER_KEY!,
+  appSecret: process.env.TWITTER_CONSUMER_SECRET!,
+  accessToken: process.env.TWITTER_ACCESS_TOKEN!,
+  accessSecret: process.env.TWITTER_ACCESS_TOKEN_SECRET!,
+});
+
+const rwClient = client.readWrite;
 
 export const uploadMediaToX = async (mediaUrl: string) => {
-  const imageResponse = await fetch(mediaUrl);
-  const buffer = Buffer.from(await imageResponse.arrayBuffer());
-
-  const formData = new FormData();
-  formData.append("media", new Blob([buffer]));
-
-  const url = "https://upload.twitter.com/1.1/media/upload.json";
-
-  const authHeader = twitterOAuth.toHeader(
-    twitterOAuth.authorize(
-      { url, method: "POST" },
-      {
-        key: process.env.TWITTER_ACCESS_TOKEN!,
-        secret: process.env.TWITTER_ACCESS_TOKEN_SECRET!,
-      },
-    ),
-  );
-
-  const res = await fetch(url, {
-    method: "POST",
-    headers: {
-      ...authHeader,
-    },
-    body: formData,
-  });
-
-  const data = await res.json();
-
-  if (!data?.media_id_string) {
-    throw new Error("Media upload failed");
+  const res = await fetch(mediaUrl);
+  if (!res.ok) {
+    throw new Error("Image fetch failed");
   }
+  const buffer = Buffer.from(await res.arrayBuffer());
 
-  return data.media_id_string as string;
+  console.log(res.headers.get("type"));
+
+  // Upload image
+  try {
+    const mediaId = await rwClient.v1.uploadMedia(buffer, {
+      mimeType: "image/png",
+    });
+
+    return mediaId;
+  } catch (err: any) {
+    console.error(err.data); 
+    console.error(err.data?.errors);
+    return err
+  }
 };
 
 const uploadTweetOnX = async (mediaId: string | undefined, text: string) => {
@@ -52,21 +47,13 @@ const uploadTweetOnX = async (mediaId: string | undefined, text: string) => {
       };
     }
 
-    const res = await fetch("https://api.x.com/2/tweets", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${process.env.TWITTER_ACCESS_TOKEN}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-
-    const data = await res.json();
+    const data = await client.v2.tweet({
+      ...body
+    })
 
     return data;
   } catch (error) {
-    console.log(error);
-    return new Response("Error creating tweet", { status: 500 });
+    throw new Error("Error creating tweet")
   }
 };
 
@@ -140,14 +127,15 @@ export const POST = async (req: NextRequest) => {
       `#${body.category.label.replaceAll(" ", "")} #Investing #StockMarket #InvestSmart #MarketTrends`,
     ].join("\n");
 
-    const res = await uploadTweetOnX(mediaId, text);
+    const res: TweetV2PostTweetResult = await uploadTweetOnX(mediaId, text);
 
-    if (!res?.data?.id) {
+    if (!res.data.id) {
       console.log("Error creating tweet");
-      return Response.json({ success: false, res }, { status: 500 });
+      return Response.json({ success: false, erros: res.errors }, { status: 500 });
     }
 
-    await client.patch(body._id).set({ postedToX: true }).commit();
+    const p = await client.patch(body._id);
+    p.set({ postedToX: true }).commit();
 
     return NextResponse.json(
       { success: "true" },
