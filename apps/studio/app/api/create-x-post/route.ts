@@ -27,9 +27,9 @@ export const uploadMediaToX = async (mediaUrl: string) => {
 
     return mediaId;
   } catch (err: any) {
-    console.error(err.data); 
+    console.error(err.data);
     console.error(err.data?.errors);
-    return err
+    return err;
   }
 };
 
@@ -48,63 +48,62 @@ const uploadTweetOnX = async (mediaId: string | undefined, text: string) => {
     }
 
     const data = await client.v2.tweet({
-      ...body
-    })
+      ...body,
+    });
 
     return data;
   } catch (error) {
-    throw new Error("Error creating tweet")
+    throw new Error("Error creating tweet");
   }
 };
 
 export const POST = async (req: NextRequest) => {
+  const body = await req.json();
+
+  if (
+    req.headers.get("x-sanity-secret") !== process.env.SANITY_WEBHOOK_SECRET
+  ) {
+    return NextResponse.json("Unauthorized access!", { status: 401 });
+  }
+
+  if (!body) {
+    return NextResponse.json(
+      { success: false, message: "Body is missing" },
+      { status: 401 },
+    );
+  }
+
+  if (!body.title) {
+    return NextResponse.json(
+      { success: false, message: "Title is missing" },
+      { status: 401 },
+    );
+  }
+  if (!body.description) {
+    return NextResponse.json(
+      { success: false, message: "Description is missing" },
+      { status: 401 },
+    );
+  }
+  if (!body.slug) {
+    return NextResponse.json(
+      { success: false, message: "Slug is missing" },
+      { status: 401 },
+    );
+  }
+  if (!body.category) {
+    return NextResponse.json(
+      { success: false, message: "Category is missing" },
+      { status: 401 },
+    );
+  }
+
+  if (body.publishedAt && new Date(body.publishedAt) > new Date()) {
+    return NextResponse.json({ scheduled: true });
+  }
+
+  const blogUrl = `${process.env.FRONTEND_URL}/${body.category.slug.current}/${body.slug.current}`;
   try {
-    const body = await req.json();
-
-    if (
-      req.headers.get("x-sanity-secret") !== process.env.SANITY_WEBHOOK_SECRET
-    ) {
-      return NextResponse.json("Unauthorized access!", { status: 401 });
-    }
-
-    if (!body) {
-      return NextResponse.json(
-        { success: false, message: "Body is missing" },
-        { status: 401 },
-      );
-    }
-
-    if (!body.title) {
-      return NextResponse.json(
-        { success: false, message: "Title is missing" },
-        { status: 401 },
-      );
-    }
-    if (!body.description) {
-      return NextResponse.json(
-        { success: false, message: "Description is missing" },
-        { status: 401 },
-      );
-    }
-    if (!body.slug) {
-      return NextResponse.json(
-        { success: false, message: "Slug is missing" },
-        { status: 401 },
-      );
-    }
-    if (!body.category) {
-      return NextResponse.json(
-        { success: false, message: "Category is missing" },
-        { status: 401 },
-      );
-    }
-
-    if (body.publishedAt && new Date(body.publishedAt) > new Date()) {
-      return NextResponse.json({ scheduled: true });
-    }
-
-    const blogUrl = `${process.env.FRONTEND_URL}/${body.category.slug.current}/${body.slug.current}`;
-
     const mediaId = body.heroImage?.url
       ? await uploadMediaToX(body.heroImage?.url)
       : undefined;
@@ -131,22 +130,29 @@ export const POST = async (req: NextRequest) => {
 
     if (!res.data.id) {
       console.log("Error creating tweet");
-      return Response.json({ success: false, erros: res.errors }, { status: 500 });
+      return Response.json(
+        { success: false, erros: res.errors },
+        { status: 500 },
+      );
     }
 
     const p = await client.patch(body._id);
     p.set({ postedToX: true }).commit();
 
-    return NextResponse.json(
-      { success: "true" },
-      {
-        status: 201,
-      },
-    );
-  } catch (error) {
-    console.log(error, "Something went wrong");
-    return NextResponse.json("Something went wrong", {
-      status: 500,
+    return NextResponse.json({
+      ok: true,
+      tweeted: true,
+      blogId: body._id,
+      data: res.data,
     });
+  } catch (err: any) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: err.message,
+        blogId: body._id,
+      },
+      { status: 500 },
+    );
   }
 };
