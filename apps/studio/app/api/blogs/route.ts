@@ -22,10 +22,10 @@ export const GET = async (req: NextRequest) => {
     const { data }: { data: NonNullable<BlogsQueryResult> } =
       await sanityFetch(fetchOptions);
 
-   if (!data) {
+    if (!data) {
       return NextResponse.json({ error: "Blogs not found" }, { status: 404 });
     }
-
+    console.log(data);
     return NextResponse.json(data, {
       status: 200,
       headers: {
@@ -37,7 +37,7 @@ export const GET = async (req: NextRequest) => {
 
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 };

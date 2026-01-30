@@ -156,7 +156,7 @@ export const blogsByTitleSlug = groq`
 `;
 
 export const blogsQuery = groq`
-    *[ _type == 'blog']{
+    *[ _type == 'blog'] | order(coalesce(uploadedAt, _createdAt) desc){
         ...,
         heroImage{
             ...,    
