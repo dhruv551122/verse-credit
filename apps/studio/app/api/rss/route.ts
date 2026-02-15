@@ -45,12 +45,12 @@ export const GET = async () => {
       return `<item>
         <title>${escapeXml(blog.title)}</title>
         <link>${postUrl}</link>
-        <description>${escapeXml(blog.description)}</description>
+        // <description>${escapeXml(blog.description)}</description>
         <category>${escapeXml(blog.category.label)}</category>
         ${
-          imageUrl
-            ? `<enclosure url="${imageUrl}" length="100000" type="image/jpeg" />`
-            : ""
+          imageUrl ?
+            `<enclosure url="${imageUrl}" length="100000" type="image/jpeg" />`
+          : ""
         }
         <pubDate>${new Date(
           blog.uplodedAt || blog._createdAt,
