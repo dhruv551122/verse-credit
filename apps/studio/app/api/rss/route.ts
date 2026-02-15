@@ -45,7 +45,6 @@ export const GET = async () => {
       return `<item>
         <title>${escapeXml(blog.title)}</title>
         <link>${postUrl}</link>
-        // <description>${escapeXml(blog.description)}</description>
         <category>${escapeXml(blog.category.label)}</category>
         ${
           imageUrl ?
