@@ -1,3 +1,4 @@
+import { orderRankField } from "@sanity/orderable-document-list";
 import { BookUser } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
@@ -13,6 +14,7 @@ const blogAuthor = defineType({
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
+    orderRankField({ type: "authorName" }),
   ],
 });
 

@@ -8,7 +8,12 @@ import {
 } from "./schemaTypes";
 import { documents } from "./schemaTypes/documents";
 import { getTitleCase } from "../utils";
-import { StructureBuilder, StructureResolver } from "sanity/structure";
+import {
+  StructureBuilder,
+  StructureResolver,
+  StructureResolverContext,
+} from "sanity/structure";
+import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 
 type Base<T = SchemaType> = {
   id?: string;
@@ -50,34 +55,48 @@ const blogsByCategory = (S: StructureBuilder) => {
           S.documentList()
             .title("Blogs")
             .filter(`_type == 'blog' && category._ref == $categoryId`)
-            .params({categoryId})
-        )
+            .params({ categoryId }),
+        ),
     );
 };
 
 type CreateMultiType = {
   S: StructureBuilder;
+  context: StructureResolverContext;
 } & Base<MultiType>;
 
-const createMultiType = ({ S, type, id, title, icon }: CreateMultiType) => {
+const createMultiType = ({
+  S,
+  type,
+  id,
+  title,
+  icon,
+  context,
+}: CreateMultiType) => {
   const schemaTitle = getSchemaTitle(type);
   const schemaIcon = getSchemaIcon(type);
   const newTitle = title ?? schemaTitle ?? getTitleCase(type);
 
-  return S.documentTypeListItem(type)
-    .id(id ?? type)
-    .title(newTitle)
-    .icon(icon ?? schemaIcon ?? File);
+  return orderableDocumentListDeskItem({
+    S,
+    context,
+    type,
+    title: newTitle,
+    id: id ?? type,
+    icon: icon ?? schemaIcon ?? File,
+  });
 };
 
-export const structure: StructureResolver = (S) =>
+export const structure: StructureResolver = (S, context) =>
   S.list()
     .title("Content Management")
     .items([
       ...singletonType.map((type) => createSingleTon({ S, type })),
       S.divider(),
-      blogsByCategory(S),
-      createMultiType({S, type: 'blog',title: 'All blogs'}),
+      blogsByCategory(S, context),
+      createMultiType({ S, type: "blog", title: "All blogs", context }),
       S.divider(),
-      ...multiTypes.filter(type => type !== 'blog').map((type) => createMultiType({ S, type })),
+      ...multiTypes
+        .filter((type) => type !== "blog")
+        .map((type) => createMultiType({ S, type, context })),
     ]);

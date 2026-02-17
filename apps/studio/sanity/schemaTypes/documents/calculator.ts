@@ -1,3 +1,4 @@
+import { orderRankField } from "@sanity/orderable-document-list";
 import { CalculatorIcon } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
@@ -75,5 +76,6 @@ export const calculator = defineType({
       type: "blockContent",
       group: "calculator",
     }),
+    orderRankField({ type: "calculator" }),
   ],
 });

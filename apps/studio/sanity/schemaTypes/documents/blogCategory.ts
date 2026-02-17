@@ -1,3 +1,4 @@
+import { orderRankField } from "@sanity/orderable-document-list";
 import { NotebookTabs } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
@@ -19,6 +20,7 @@ const blogCategory = defineType({
       title: "Slug",
       validation: (Rule) => Rule.required(),
     }),
+    orderRankField({ type: "blogCategory" }),
   ],
 });
 

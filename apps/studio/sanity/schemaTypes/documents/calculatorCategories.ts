@@ -1,3 +1,4 @@
+import { orderRankField } from "@sanity/orderable-document-list";
 import { Blocks } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
@@ -41,5 +42,6 @@ export const calculatorCategory = defineType({
       group: "category",
       validation: (Rule) => Rule.required(),
     }),
+    orderRankField({ type: "calculatorCategory" }),
   ],
 });

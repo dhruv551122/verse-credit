@@ -1,3 +1,4 @@
+import { orderRankField } from "@sanity/orderable-document-list";
 import { BookOpen } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
@@ -98,6 +99,7 @@ const blog = defineType({
       type: "string",
       group: "blog",
     }),
+    orderRankField({ type: "blog" }),
   ],
   preview: {
     select: {
