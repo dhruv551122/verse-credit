@@ -1,23 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
-import { calculatorBySlugQuery } from "studio/sanity/lib/query";
-import { CalculatorBySlugQueryResult } from "../../../../../packages/types/src";
+import { blogsByCategoryQuery } from "studio/sanity/lib/query";
+import { BlogsByCategoryQueryResult } from "../../../../../packages/types/src";
 import { client } from "studio/sanity/lib/client";
 
-export async function GET(req: NextRequest) {
+export const GET = async (req: NextRequest) => {
   const { searchParams } = new URL(req.url);
 
-  const calculatorSlug = searchParams.get("calculatorSlug");
+  const category = searchParams.get("categorySlug");
 
   try {
-    const data = await client.fetch<NonNullable<CalculatorBySlugQueryResult>>(
-      calculatorBySlugQuery,
-      { calculatorSlug },
+    const data = await client.fetch<NonNullable<BlogsByCategoryQueryResult>>(
+      blogsByCategoryQuery,
+      { categorySlug: category },
     );
 
     if (!data) {
-      return NextResponse.json({ error: "Blog not found" }, { status: 404 });
+      return NextResponse.json({ error: "Blogs not found" }, { status: 404 });
     }
-
     return NextResponse.json(data, {
       status: 200,
       headers: {
@@ -32,4 +31,4 @@ export async function GET(req: NextRequest) {
       { status: 500 },
     );
   }
-}
+};

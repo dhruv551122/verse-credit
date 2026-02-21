@@ -67,6 +67,14 @@ export const settings = defineType({
               name: "logo",
               title: "Logo",
               type: "image",
+              fields: [
+                defineField({
+                  name: "alt",
+                  title: "Alt Text",
+                  type: "string",
+                  validation: (Rule) => Rule.required(),
+                }),
+              ],
               validation: (Rule) => Rule.required(),
             }),
             defineField({

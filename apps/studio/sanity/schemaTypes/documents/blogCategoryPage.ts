@@ -46,18 +46,5 @@ export const blogCategoryPage = defineType({
       group: "otherCategories",
       validation: (Rule) => Rule.required(),
     }),
-    defineField({
-      name: "otherCategories",
-      title: "Other Categories",
-      type: "array",
-      group: "otherCategories",
-      of: [
-        {
-          type: "reference",
-          to: [{ type: "blogCategory" }],
-        },
-      ],
-      validation: (Rule) => Rule.required(),
-    }),
   ],
 });

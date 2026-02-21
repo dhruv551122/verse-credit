@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { sanityFetch } from "studio/sanity/lib/live";
 import { siteMapQuery } from "studio/sanity/lib/query";
 import { SiteMapQueryResult } from "../../../../../packages/types/src";
+import { client } from "studio/sanity/lib/client";
 
 export const GET = async () => {
   try {
-    const { data }: { data: NonNullable<SiteMapQueryResult> } =
-      await sanityFetch({ query: siteMapQuery });
+    const data =
+      await client.fetch<NonNullable<SiteMapQueryResult>>(siteMapQuery);
     if (!data) {
       return new NextResponse("Data not found.", { status: 400 });
     }

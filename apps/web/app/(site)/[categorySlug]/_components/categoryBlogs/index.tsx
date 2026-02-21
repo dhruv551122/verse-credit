@@ -1,5 +1,5 @@
 import Title from "@/components/common/title";
-import { BlogsByCategoryQueryResult } from "@sanity-types/*";
+import { BlogCategoryPageQueryResult } from "@sanity-types/*";
 import CategoryPageBlogCard from "./categoryPageBlogCard";
 import { cn, formatDate } from "@/lib/utils";
 import BlogHeader from "@/components/common/blogHeader";
@@ -10,7 +10,7 @@ function CategoryBlogs({
   blogs,
   title,
 }: {
-  blogs: NonNullable<BlogsByCategoryQueryResult>;
+  blogs: NonNullable<BlogCategoryPageQueryResult>["blogList"];
   title: string;
 }) {
   return (

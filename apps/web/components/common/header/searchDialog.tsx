@@ -71,7 +71,7 @@ const SearchDialog = ({
       try {
         const controller = new AbortController();
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs?titleSlug=${inputText}`,
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogsByTitle?titleSlug=${inputText}`,
           { signal: controller.signal },
         );
 

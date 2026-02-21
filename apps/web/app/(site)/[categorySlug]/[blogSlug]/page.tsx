@@ -85,7 +85,7 @@ const BlogPage = async ({
 export default BlogPage;
 
 export async function generateStaticParams() {
-  const res = await fetch(`${process.env.BACKEND_URL}/api/blogsByClient`);
+  const res = await fetch(`${process.env.BACKEND_URL}/api/blogs`);
 
   if (!res.ok && !res.ok) return [];
 

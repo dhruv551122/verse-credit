@@ -1,26 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
-import { sanityFetch } from "studio/sanity/lib/live";
-import {
-  blogsByCategoryQuery,
-  blogsByTitleSlug,
-  blogsQuery,
-} from "studio/sanity/lib/query";
+import { NextResponse } from "next/server";
+import { blogsQuery } from "studio/sanity/lib/query";
 import { BlogsQueryResult } from "../../../../../packages/types/src";
+import { client } from "studio/sanity/lib/client";
 
-export const GET = async (req: NextRequest) => {
-  const { searchParams } = new URL(req.url);
-
-  const category = searchParams.get("categorySlug");
-  const titleSlug = searchParams.get("titleSlug");
-  const fetchOptions = category
-    ? { query: blogsByCategoryQuery, params: { categorySlug: category } }
-    : titleSlug
-      ? { query: blogsByTitleSlug, params: { titleSlug: titleSlug } }
-      : { query: blogsQuery };
-
+export const GET = async () => {
   try {
-    const { data }: { data: NonNullable<BlogsQueryResult> } =
-      await sanityFetch(fetchOptions);
+    const data = await client.fetch<NonNullable<BlogsQueryResult>>(blogsQuery);
 
     if (!data) {
       return NextResponse.json({ error: "Blogs not found" }, { status: 404 });

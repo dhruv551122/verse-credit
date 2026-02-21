@@ -1,15 +1,21 @@
 import { NextResponse } from "next/server";
-import { blogsQuery } from "studio/sanity/lib/query";
-import { BlogsQueryResult } from "../../../../../packages/types/src";
+import { CalculatorCategoriesQueryResult } from "../../../../../packages/types/src";
 import { client } from "studio/sanity/lib/client";
+import { calculatorCategoriesQuery } from "studio/sanity/lib/query";
 
-export const GET = async () => {
+export async function GET() {
   try {
-    const data = await client.fetch<NonNullable<BlogsQueryResult>>(blogsQuery);
+    const data = await client.fetch<
+      NonNullable<CalculatorCategoriesQueryResult>
+    >(calculatorCategoriesQuery);
 
     if (!data) {
-      return NextResponse.json({ error: "Blogs not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "No result for calculator categories." },
+        { status: 404 },
+      );
     }
+
     return NextResponse.json(data, {
       status: 200,
       headers: {
@@ -24,4 +30,4 @@ export const GET = async () => {
       { status: 500 },
     );
   }
-};
+}

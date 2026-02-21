@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { sanityFetch } from "studio/sanity/lib/live";
 import { settingsQuery } from "studio/sanity/lib/query";
 import { SettingsQueryResult } from "../../../../../packages/types/src";
+import { client } from "studio/sanity/lib/client";
 
 export const GET = async () => {
   try {
-    const { data }: { data: NonNullable<SettingsQueryResult> } =
-      await sanityFetch({ query: settingsQuery });
+    const data =
+      await client.fetch<NonNullable<SettingsQueryResult>>(settingsQuery);
     if (!data) {
       return new NextResponse("Data not found.", { status: 400 });
     }

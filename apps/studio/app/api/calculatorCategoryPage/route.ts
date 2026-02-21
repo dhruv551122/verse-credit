@@ -1,18 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import { calculatorBySlugQuery } from "studio/sanity/lib/query";
-import { CalculatorBySlugQueryResult } from "../../../../../packages/types/src";
+import { calculatorCategoryPageQuery } from "studio/sanity/lib/query";
+import { CalculatorCategoryPageQueryResult } from "../../../../../packages/types/src";
 import { client } from "studio/sanity/lib/client";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
 
   const calculatorSlug = searchParams.get("calculatorSlug");
-
   try {
-    const data = await client.fetch<NonNullable<CalculatorBySlugQueryResult>>(
-      calculatorBySlugQuery,
-      { calculatorSlug },
-    );
+    const data = await client.fetch<
+      NonNullable<CalculatorCategoryPageQueryResult>
+    >(calculatorCategoryPageQuery, { calculatorSlug });
 
     if (!data) {
       return NextResponse.json({ error: "Blog not found" }, { status: 404 });

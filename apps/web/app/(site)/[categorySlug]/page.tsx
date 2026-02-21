@@ -4,9 +4,7 @@ import { URLSearchParams } from "url";
 import CategoryBlogs from "./_components/categoryBlogs";
 import {
   BlogCategoriesQueryResult,
-  BlogCategoryBySlugQueryResult,
   BlogCategoryPageQueryResult,
-  BlogsByCategoryQueryResult,
 } from "@sanity-types/*";
 import CategoryPageRight from "./_components/categoryPageRight";
 import { notFound } from "next/navigation";
@@ -18,23 +16,19 @@ const CategoriesPage = async ({
 }) => {
   const param = await params;
   const searchParams = new URLSearchParams(param).toString();
-  const blogsData = await fetch(
-    `${process.env.BACKEND_URL}/api/blogs?${searchParams}`,
-  );
 
-  const blogs: NonNullable<BlogsByCategoryQueryResult> = await blogsData.json();
-  let categoryPage: NonNullable<{
-    category: NonNullable<BlogCategoryBySlugQueryResult>;
-    categoryPage: NonNullable<BlogCategoryPageQueryResult>;
-  }>;
+  let categoryPage: NonNullable<BlogCategoryPageQueryResult>;
   try {
     const categoryPageData = await fetch(
-      `${process.env.BACKEND_URL}/api/blogs/categoryPage?${searchParams}`,
+      `${process.env.BACKEND_URL}/api/blogCategoryPage?${searchParams}`,
     );
 
     categoryPage = await categoryPageData.json();
+    if (!categoryPage.category) {
+      return notFound();
+    }
   } catch (error: unknown) {
-    console.log(error);
+    console.error(error);
     return notFound();
   }
 
@@ -46,15 +40,18 @@ const CategoriesPage = async ({
             Home
           </Link>
           <ChevronRight />
-          <div className="text-gray-700">{categoryPage.category.label}</div>
+          <div className="text-gray-700">{categoryPage.category?.label}</div>
         </div>
       </div>
       <div className="max-width-container padding-container">
         <div className="grid grid-cols-1 lg:grid-cols-3">
           <div className="lg:border-r lg:border-gray-300 lg:pr-8 lg:col-span-2">
-            <CategoryBlogs blogs={blogs} title={categoryPage.category.label} />
+            <CategoryBlogs
+              blogs={categoryPage.blogList}
+              title={categoryPage.category.label}
+            />
           </div>
-          <CategoryPageRight categoryPage={categoryPage.categoryPage} />
+          <CategoryPageRight categoryPage={categoryPage} />
         </div>
       </div>
     </div>
@@ -64,10 +61,9 @@ const CategoriesPage = async ({
 export default CategoriesPage;
 
 export async function generateStaticParams() {
-  const res = await fetch(
-    `${process.env.BACKEND_URL}/api/blogCategoriesByClient`,
-    { cache: "force-cache" },
-  );
+  const res = await fetch(`${process.env.BACKEND_URL}/api/blogCategories`, {
+    cache: "force-cache",
+  });
 
   if (!res.ok) return [];
   const categories: NonNullable<BlogCategoriesQueryResult> = await res.json();

@@ -15,7 +15,7 @@ const Footer = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
             className="object-contain"
           />
         </Link>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-20 mt-10 ">
+        <div className="grid grid-cols-1 gap-10 mt-10 md:grid-cols-2 md:gap-20 ">
           <div className="flex flex-col gap-2 shrink-0 ">
             <h4 className="text-subtle-white text-[22px] font-medium">
               Follow us on
@@ -29,7 +29,7 @@ const Footer = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
                 >
                   <SanityImage
                     src={link.logo}
-                    alt={link.logo.asset?.altText || link.url.label}
+                    alt={link.logo.alt}
                     width={20}
                     height={20}
                     className="object-contain w-auto h-6"

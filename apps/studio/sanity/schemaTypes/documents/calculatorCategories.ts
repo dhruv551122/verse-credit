@@ -19,6 +19,7 @@ export const calculatorCategory = defineType({
       name: "seo",
       title: "Seo",
       type: "seo",
+      group: "seo",
       validation: (Rule) => Rule.required(),
     }),
     defineField({

@@ -5,10 +5,6 @@ export const homePageQuery = groq`
         ...,
         heroRightBlogs[] -> {
          ...,
-            heroImage{
-               ...,    
-              asset -> 
-          },
           author ->,
           category -> 
         },
@@ -18,39 +14,23 @@ export const homePageQuery = groq`
         },
         newsBlogs[] -> {
           ...,
-          heroImage{
-            ...,    
-            asset -> 
-          },
           author ->,
-         category -> 
+          category -> 
         },
-        newsBackgroundImage{
-            ...,
-            asset ->,
-        }
     }
 `;
 
 export const blogsByCategoryQuery = groq`
     *[_type == 'blog' && category->slug.current == $categorySlug]{
         ...,
-        heroImage{
-            ...,    
-            asset -> 
-        },
         author ->,
         category -> 
     }
 `;
 
 export const blogBySlugQuery = groq`
-    *[_type == 'blog' && category->slug.current == $categorySlug && slug.current == $blogSlug][0]{
+    *[_type == 'blog' && slug.current == $blogSlug][0]{
         ...,
-        heroImage{
-            ...,    
-            asset -> 
-        },
         author ->,
         category -> 
     }
@@ -62,7 +42,7 @@ export const blogCategoryBySlugQuery = groq`
     }
 `;
 
-export const claculatorCategoriesQuery = groq`
+export const calculatorCategoriesQuery = groq`
     *[_type == 'calculatorCategory']{
         _id,
         title,
@@ -71,14 +51,17 @@ export const claculatorCategoriesQuery = groq`
     }
 `;
 
-export const calculatorByCategoryQuery = groq`
-    *[_type == 'calculator' && category.slug == $categorySlug]{
+export const calculatorCategoryPageQuery = groq`
+*[_type == 'calculatorCategory' && slug.current == $categorySlug]{
+    ...,
+    "calculatorList": *[_type == 'calculator' && category.slug == $categorySlug]{
         icon,
         title,
         description,
         slug,
         category->
     }
+}
 `;
 export const calculatorBySlugQuery = groq`
     *[_type == 'calculator' && slug == $calculatorSlug]{
@@ -90,25 +73,6 @@ export const calculatorBySlugQuery = groq`
 export const settingsQuery = groq`
     *[_id == 'settings' && _type == 'settings'][0]{
         ...,
-        headerLogo {
-            ...,
-            asset ->{
-                ...
-            },
-        },
-        footerLogo{
-            ...,
-            asset ->{
-                ...
-            },
-        },
-        socialMediaLinks[]{
-            ...,
-            logo{
-                ...,
-                asset ->
-            }
-        }
     }
 `;
 
@@ -129,14 +93,16 @@ export const blogCategoryPageQuery = groq`
         ...,
         recommandedBlogs[] -> {
             ...,
-            heroImage{
-            ...,    
-            asset -> 
-            },
             author ->,
             category -> 
         },
-        otherCategories[] -> {
+        "category": *[_type == 'blogCategory' && slug.current == $categorySlug][0]{...,},
+        "blogList": *[_type == 'blog' && category->slug.current == $categorySlug]{
+            ...,
+            category->,
+            author->,
+        },
+        "otherCategories": *[ _type == 'blogCategory' && slug.current != $categorySlug]{
             ...,
             'blogCount': count(*[_type == 'blog' && references(^._id)])
         }
@@ -150,10 +116,7 @@ export const blogsByTitleSlug = groq`
         author->,
         category->,
         slug,
-        heroImage{
-            ...,
-            asset->
-        },
+        heroImage,
         uploadedAt,
         _updatedAt,
         _score
@@ -163,10 +126,6 @@ export const blogsByTitleSlug = groq`
 export const blogsQuery = groq`
     *[ _type == 'blog'] | order(coalesce(uploadedAt, _createdAt) desc){
         ...,
-        heroImage{
-            ...,    
-            asset -> 
-        },
         author ->,
         category -> 
     }
@@ -180,14 +139,7 @@ export const blogsRssQuery = groq`
         slug,
         _createdAt,
         category -> ,
-        heroImage {
-            ...,
-            asset -> {
-                url,
-                altText,
-                title
-            }
-        },
+        heroImage,
     }
 `;
 

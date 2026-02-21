@@ -1,29 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
-import { sanityFetch } from "studio/sanity/lib/live";
 import { blogBySlugQuery } from "studio/sanity/lib/query";
 import { BlogBySlugQueryResult } from "../../../../../packages/types/src";
+import { client } from "studio/sanity/lib/client";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
 
-  const categorySlug = searchParams.get("categorySlug");
   const blogSlug = searchParams.get("blogSlug");
 
-  if (!categorySlug || !blogSlug) {
-    return NextResponse.json(
-      { error: "Missing categorySlug or blogSlug" },
-      { status: 400 },
-    );
+  if (!blogSlug) {
+    return NextResponse.json({ error: "Missing blog slug!" }, { status: 400 });
   }
 
   try {
-    const { data }: { data: BlogBySlugQueryResult } = await sanityFetch({
-      query: blogBySlugQuery,
-      params: { categorySlug, blogSlug },
-    });
+    const data = await client.fetch<NonNullable<BlogBySlugQueryResult>>(
+      blogBySlugQuery,
+      { blogSlug },
+    );
 
     if (!data) {
-      return NextResponse.json({ error: "Blog not found" }, { status: 404 });
+      return NextResponse.json(
+        { error: "Blog not found, might be provided blog slug is wrong." },
+        { status: 404 },
+      );
     }
 
     return NextResponse.json(data, {
