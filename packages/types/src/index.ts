@@ -24,7 +24,15 @@ export type StyledTable = {
           _type: "span";
           _key: string;
         }>;
-        style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+        style?:
+          | "normal"
+          | "h1"
+          | "h2"
+          | "h3"
+          | "h4"
+          | "h5"
+          | "h6"
+          | "blockquote";
         listItem?: "bullet" | "number";
         markDefs?: Array<{
           href?: string;
@@ -43,40 +51,49 @@ export type StyledTable = {
   }>;
 };
 
-export type BlockContent = Array<{
-  children?: Array<{
-    marks?: Array<string>;
-    text?: string;
-    _type: "span";
-    _key: string;
-  }>;
-  style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-  listItem?: "bullet" | "number";
-  markDefs?: Array<{
-    _key: string;
-  } & TextColor | {
-    href?: string;
-    _type: "link";
-    _key: string;
-  }>;
-  level?: number;
-  _type: "block";
-  _key: string;
-} | {
-  asset?: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-  };
-  media?: unknown;
-  hotspot?: SanityImageHotspot;
-  crop?: SanityImageCrop;
-  _type: "image";
-  _key: string;
-} | {
-  _key: string;
-} & StyledTable>;
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type BlockContent = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: "span";
+        _key: string;
+      }>;
+      style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+      listItem?: "bullet" | "number";
+      markDefs?: Array<
+        | ({
+            _key: string;
+          } & TextColor)
+        | {
+            href?: string;
+            _type: "link";
+            _key: string;
+          }
+      >;
+      level?: number;
+      _type: "block";
+      _key: string;
+    }
+  | {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+      _key: string;
+    }
+  | ({
+      _key: string;
+    } & StyledTable)
+>;
 
 export type Seo = {
   _type: "seo";
@@ -91,6 +108,20 @@ export type Link = {
   openInNewTab: boolean;
 };
 
+export type BlogAuthorReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "blogAuthor";
+};
+
+export type BlogCategoryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "blogCategory";
+};
+
 export type Blog = {
   _id: string;
   _type: "blog";
@@ -102,12 +133,7 @@ export type Blog = {
   title: string;
   description: string;
   heroImage: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -115,19 +141,12 @@ export type Blog = {
     _type: "image";
   };
   content: BlockContent;
-  author: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "blogAuthor";
-  };
-  category: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "blogCategory";
-  };
+  author: BlogAuthorReference;
+  category: BlogCategoryReference;
   uplodedAt?: string;
+  postedToX?: boolean;
+  xPostStatus?: string;
+  orderRank?: string;
 };
 
 export type SanityImageCrop = {
@@ -159,6 +178,7 @@ export type BlogAuthor = {
   _updatedAt: string;
   _rev: string;
   authorName: string;
+  orderRank?: string;
 };
 
 export type BlogCategory = {
@@ -169,6 +189,14 @@ export type BlogCategory = {
   _rev: string;
   label: string;
   slug: Slug;
+  orderRank?: string;
+};
+
+export type CalculatorCategoryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "calculatorCategory";
 };
 
 export type Calculator = {
@@ -180,12 +208,7 @@ export type Calculator = {
   seo: Seo;
   title: string;
   icon: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -194,14 +217,10 @@ export type Calculator = {
   };
   tagLine: string;
   description: string;
-  slug: string;
-  category: {
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    [internalGroqTypeReferenceTo]?: "calculatorCategory";
-  };
+  slug: Slug;
+  category: CalculatorCategoryReference;
   aboutCalculator?: BlockContent;
+  orderRank?: string;
 };
 
 export type TextColor = {
@@ -220,6 +239,7 @@ export type CalculatorCategory = {
   title: string;
   tagLine: string;
   slug: string;
+  orderRank?: string;
 };
 
 export type Contact_us = {
@@ -234,6 +254,13 @@ export type Contact_us = {
   formTitle: string;
 };
 
+export type BlogReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "blog";
+};
+
 export type BlogCategoryPage = {
   _id: string;
   _type: "blogCategoryPage";
@@ -242,21 +269,17 @@ export type BlogCategoryPage = {
   _rev: string;
   seo: Seo;
   recommandedBlogsTitle: string;
-  recommandedBlogs: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "blog";
-  }>;
+  recommandedBlogs: Array<
+    {
+      _key: string;
+    } & BlogReference
+  >;
   otherCategoriesTitle: string;
-  otherCategories: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "blogCategory";
-  }>;
+  otherCategories: Array<
+    {
+      _key: string;
+    } & BlogCategoryReference
+  >;
 };
 
 export type Home = {
@@ -268,45 +291,34 @@ export type Home = {
   seo: Seo;
   heroLeftTitle: string;
   heroRightTitle: string;
-  heroRightBlogs: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "blog";
-  }>;
+  heroRightBlogs: Array<
+    {
+      _key: string;
+    } & BlogReference
+  >;
   categoryGroup: Array<{
     title: string;
-    categories: Array<{
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      _key: string;
-      [internalGroqTypeReferenceTo]?: "blogCategory";
-    }>;
+    categories: Array<
+      {
+        _key: string;
+      } & BlogCategoryReference
+    >;
     _key: string;
   }>;
   newsTitle: string;
   newsBackgroundImage: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt: string;
     _type: "image";
   };
-  newsBlogs: Array<{
-    _ref: string;
-    _type: "reference";
-    _weak?: boolean;
-    _key: string;
-    [internalGroqTypeReferenceTo]?: "blog";
-  }>;
+  newsBlogs: Array<
+    {
+      _key: string;
+    } & BlogReference
+  >;
 };
 
 export type Settings = {
@@ -316,28 +328,20 @@ export type Settings = {
   _updatedAt: string;
   _rev: string;
   headerLogo: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt: string;
     _type: "image";
   };
-  headerLinks: Array<{
-    _key: string;
-  } & Link>;
+  headerLinks: Array<
+    {
+      _key: string;
+    } & Link
+  >;
   footerLogo: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -346,12 +350,7 @@ export type Settings = {
   };
   socialMediaLinks: Array<{
     logo: {
-      asset?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-      };
+      asset?: SanityImageAssetReference;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
@@ -360,9 +359,11 @@ export type Settings = {
     url: Link;
     _key: string;
   }>;
-  footerLinks: Array<{
-    _key: string;
-  } & Link>;
+  footerLinks: Array<
+    {
+      _key: string;
+    } & Link
+  >;
 };
 
 export type HighlightColor = {
@@ -419,6 +420,7 @@ export type SanityImageMetadata = {
   palette?: SanityImagePalette;
   lqip?: string;
   blurHash?: string;
+  thumbHash?: string;
   hasAlpha?: boolean;
   isOpaque?: boolean;
 };
@@ -482,13 +484,48 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = StyledTable | BlockContent | Seo | Link | Blog | SanityImageCrop | SanityImageHotspot | Slug | BlogAuthor | BlogCategory | Calculator | TextColor | CalculatorCategory | Contact_us | BlogCategoryPage | Home | Settings | HighlightColor | SimplerColor | MediaTag | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes =
+  | StyledTable
+  | SanityImageAssetReference
+  | BlockContent
+  | Seo
+  | Link
+  | BlogAuthorReference
+  | BlogCategoryReference
+  | Blog
+  | SanityImageCrop
+  | SanityImageHotspot
+  | Slug
+  | BlogAuthor
+  | BlogCategory
+  | CalculatorCategoryReference
+  | Calculator
+  | TextColor
+  | CalculatorCategory
+  | Contact_us
+  | BlogReference
+  | BlogCategoryPage
+  | Home
+  | Settings
+  | HighlightColor
+  | SimplerColor
+  | MediaTag
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageMetadata
+  | SanityFileAsset
+  | SanityAssetSourceData
+  | SanityImageAsset
+  | Geopoint;
+
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./sanity/lib/query.ts
+
+// Source: sanity/lib/query.ts
 // Variable: homePageQuery
 // Query: *[_type == 'home' && _id == 'home'][0]{        ...,        heroRightBlogs[] -> {         ...,            heroImage{               ...,                  asset ->           },          author ->,          category ->         },        categoryGroup[]{            ...,            categories[] ->,        },        newsBlogs[] -> {          ...,          heroImage{            ...,                asset ->           },          author ->,         category ->         },        newsBackgroundImage{            ...,            asset ->,        }    }
 export type HomePageQueryResult = {
-  _id: string;
+  _id: "home";
   _type: "home";
   _createdAt: string;
   _updatedAt: string;
@@ -543,6 +580,7 @@ export type HomePageQueryResult = {
       _updatedAt: string;
       _rev: string;
       authorName: string;
+      orderRank?: string;
     };
     category: {
       _id: string;
@@ -552,8 +590,12 @@ export type HomePageQueryResult = {
       _rev: string;
       label: string;
       slug: Slug;
+      orderRank?: string;
     };
     uplodedAt?: string;
+    postedToX?: boolean;
+    xPostStatus?: string;
+    orderRank?: string;
   }>;
   categoryGroup: Array<{
     title: string;
@@ -565,6 +607,7 @@ export type HomePageQueryResult = {
       _rev: string;
       label: string;
       slug: Slug;
+      orderRank?: string;
     }>;
     _key: string;
   }>;
@@ -645,6 +688,7 @@ export type HomePageQueryResult = {
       _updatedAt: string;
       _rev: string;
       authorName: string;
+      orderRank?: string;
     };
     category: {
       _id: string;
@@ -654,10 +698,16 @@ export type HomePageQueryResult = {
       _rev: string;
       label: string;
       slug: Slug;
+      orderRank?: string;
     };
     uplodedAt?: string;
+    postedToX?: boolean;
+    xPostStatus?: string;
+    orderRank?: string;
   }>;
 } | null;
+
+// Source: sanity/lib/query.ts
 // Variable: blogsByCategoryQuery
 // Query: *[_type == 'blog' && category->slug.current == $categorySlug]{        ...,        heroImage{            ...,                asset ->         },        author ->,        category ->     }
 export type BlogsByCategoryQueryResult = Array<{
@@ -707,6 +757,7 @@ export type BlogsByCategoryQueryResult = Array<{
     _updatedAt: string;
     _rev: string;
     authorName: string;
+    orderRank?: string;
   };
   category: {
     _id: string;
@@ -716,9 +767,15 @@ export type BlogsByCategoryQueryResult = Array<{
     _rev: string;
     label: string;
     slug: Slug;
+    orderRank?: string;
   };
   uplodedAt?: string;
+  postedToX?: boolean;
+  xPostStatus?: string;
+  orderRank?: string;
 }>;
+
+// Source: sanity/lib/query.ts
 // Variable: blogBySlugQuery
 // Query: *[_type == 'blog' && category->slug.current == $categorySlug && slug.current == $blogSlug][0]{        ...,        heroImage{            ...,                asset ->         },        author ->,        category ->     }
 export type BlogBySlugQueryResult = {
@@ -768,6 +825,7 @@ export type BlogBySlugQueryResult = {
     _updatedAt: string;
     _rev: string;
     authorName: string;
+    orderRank?: string;
   };
   category: {
     _id: string;
@@ -777,9 +835,15 @@ export type BlogBySlugQueryResult = {
     _rev: string;
     label: string;
     slug: Slug;
+    orderRank?: string;
   };
   uplodedAt?: string;
+  postedToX?: boolean;
+  xPostStatus?: string;
+  orderRank?: string;
 } | null;
+
+// Source: sanity/lib/query.ts
 // Variable: blogCategoryBySlugQuery
 // Query: *[_type == 'blogCategory' && slug.current == $categorySlug][0]{        ...,    }
 export type BlogCategoryBySlugQueryResult = {
@@ -790,7 +854,10 @@ export type BlogCategoryBySlugQueryResult = {
   _rev: string;
   label: string;
   slug: Slug;
+  orderRank?: string;
 } | null;
+
+// Source: sanity/lib/query.ts
 // Variable: claculatorCategoriesQuery
 // Query: *[_type == 'calculatorCategory']{        _id,        title,        tagLine,        slug,    }
 export type ClaculatorCategoriesQueryResult = Array<{
@@ -799,48 +866,22 @@ export type ClaculatorCategoriesQueryResult = Array<{
   tagLine: string;
   slug: string;
 }>;
-// Variable: calculatorQuery
-// Query: *[_type == 'calculator']{        ...,        icon {            ...,            asset ->        },        category ->    }
-export type CalculatorQueryResult = Array<{
-  _id: string;
-  _type: "calculator";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  seo: Seo;
-  title: string;
+
+// Source: sanity/lib/query.ts
+// Variable: calculatorByCategoryQuery
+// Query: *[_type == 'calculator' && category.slug == $categorySlug]{        icon,        title,        description,        slug,        category->    }
+export type CalculatorByCategoryQueryResult = Array<{
   icon: {
-    asset: {
-      _id: string;
-      _type: "sanity.imageAsset";
-      _createdAt: string;
-      _updatedAt: string;
-      _rev: string;
-      originalFilename?: string;
-      label?: string;
-      title?: string;
-      description?: string;
-      altText?: string;
-      sha1hash?: string;
-      extension?: string;
-      mimeType?: string;
-      size?: number;
-      assetId?: string;
-      uploadId?: string;
-      path?: string;
-      url?: string;
-      metadata?: SanityImageMetadata;
-      source?: SanityAssetSourceData;
-    } | null;
+    asset?: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt: string;
     _type: "image";
   };
-  tagLine: string;
+  title: string;
   description: string;
-  slug: string;
+  slug: Slug;
   category: {
     _id: string;
     _type: "calculatorCategory";
@@ -851,13 +892,53 @@ export type CalculatorQueryResult = Array<{
     title: string;
     tagLine: string;
     slug: string;
+    orderRank?: string;
+  };
+}>;
+
+// Source: sanity/lib/query.ts
+// Variable: calculatorBySlugQuery
+// Query: *[_type == 'calculator' && slug == $calculatorSlug]{        ...,        category->    }
+export type CalculatorBySlugQueryResult = Array<{
+  _id: string;
+  _type: "calculator";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo: Seo;
+  title: string;
+  icon: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  tagLine: string;
+  description: string;
+  slug: Slug;
+  category: {
+    _id: string;
+    _type: "calculatorCategory";
+    _createdAt: string;
+    _updatedAt: string;
+    _rev: string;
+    seo: Seo;
+    title: string;
+    tagLine: string;
+    slug: string;
+    orderRank?: string;
   };
   aboutCalculator?: BlockContent;
+  orderRank?: string;
 }>;
+
+// Source: sanity/lib/query.ts
 // Variable: settingsQuery
 // Query: *[_id == 'settings' && _type == 'settings'][0]{        ...,        headerLogo {            ...,            asset ->{                ...            },        },        footerLogo{            ...,            asset ->{                ...            },        },        socialMediaLinks[]{            ...,            logo{                ...,                asset ->            }        }    }
 export type SettingsQueryResult = {
-  _id: string;
+  _id: "settings";
   _type: "settings";
   _createdAt: string;
   _updatedAt: string;
@@ -891,9 +972,11 @@ export type SettingsQueryResult = {
     alt: string;
     _type: "image";
   };
-  headerLinks: Array<{
-    _key: string;
-  } & Link>;
+  headerLinks: Array<
+    {
+      _key: string;
+    } & Link
+  >;
   footerLogo: {
     asset: {
       _id: string;
@@ -955,10 +1038,14 @@ export type SettingsQueryResult = {
     url: Link;
     _key: string;
   }>;
-  footerLinks: Array<{
-    _key: string;
-  } & Link>;
+  footerLinks: Array<
+    {
+      _key: string;
+    } & Link
+  >;
 } | null;
+
+// Source: sanity/lib/query.ts
 // Variable: blogCategoriesQuery
 // Query: *[_type == 'blogCategory']{        ...,    }
 export type BlogCategoriesQueryResult = Array<{
@@ -969,17 +1056,23 @@ export type BlogCategoriesQueryResult = Array<{
   _rev: string;
   label: string;
   slug: Slug;
+  orderRank?: string;
 }>;
+
+// Source: sanity/lib/query.ts
 // Variable: blogAuthorsQuery
 // Query: *[_id == 'blogAuthor' && _type == 'blogAuthor']{        ...,    }
 export type BlogAuthorsQueryResult = Array<{
-  _id: string;
+  _id: "blogAuthor";
   _type: "blogAuthor";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   authorName: string;
+  orderRank?: string;
 }>;
+
+// Source: sanity/lib/query.ts
 // Variable: blogCategoryPageQuery
 // Query: *[_type == 'blogCategoryPage'][0]{        ...,        recommandedBlogs[] -> {            ...,            heroImage{            ...,                asset ->             },            author ->,            category ->         },        otherCategories[] -> {            ...,            'blogCount': count(*[_type == 'blog' && references(^._id)])        }    }
 export type BlogCategoryPageQueryResult = {
@@ -1037,6 +1130,7 @@ export type BlogCategoryPageQueryResult = {
       _updatedAt: string;
       _rev: string;
       authorName: string;
+      orderRank?: string;
     };
     category: {
       _id: string;
@@ -1046,8 +1140,12 @@ export type BlogCategoryPageQueryResult = {
       _rev: string;
       label: string;
       slug: Slug;
+      orderRank?: string;
     };
     uplodedAt?: string;
+    postedToX?: boolean;
+    xPostStatus?: string;
+    orderRank?: string;
   }>;
   otherCategoriesTitle: string;
   otherCategories: Array<{
@@ -1058,9 +1156,12 @@ export type BlogCategoryPageQueryResult = {
     _rev: string;
     label: string;
     slug: Slug;
+    orderRank?: string;
     blogCount: number;
   }>;
 } | null;
+
+// Source: sanity/lib/query.ts
 // Variable: blogsByTitleSlug
 // Query: *[_type == 'blog' && title match $titleSlug + '*'] | order(_score desc){        _id,        title,        author->,        category->,        slug,        heroImage{            ...,            asset->        },        uploadedAt,        _updatedAt,        _score    }
 export type BlogsByTitleSlugResult = Array<{
@@ -1073,6 +1174,7 @@ export type BlogsByTitleSlugResult = Array<{
     _updatedAt: string;
     _rev: string;
     authorName: string;
+    orderRank?: string;
   };
   category: {
     _id: string;
@@ -1082,6 +1184,7 @@ export type BlogsByTitleSlugResult = Array<{
     _rev: string;
     label: string;
     slug: Slug;
+    orderRank?: string;
   };
   slug: Slug;
   heroImage: {
@@ -1117,8 +1220,10 @@ export type BlogsByTitleSlugResult = Array<{
   _updatedAt: string;
   _score: null;
 }>;
+
+// Source: sanity/lib/query.ts
 // Variable: blogsQuery
-// Query: *[ _type == 'blog']{        ...,        heroImage{            ...,                asset ->         },        author ->,        category ->     }
+// Query: *[ _type == 'blog'] | order(coalesce(uploadedAt, _createdAt) desc){        ...,        heroImage{            ...,                asset ->         },        author ->,        category ->     }
 export type BlogsQueryResult = Array<{
   _id: string;
   _type: "blog";
@@ -1166,6 +1271,7 @@ export type BlogsQueryResult = Array<{
     _updatedAt: string;
     _rev: string;
     authorName: string;
+    orderRank?: string;
   };
   category: {
     _id: string;
@@ -1175,11 +1281,17 @@ export type BlogsQueryResult = Array<{
     _rev: string;
     label: string;
     slug: Slug;
+    orderRank?: string;
   };
   uplodedAt?: string;
+  postedToX?: boolean;
+  xPostStatus?: string;
+  orderRank?: string;
 }>;
+
+// Source: sanity/lib/query.ts
 // Variable: blogsRssQuery
-// Query: *[_type == 'blog']{        title,        description,        uplodedAt,        slug,        _createdAt,        category -> ,        heroImage {            ...,            asset -> {                url,                altText,                title            }        },        "siteLogo": *[_type == 'settings' && _id == 'settings'][0]{            headerLogo{                ...,                asset -> {                    url,                    altText,                    title                }            }        }            }
+// Query: *[_type == 'blog'] | order(orderrank){        title,        description,        uplodedAt,        slug,        _createdAt,        category -> ,        heroImage {            ...,            asset -> {                url,                altText,                title            }        },    }
 export type BlogsRssQueryResult = Array<{
   title: string;
   description: string;
@@ -1194,6 +1306,7 @@ export type BlogsRssQueryResult = Array<{
     _rev: string;
     label: string;
     slug: Slug;
+    orderRank?: string;
   };
   heroImage: {
     asset: {
@@ -1207,25 +1320,13 @@ export type BlogsRssQueryResult = Array<{
     alt: string;
     _type: "image";
   };
-  siteLogo: {
-    headerLogo: {
-      asset: {
-        url: string | null;
-        altText: string | null;
-        title: string | null;
-      } | null;
-      media?: unknown;
-      hotspot?: SanityImageHotspot;
-      crop?: SanityImageCrop;
-      alt: string;
-      _type: "image";
-    };
-  } | null;
 }>;
+
+// Source: sanity/lib/query.ts
 // Variable: contactPageQuery
 // Query: *[_type == 'contact_us' && _id == 'contact_us'][0]{        ...,    }
 export type ContactPageQueryResult = {
-  _id: string;
+  _id: "contact_us";
   _type: "contact_us";
   _createdAt: string;
   _updatedAt: string;
@@ -1235,6 +1336,8 @@ export type ContactPageQueryResult = {
   contactDescription: string;
   formTitle: string;
 } | null;
+
+// Source: sanity/lib/query.ts
 // Variable: siteMapQuery
 // Query: *[_type == 'blogCategory']{        _id,        "title": label,        "slug": slug.current,        "blogs": *[_type == "blog" && references(^._id)]{            title,            "slug": slug.current,            "categorySlug": category->slug.current,            _updatedAt        }    }
 export type SiteMapQueryResult = Array<{
@@ -1248,4 +1351,3 @@ export type SiteMapQueryResult = Array<{
     _updatedAt: string;
   }>;
 }>;
-

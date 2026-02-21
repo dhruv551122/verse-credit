@@ -3,21 +3,29 @@ import { Dispatch, SetStateAction, useState } from "react";
 import MonthPicker from "./month-picker";
 import CalculatorTable from "./claculatorTable";
 import { cn } from "@/lib/utils";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 const Amortization = ({
   groupedYearsDetail,
   startDate,
   setStartDate,
 }: {
-  groupedYearsDetail?: any[];
+  groupedYearsDetail?: Record<
+    string | number,
+    Record<string, string | number>[]
+  >;
 
   startDate: Date;
   setStartDate: Dispatch<SetStateAction<Date>>;
 }) => {
-      const [isAccordianOpen, setIsAccordianOpen] = useState<boolean>(false);
+  const [isAccordianOpen, setIsAccordianOpen] = useState<boolean>(false);
   const [yearsDetailPageCount, setYearsDetailPageCount] = useState<number>(0);
-    
+
   return (
     <div className="flex flex-col gap-6 ">
       <div className="flex flex-col items-center justify-center gap-2">
@@ -37,12 +45,12 @@ const Amortization = ({
           }}
           className={cn(
             "transition-all duration-300 self-center w-full size-8",
-            isAccordianOpen && "rotate-45"
+            isAccordianOpen && "rotate-45",
           )}
         />
       </div>
 
-      {groupedYearsDetail && isAccordianOpen  && (
+      {groupedYearsDetail && isAccordianOpen && (
         <div>
           <MonthPicker setDate={setStartDate} date={startDate} />
           <Accordion type="multiple" className="w-full">
@@ -52,7 +60,7 @@ const Amortization = ({
                 <AccordionItem key={index} value={detail}>
                   <AccordionTrigger>{detail}</AccordionTrigger>
                   <AccordionContent>
-                    <CalculatorTable data={groupedYearsDetail[detail as any]} />
+                    <CalculatorTable data={groupedYearsDetail[detail]} />
                   </AccordionContent>
                 </AccordionItem>
               ))}
@@ -62,9 +70,9 @@ const Amortization = ({
       {groupedYearsDetail &&
         isAccordianOpen &&
         Object.keys(groupedYearsDetail).length > yearsDetailPageCount * 5 && (
-          <div className="w-full flex items-center justify-center">
+          <div className="flex items-center justify-center w-full">
             <button
-              className="py-2 px-4 bg-black text-white w-fit align-center rounded-md"
+              className="px-4 py-2 text-white bg-black rounded-md w-fit align-center"
               onClick={() => setYearsDetailPageCount((prev) => prev + 1)}
             >
               Load More
@@ -75,4 +83,4 @@ const Amortization = ({
   );
 };
 
-export default Amortization
+export default Amortization;

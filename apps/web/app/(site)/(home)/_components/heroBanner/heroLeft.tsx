@@ -23,7 +23,7 @@ const HeroLeft = ({
             key={blog._id}
             className={cn(
               "flex flex-col gap-4 group",
-              index === 0 && "sm:col-span-2"
+              index === 0 && "sm:col-span-2",
             )}
           >
             <BlogHeader
@@ -33,7 +33,7 @@ const HeroLeft = ({
               title={blog.title}
               titleClassname={cn(
                 "group-hover:text-chathams-blue",
-                index === 0 && "text-3xl"
+                index === 0 && "text-3xl",
               )}
             />
             <div className="w-full overflow-hidden rounded-xl">

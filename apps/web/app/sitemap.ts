@@ -6,28 +6,33 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const data: NonNullable<SiteMapQueryResult> = await res.json();
 
-  const baseUrl = "https://verse-credit-web.vercel.app";
+  const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN_URL}`;
 
   const staticRoutes = [
     {
       url: baseUrl,
       lastModified: new Date(),
-      priority: 1,
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/about-us`,
       lastModified: new Date(),
-      priority: 0.9,
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/contact-us`,
+      lastModified: new Date(),
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/sitemap.xml`,
       lastModified: new Date(),
       priority: 0.9,
     },
     {
       url: `${baseUrl}/calculators`,
       lastModified: new Date(),
-      priority: 0.9,
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/sitemap`,
@@ -39,7 +44,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const categoryRoutes = data.map((category) => ({
     url: `${baseUrl}/${category.slug}`,
     lastModified: new Date(),
-    priority: 0.7,
+    priority: 0.8,
   }));
 
   const blogRoutes = data.flatMap((category) =>

@@ -33,7 +33,7 @@ const Group = ({
                   variant="outline"
                   className={cn(
                     category.label === selectedCategory?.label &&
-                      "border-chathams-blue text-chathams-blue"
+                      "border-chathams-blue text-chathams-blue",
                   )}
                   onClick={() => setSelectedCategory(category)}
                 >
@@ -51,7 +51,10 @@ const Group = ({
               .filter((blog) => blog.category.label === selectedCategory.label)
               .slice(0, 7)
               .map((blog) => (
-                <div key={blog._id} className="min-w-60 max-w-60 sm:min-w-100 sm:max-w-100">
+                <div
+                  key={blog._id}
+                  className="min-w-60 max-w-60 sm:min-w-100 sm:max-w-100"
+                >
                   <CarouselItem>
                     <CategoriesGroupCard blog={blog} />
                   </CarouselItem>

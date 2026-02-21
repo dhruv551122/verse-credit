@@ -11,7 +11,7 @@ import { cn } from "@/lib/utils";
 import { BlogCategoriesQueryResult } from "@sanity-types/*";
 import { X } from "lucide-react";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const TopicsDialog = ({
   isMobile,
@@ -25,26 +25,30 @@ const TopicsDialog = ({
 
   const topicsDialogTimeRef = useRef<NodeJS.Timeout>(undefined);
 
-  if (typeof document !== "undefined") {
-    if (isTopicsMounted) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      if (isTopicsMounted) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "auto";
+      }
     }
-  }
+  }, [isTopicsMounted]);
   if (isMobile) {
     setIsTopicsMounted(false);
   }
 
-  if (topicsDialogTimeRef.current) {
-    clearTimeout(topicsDialogTimeRef.current);
-  }
+  useEffect(() => {
+    if (topicsDialogTimeRef.current) {
+      clearTimeout(topicsDialogTimeRef.current);
+    }
 
-  if (isTopicsMounted) {
-    topicsDialogTimeRef.current = setTimeout(() => setIsTopicsOpen(true), 10);
-  } else {
-    topicsDialogTimeRef.current = setTimeout(() => setIsTopicsOpen(false));
-  }
+    if (isTopicsMounted) {
+      topicsDialogTimeRef.current = setTimeout(() => setIsTopicsOpen(true), 10);
+    } else {
+      topicsDialogTimeRef.current = setTimeout(() => setIsTopicsOpen(false));
+    }
+  }, [isTopicsMounted]);
 
   return (
     <Dialog
@@ -59,13 +63,13 @@ const TopicsDialog = ({
         showCloseButton={false}
         className={cn(
           "text-tuatara top-0 z-50 h-0 translate-y-0 backdrop-blur-xs rounded-none shadow-none border-none sm:max-w-none max-w-none  data-[state=open]:h-screen   w-screen  flex justify-center bg-black/50 ",
-          isMobile && "rounded-none"
+          isMobile && "rounded-none",
         )}
       >
         <div
           className={cn(
             "p-4 bg-white rounded-lg shadow-lg md:w-2/3 lg:w-1/2 md:p-6 h-fit mt-14 -translate-y-full duration-300",
-            isTopicsOpen && "translate-y-0"
+            isTopicsOpen && "translate-y-0",
           )}
         >
           <DialogHeader className="gap-4 text-left h-fit">
@@ -85,11 +89,11 @@ const TopicsDialog = ({
             </div>
           </DialogHeader>
           <div className="grid grid-cols-3 gap-4 py-2 mt-4 ">
-            {categoriesData.map((category, index) => (
+            {categoriesData.map((category) => (
               <DialogClose key={category._id} asChild>
                 <Link
                   href={`/${category.slug.current}`}
-                  className="flex flex-col sm:flex-row sm:items-center hover:text-chathams-blue justify-between gap-4"
+                  className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center hover:text-chathams-blue"
                 >
                   {category.label}
                 </Link>

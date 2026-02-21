@@ -44,7 +44,10 @@ const createSingleTon = ({ S, type, title, icon }: CreateSingleTon) => {
     .child(S.document().schemaType(type).documentId(type));
 };
 
-const blogsByCategory = (S: StructureBuilder) => {
+const blogsByCategory = (
+  S: StructureBuilder,
+  context: StructureResolverContext,
+) => {
   return S.listItem()
     .title("Blogs By category")
     .icon(BookOpen)
@@ -52,10 +55,18 @@ const blogsByCategory = (S: StructureBuilder) => {
       S.documentTypeList("blogCategory")
         .title("Categories")
         .child((categoryId) =>
-          S.documentList()
+          S.list()
             .title("Blogs")
-            .filter(`_type == 'blog' && category._ref == $categoryId`)
-            .params({ categoryId }),
+            .items([
+              orderableDocumentListDeskItem({
+                S,
+                context,
+                type: "blog",
+                title: "Blog",
+                filter: "_type == 'blog' && category._ref == $categoryId",
+                params: { categoryId },
+              }),
+            ]),
         ),
     );
 };

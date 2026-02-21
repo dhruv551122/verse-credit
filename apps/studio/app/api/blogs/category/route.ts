@@ -33,8 +33,8 @@ export const GET = async (req: NextRequest) => {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
-  } catch (error) {
-    console.error("Unable to fetch data");
+  } catch (error: unknown) {
+    console.error(error, "Unable to fetch data");
     return new NextResponse("Unable to fetch data", { status: 500 });
   }
 };

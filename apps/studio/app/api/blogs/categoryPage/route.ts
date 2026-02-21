@@ -25,7 +25,7 @@ export const GET = async (req: NextRequest) => {
       {
         query: blogCategoryBySlugQuery,
         params: { categorySlug: categorySlug },
-      }
+      },
     );
 
     const {
@@ -39,7 +39,7 @@ export const GET = async (req: NextRequest) => {
       categoryPage: {
         ...categoryPage,
         otherCategories: categoryPage.otherCategories.filter(
-          (category) => category._id !== categoryData._id
+          (category) => category._id !== categoryData._id,
         ),
       },
     };

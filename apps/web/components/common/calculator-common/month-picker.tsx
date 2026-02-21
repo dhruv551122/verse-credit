@@ -1,5 +1,9 @@
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { SetStateAction, useState } from "react";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { SetStateAction } from "react";
 import { cn, formatDateToMonth } from "@/lib/utils";
 import { CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -19,17 +23,14 @@ const MonthPicker = ({
           variant={"outline"}
           className={cn(
             "justify-start text-left font-normal",
-            !date && "text-muted-foreground"
+            !date && "text-muted-foreground",
           )}
         >
-          <CalendarIcon className="mr-2 h-4 w-4" />
+          <CalendarIcon className="w-4 h-4 mr-2" />
           {date ? formatDateToMonth(date) : <span>Pick a month and year</span>}
         </Button>
       </PopoverTrigger>
-      <PopoverContent
-      className="w-fit"
-        align="start"
-      >
+      <PopoverContent className="w-fit" align="start">
         <Calendar
           endMonth={new Date(new Date().getFullYear() + 20, 0)}
           className="p-0 h-fit"

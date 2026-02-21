@@ -10,7 +10,10 @@ const CategoriesGroupCard = ({
   blog: NonNullable<BlogsQueryResult>[number];
 }) => {
   return (
-    <Link href={`/${blog.category.slug.current}/${blog.slug.current}`} className=" duration-300  group">
+    <Link
+      href={`/${blog.category.slug.current}/${blog.slug.current}`}
+      className=" duration-300  group"
+    >
       <div className="w-full mb-6">
         <SanityImage
           src={blog.heroImage}

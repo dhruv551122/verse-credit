@@ -26,13 +26,15 @@ const Header = ({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [screenSize, setScreenSize] = useState<number>(0);
 
-  if (typeof document !== "undefined") {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      if (isMobileMenuOpen) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "auto";
+      }
     }
-  }
+  }, [isMobileMenuOpen]);
 
   useEffect(() => {
     const handleResize = () => {

@@ -6,14 +6,7 @@ import {
 } from "@/components/ui/carousel";
 import { ReactNode } from "react";
 
-const BlogCardCarousel = ({
- 
-  children,
-}: {
-  
-  children: ReactNode;
-}) => {
-  
+const BlogCardCarousel = ({ children }: { children: ReactNode }) => {
   return (
     <div className="pl-4 md:pl-10 2xl:w-[calc(100%-(100%-1440px)/2)] 2xl:ml-auto pb-4 md:pb-10 lg:pb-16">
       <Carousel className="overflow-hidden left-0">

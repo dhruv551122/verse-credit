@@ -1,25 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sanityFetch } from "studio/sanity/lib/live";
-import { blogBySlugQuery } from "studio/sanity/lib/query";
-import { BlogBySlugQueryResult } from "../../../../../packages/types/src";
+import {
+  calculatorBySlugQuery,
+  calculatorByCategoryQuery,
+} from "studio/sanity/lib/query";
+import {
+  CalculatorByCategoryQueryResult,
+  CalculatorBySlugQueryResult,
+} from "../../../../../packages/types/src";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
 
   const categorySlug = searchParams.get("categorySlug");
-  const blogSlug = searchParams.get("blogSlug");
-
-  if (!categorySlug || !blogSlug) {
-    return NextResponse.json(
-      { error: "Missing categorySlug or blogSlug" },
-      { status: 400 },
-    );
-  }
+  const calculatorSlug = searchParams.get("calculatorSlug");
 
   try {
-    const { data }: { data: BlogBySlugQueryResult } = await sanityFetch({
-      query: blogBySlugQuery,
-      params: { categorySlug, blogSlug },
+    const { data } = await sanityFetch<
+      NonNullable<CalculatorByCategoryQueryResult | CalculatorBySlugQueryResult>
+    >({
+      query: calculatorSlug ? calculatorBySlugQuery : calculatorByCategoryQuery,
+      params: categorySlug ? { categorySlug } : { calculatorSlug },
     });
 
     if (!data) {

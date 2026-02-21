@@ -37,24 +37,24 @@ const CalculatorContainer = ({
   outputLable,
   chartConfig,
   chartData,
-  canShowYearsDetail,
+  // canShowYearsDetail,
 }: CalculatorContainerProps) => {
   const [errors, setErrors] = useState<string[]>([]);
 
   return (
     <div>
       <h1 className="mb-4 text-3xl font-bold">{title}</h1>
-      <div className="flex lg:flex-row items-center lg:items-start flex-col gap-10  ">
+      <div className="flex flex-col items-center gap-10 lg:flex-row lg:items-start ">
         <div className="w-full ">
           <div className="flex flex-col gap-10">
             {fieldValues.map((fieldValue) => (
               <CalculatorField
                 key={fieldValue.fieldLable}
-                inputValue={fieldValue.inputValue}
+                // inputValue={fieldValue.inputValue}
                 setFieldValue={fieldValue.setFieldValue}
-                setInputValue={fieldValue.setInputValue}
+                // setInputValue={fieldValue.setInputValue}
                 fieldValue={fieldValue.fieldValue}
-                setError={setErrors}
+                // setError={setErrors}
                 errors={errors}
                 defaultFieldValue={fieldValue.defaultFieldValue}
                 step={fieldValue.step}
@@ -67,12 +67,12 @@ const CalculatorContainer = ({
             ))}
           </div>
 
-          <div className="mt-6 p-4 bg-gray-100 rounded-lg flex flex-col gap-4 text-base">
-            <h2 className="text-2xl font-semibold mb-2">{outputLable}</h2>
+          <div className="flex flex-col gap-4 p-4 mt-6 text-base bg-gray-100 rounded-lg">
+            <h2 className="mb-2 text-2xl font-semibold">{outputLable}</h2>
             {outputValues.map((outputValue) => (
               <div
                 key={outputValue.label}
-                className="w-full flex flex-col sm:flex-row sm:items-center sm:justify-between"
+                className="flex flex-col w-full sm:flex-row sm:items-center sm:justify-between"
               >
                 <span>{outputValue.label}</span>
                 <span className="font-bold">

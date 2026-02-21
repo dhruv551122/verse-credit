@@ -1,15 +1,8 @@
 import { HomePageQueryResult } from "@sanity-types/*";
 import NewsCard from "./newsCard";
 import { SanityImage } from "@/sanity/sanityImage";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+import { CarouselItem } from "@/components/ui/carousel";
 import BlogCardCarousel from "@/components/common/blogCardCarousel";
-import Link from "next/link";
 
 const NewsBlogs = ({
   homePage,
@@ -32,7 +25,10 @@ const NewsBlogs = ({
       <div>
         <BlogCardCarousel>
           {homePage.newsBlogs.map((blog) => (
-            <div key={blog._id} className="min-w-60 max-w-60 sm:max-w-80 sm:min-w-80 ">
+            <div
+              key={blog._id}
+              className="min-w-60 max-w-60 sm:max-w-80 sm:min-w-80 "
+            >
               <CarouselItem>
                 <NewsCard blog={blog} />
               </CarouselItem>

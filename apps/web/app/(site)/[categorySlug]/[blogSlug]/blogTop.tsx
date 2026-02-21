@@ -13,7 +13,9 @@ const BlogTop = ({ blog }: { blog: NonNullable<BlogBySlugQueryResult> }) => {
           <h2 className="text-3xl sm:text-5xl text-balance font-semibold">
             {blog.title}
           </h2>
-          <p className="text-base md:text-xl text-balance">{blog.description}</p>
+          <p className="text-base md:text-xl text-balance">
+            {blog.description}
+          </p>
 
           <p className="text-sm sm:text-base ">
             <span className="pr-2 font-semibold border-r-2 border-gray-500">

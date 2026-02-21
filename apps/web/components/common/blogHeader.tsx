@@ -26,7 +26,7 @@ const BlogHeader = ({
       <h4
         className={cn(
           "text-base font-bold uppercase text-chathams-blue",
-          headingClassname
+          headingClassname,
         )}
       >
         {category}
@@ -34,7 +34,7 @@ const BlogHeader = ({
       <h2
         className={cn(
           "text-xl sm:text-[22px] font-semibold text-tuatara leading-6",
-          titleClassname
+          titleClassname,
         )}
       >
         {title}
@@ -44,7 +44,7 @@ const BlogHeader = ({
           <span
             className={cn(
               "pr-2 font-semibold text-gray-500 border-r-2 border-gray-600",
-              authorClassname
+              authorClassname,
             )}
           >
             {author}

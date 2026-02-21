@@ -17,7 +17,7 @@ const RecommandedBlogs = ({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4">
           {blogs.map((blog) => (
             <Link
-            key={blog._id}
+              key={blog._id}
               href={`/${blog.category.slug.current}/${blog.slug.current}`}
               className=" duration-300 group"
             >

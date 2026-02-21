@@ -6,7 +6,7 @@ import { StyledTable } from "../../../../packages/types/src";
 export default function StyledTablePreview(
   value: PreviewProps & {
     rows?: StyledTable["rows"];
-  }
+  },
 ) {
   if (!value?.rows?.length) {
     return (

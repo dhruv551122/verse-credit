@@ -10,13 +10,7 @@ import {
 const CalculatorTable = ({
   data,
 }: {
-  data: {
-    year: number;
-    month: number;
-    interestForMonth: number;
-    balance: number;
-    principlePaid: number;
-  }[];
+  data: Record<string, string | number>[];
 }) => {
   return (
     <Table>
@@ -36,7 +30,7 @@ const CalculatorTable = ({
             <TableCell>{detail.principlePaid}</TableCell>
             <TableCell>{detail.interestForMonth}</TableCell>
             <TableCell>
-              {detail.principlePaid + detail.interestForMonth}
+              {Number(detail.principlePaid) + Number(detail.interestForMonth)}
             </TableCell>
             <TableCell>{detail.balance}</TableCell>
           </TableRow>

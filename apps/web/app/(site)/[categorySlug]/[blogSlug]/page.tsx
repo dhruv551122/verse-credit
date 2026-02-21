@@ -1,4 +1,4 @@
-import { BlogBySlugQueryResult } from "@sanity-types/*";
+import { BlogBySlugQueryResult, BlogsQueryResult } from "@sanity-types/*";
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
 import BlogContent from "./blogContent";
@@ -19,7 +19,7 @@ export async function generateMetadata({
   }).toString();
 
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/blog?${searchParams}`
+    `${process.env.BACKEND_URL}/api/blog?${searchParams}`,
   );
 
   if (!res.ok) {
@@ -48,16 +48,16 @@ const BlogPage = async ({
   const blogParams = await params;
   const searchParams = new URLSearchParams(blogParams).toString();
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/blog?${searchParams}`
+    `${process.env.BACKEND_URL}/api/blog?${searchParams}`,
   );
 
   if (!res.ok) notFound();
   const blog: NonNullable<BlogBySlugQueryResult> = await res.json();
 
-  const blogsRes = await fetch(`${process.env.BACKEND_URL}/api/blogs`);
+  // const blogsRes = await fetch(`${process.env.BACKEND_URL}/api/blogs`);
 
-  const blogs = await blogsRes.json();
-  const randomBlogs = blogs.sort(() => 0.5 - Math.random()).slice(0, 3);
+  // const blogs = await blogsRes.json();
+  // const randomBlogs = blogs.sort(() => 0.5 - Math.random()).slice(0, 3);
 
   return (
     <div className="mt-16.75 font-inter">
@@ -77,9 +77,27 @@ const BlogPage = async ({
         </div>
       </div>
       <BlogContent blog={blog} />
-      <RecommandedBlogs blogs={randomBlogs}/>
+      {/* <RecommandedBlogs blogs={randomBlogs}/> */}
     </div>
   );
 };
 
 export default BlogPage;
+
+export async function generateStaticParams() {
+  const res = await fetch(`${process.env.BACKEND_URL}/api/blogsByClient`);
+
+  if (!res.ok && !res.ok) return [];
+
+  if (!res.ok && !res.ok) return [];
+  const data: NonNullable<BlogsQueryResult> = await res.json();
+
+  if (!data || !Array.isArray(data)) {
+    return [];
+  }
+
+  return data.map((blog) => ({
+    categorySlug: blog.category.slug.current,
+    blogSlug: blog.slug.current,
+  }));
+}

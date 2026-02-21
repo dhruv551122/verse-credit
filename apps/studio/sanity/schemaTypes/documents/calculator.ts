@@ -57,8 +57,9 @@ export const calculator = defineType({
     }),
     defineField({
       name: "slug",
-      type: "string",
+      type: "slug",
       title: "Slug",
+      options: { source: "title" },
       group: "calculator",
       validation: (Rule) => Rule.required(),
     }),

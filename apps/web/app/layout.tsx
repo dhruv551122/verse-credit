@@ -24,7 +24,8 @@ const ingrid_darling = Inter({
 
 export const metadata: Metadata = {
   title: "VerseCredit: Global & Indian Financial News at a Glance",
-  description: "Latest finance, market, and economic news delivered clearly and accurately.",
+  description:
+    "Latest finance, market, and economic news delivered clearly and accurately.",
 };
 
 export default function RootLayout({

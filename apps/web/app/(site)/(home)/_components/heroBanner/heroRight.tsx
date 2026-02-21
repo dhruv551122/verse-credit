@@ -16,12 +16,12 @@ const HeroRight = ({
       <div className="flex flex-col gap-4">
         {homePage.heroRightBlogs.map((blog, index) => (
           <Link
-          href={`/${blog.category.slug.current}/${blog.slug.current}`}
+            href={`/${blog.category.slug.current}/${blog.slug.current}`}
             key={blog._id}
             className={cn(
               "grid gap-2  sm:grid-cols-6 group",
               homePage.heroRightBlogs.length - 1 !== index &&
-                "pb-4 border-b border-gray-300"
+                "pb-4 border-b border-gray-300",
             )}
           >
             <BlogHeader

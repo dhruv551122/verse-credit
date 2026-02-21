@@ -25,7 +25,6 @@ export const GET = async (req: NextRequest) => {
     if (!data) {
       return NextResponse.json({ error: "Blogs not found" }, { status: 404 });
     }
-    console.log(data);
     return NextResponse.json(data, {
       status: 200,
       headers: {

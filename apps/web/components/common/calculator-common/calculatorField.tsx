@@ -9,9 +9,9 @@ import { cn } from "@/lib/utils";
 import { InfoIcon } from "lucide-react";
 import { SetStateAction } from "react";
 const CalculatorField = ({
-  inputValue,
+  // inputValue,
   setFieldValue,
-  setInputValue,
+  // setInputValue,
   fieldValue,
   step,
   minFiledValue,
@@ -20,12 +20,12 @@ const CalculatorField = ({
   fieldLable,
   filedUnit,
   unitRightSide,
-  setError,
+  // setError,
   errors,
 }: {
-  inputValue: number;
+  // inputValue: number;
   setFieldValue: React.Dispatch<React.SetStateAction<number>>;
-  setInputValue: React.Dispatch<React.SetStateAction<number>>;
+  // setInputValue: React.Dispatch<React.SetStateAction<number>>;
   fieldValue: number;
   defaultFieldValue: number;
   step: number;
@@ -33,15 +33,15 @@ const CalculatorField = ({
   maxFieldValue: number;
   fieldLable: string;
   filedUnit?: string;
-  setError: React.Dispatch<SetStateAction<string[]>>;
+  // setError: React.Dispatch<SetStateAction<string[]>>;
   unitRightSide?: boolean;
   errors: string[];
 }) => {
   const isError = errors.includes(fieldLable);
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 text-base">
-        <h4 className=" font-semibold">{fieldLable}</h4>
+      <div className="flex flex-col gap-4 text-base md:flex-row md:items-center md:justify-between">
+        <h4 className="font-semibold ">{fieldLable}</h4>
         <div className="flex items-center gap-4">
           <Tooltip>
             <TooltipTrigger>
@@ -57,7 +57,7 @@ const CalculatorField = ({
             <span
               className={cn(
                 "absolute  top-1/2 -translate-y-1/2",
-                unitRightSide ? "right-2" : "left-2"
+                unitRightSide ? "right-2" : "left-2",
               )}
             >
               {filedUnit}
@@ -66,10 +66,9 @@ const CalculatorField = ({
               className={cn(
                 "! text-right",
                 unitRightSide ? "pr-6" : "pl-5",
-                isError && "border-red-600! bg-red-300/50 ring-red-300! "
+                isError && "border-red-600! bg-red-300/50 ring-red-300! ",
               )}
               value={fieldValue}
-              
               onChange={(e) => {
                 const input = Number(e.target.value);
                 if (Number.isNaN(input)) return;

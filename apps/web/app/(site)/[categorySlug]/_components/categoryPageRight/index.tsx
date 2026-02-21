@@ -23,7 +23,7 @@ const CategoryPageRight = ({
               className={cn(
                 "flex justify-between gap-4 py-4 ",
                 index !== categoryPage.recommandedBlogs.length - 1 &&
-                  "border-b border-gray-300"
+                  "border-b border-gray-300",
               )}
             >
               <BlogHeader

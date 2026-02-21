@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
 
-export function proxy(req: NextRequest) {
+export function proxy() {
   const res = NextResponse.next();
 
   res.headers.set("Access-Control-Allow-Origin", `${process.env.FRONTEND_URL}`);

@@ -40,23 +40,27 @@ const SearchDialog = ({
   const timerRef = useRef<ReturnType<typeof setTimeout>>(null);
   const searchDialogTimeRef = useRef<NodeJS.Timeout>(undefined);
 
-  if (typeof document !== "undefined") {
-    if (isMobileMenuOpen || isSearchMounted) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      if (isMobileMenuOpen || isSearchMounted) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "auto";
+      }
     }
-  }
+  }, [isMobileMenuOpen, isSearchMounted]);
 
-  if (searchDialogTimeRef.current) {
-    clearTimeout(searchDialogTimeRef.current);
-  }
+  useEffect(() => {
+    if (searchDialogTimeRef.current) {
+      clearTimeout(searchDialogTimeRef.current);
+    }
 
-  if (isSearchMounted) {
-    searchDialogTimeRef.current = setTimeout(() => setIsSearchOpen(true), 10);
-  } else {
-    searchDialogTimeRef.current = setTimeout(() => setIsSearchOpen(false));
-  }
+    if (isSearchMounted) {
+      searchDialogTimeRef.current = setTimeout(() => setIsSearchOpen(true), 10);
+    } else {
+      searchDialogTimeRef.current = setTimeout(() => setIsSearchOpen(false));
+    }
+  }, [isSearchMounted]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -152,8 +156,8 @@ const SearchDialog = ({
               />
             </div>
           </DialogHeader>
-          {resultBlogs.length > 0 ?
-            <div className="flex flex-col gap-4 py-2 md:mt-4 overflow-y-scroll max-h-150 w-full md:min-h-80 md:max-h-80">
+          {resultBlogs.length > 0 ? (
+            <div className="flex flex-col w-full gap-4 py-2 overflow-y-scroll md:mt-4 max-h-150 md:min-h-80 md:max-h-80">
               {resultBlogs.map((blog, index) => (
                 <DialogClose key={blog._id} asChild>
                   <Link
@@ -182,10 +186,11 @@ const SearchDialog = ({
                 </DialogClose>
               ))}
             </div>
-          : <div className="h-full mt-4 md:max-h-80 md:min-h-80">
+          ) : (
+            <div className="h-full mt-4 md:max-h-80 md:min-h-80">
               <p>No match found.</p>
             </div>
-          }
+          )}
         </div>
       </DialogContent>
     </Dialog>

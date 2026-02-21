@@ -21,12 +21,12 @@ const MIN_TENURE_YEARS = 1;
 const SIPCalculator = () => {
   const [sipType, setSipType] = useState<"monthly" | "lumpsum">("monthly");
   const [monthlyInvestment, setMonthlyInvestment] = useState<number>(
-    DEFAULT_MONTHLY_INVESTMENT
+    DEFAULT_MONTHLY_INVESTMENT,
   );
   const [returnRate, setReturnRate] = useState<number>(DEFAULT_RETURN_RATE);
   const [tenure, setTenure] = useState<number>(DEFAULT_TENURE_YEARS);
   const [monthlyInvestmentInput, setmonthlyInvestmentInput] = useState<number>(
-    DEFAULT_MONTHLY_INVESTMENT
+    DEFAULT_MONTHLY_INVESTMENT,
   );
   const [returnRateInput, setReturnRateInput] =
     useState<number>(DEFAULT_RETURN_RATE);
@@ -137,7 +137,7 @@ const SIPCalculator = () => {
           role="button"
           className={cn(
             "cursor-pointer py-2 px-4 text-white border-b border-black  duration-300",
-            sipType === "monthly" ? "bg-[#9a9a9a] " : "bg-[#2a2a2a]"
+            sipType === "monthly" ? "bg-[#9a9a9a] " : "bg-[#2a2a2a]",
           )}
           onClick={() => setSipType("monthly")}
         >
@@ -147,7 +147,7 @@ const SIPCalculator = () => {
           role="button"
           className={cn(
             "cursor-pointer py-2 px-4 text-white border-b border-black duration-300",
-            sipType === "lumpsum" ? "bg-[#9a9a9a] " : "bg-[#2a2a2a] "
+            sipType === "lumpsum" ? "bg-[#9a9a9a] " : "bg-[#2a2a2a] ",
           )}
           onClick={() => setSipType("lumpsum")}
         >
@@ -169,6 +169,6 @@ const SIPCalculator = () => {
       </div>
     </div>
   );
-}
+};
 
-export default SIPCalculator
+export default SIPCalculator;

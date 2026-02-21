@@ -3,6 +3,7 @@ import Link from "next/link";
 import { URLSearchParams } from "url";
 import CategoryBlogs from "./_components/categoryBlogs";
 import {
+  BlogCategoriesQueryResult,
   BlogCategoryBySlugQueryResult,
   BlogCategoryPageQueryResult,
   BlogsByCategoryQueryResult,
@@ -32,7 +33,8 @@ const CategoriesPage = async ({
     );
 
     categoryPage = await categoryPageData.json();
-  } catch (error) {
+  } catch (error: unknown) {
+    console.log(error);
     return notFound();
   }
 
@@ -60,3 +62,21 @@ const CategoriesPage = async ({
 };
 
 export default CategoriesPage;
+
+export async function generateStaticParams() {
+  const res = await fetch(
+    `${process.env.BACKEND_URL}/api/blogCategoriesByClient`,
+    { cache: "force-cache" },
+  );
+
+  if (!res.ok) return [];
+  const categories: NonNullable<BlogCategoriesQueryResult> = await res.json();
+
+  if (!categories || !Array.isArray(categories)) {
+    return [];
+  }
+
+  return categories.map((category) => ({
+    categorySlug: category.slug.current,
+  }));
+}

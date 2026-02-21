@@ -14,7 +14,11 @@ const CalculatorChart = ({
   data,
 }: {
   chartConfig: ChartConfig;
-  data: any[];
+  data: {
+    label: string;
+    value: number;
+    fill: string;
+  }[];
 }) => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   useEffect(() => {
@@ -28,7 +32,7 @@ const CalculatorChart = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
   return (
-    <Card className="border-none shadow-none max-w-70 gap-0 sm:max-w-100 p-0">
+    <Card className="gap-0 p-0 border-none shadow-none max-w-70 sm:max-w-100">
       <CardHeader className="p-0">
         <CardTitle className="flex items-center justify-center gap-6 sm:gap-10">
           {data.map((data) => (

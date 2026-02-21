@@ -16,7 +16,7 @@ const CategoryPageBlogCard = ({
       href={`/${blog.category.slug.current}/${blog.slug.current}`}
       className={cn(
         "duration-300 group grid grid-cols-1 gap-4 sm:grid-cols-3 ",
-        className
+        className,
       )}
     >
       <div className="flex flex-col gap-1 sm:col-span-2">

@@ -10,7 +10,10 @@ const NewsCard = ({
   blog: NonNullable<BlogsQueryResult>[number];
 }) => {
   return (
-    <Link href={`/${blog.category.slug.current}/${blog.slug.current}`} className="flex flex-col rounded-xl group overflow-hidden ">
+    <Link
+      href={`/${blog.category.slug.current}/${blog.slug.current}`}
+      className="flex flex-col rounded-xl group overflow-hidden "
+    >
       <BlogHeader
         className="p-4 sm:p-6 bg-white h-44 sm:h-50"
         author={blog.author.authorName}

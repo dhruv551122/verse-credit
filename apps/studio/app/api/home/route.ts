@@ -3,7 +3,7 @@ import { HomePageQueryResult } from "../../../../../packages/types/src";
 import { homePageQuery } from "studio/sanity/lib/query";
 import { sanityFetch } from "studio/sanity/lib/live";
 
-export const GET = async (req: Request) => {
+export const GET = async () => {
   try {
     const { data }: { data: NonNullable<HomePageQueryResult> } =
       await sanityFetch({ query: homePageQuery });
@@ -16,7 +16,7 @@ export const GET = async (req: Request) => {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
-    console.error("Unable fetch data");
+    console.error(error, "Unable fetch data");
 
     return new NextResponse("Unable to fetch Data", { status: 500 });
   }

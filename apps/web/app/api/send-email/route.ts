@@ -26,7 +26,7 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    const { data, error } = await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: from,
       to: [to],
       subject: "Contact form submission",
@@ -67,13 +67,10 @@ export const POST = async (req: NextRequest) => {
       success: true,
       message: "Contact form submitted successfully",
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error sending email:", error);
 
-    const errorMessage =
-      error?.response?.body?.errors?.[0]?.message ||
-      error?.message ||
-      "Failed to send email.";
+    const errorMessage = "Failed to send email." + error;
 
     return NextResponse.json(
       { success: false, message: errorMessage },

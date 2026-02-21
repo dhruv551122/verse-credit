@@ -1,9 +1,9 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { sanityFetch } from "studio/sanity/lib/live";
 import { settingsQuery } from "studio/sanity/lib/query";
 import { SettingsQueryResult } from "../../../../../packages/types/src";
 
-export const GET = async (req: NextRequest) => {
+export const GET = async () => {
   try {
     const { data }: { data: NonNullable<SettingsQueryResult> } =
       await sanityFetch({ query: settingsQuery });

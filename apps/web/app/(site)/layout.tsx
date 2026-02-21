@@ -12,7 +12,7 @@ const SiteLayout = async ({
 }>) => {
   const data = await fetch(`${process.env.BACKEND_URL}/api/settings`);
   const categoriesRes = await fetch(
-    `${process.env.BACKEND_URL}/api/blogs/category`
+    `${process.env.BACKEND_URL}/api/blogs/category`,
   );
   const settingsData: NonNullable<SettingsQueryResult> = await data.json();
   const categoriesData: NonNullable<BlogCategoriesQueryResult> =

@@ -71,14 +71,19 @@ export const claculatorCategoriesQuery = groq`
     }
 `;
 
-export const calculatorQuery = groq`
-    *[_type == 'calculator']{
+export const calculatorByCategoryQuery = groq`
+    *[_type == 'calculator' && category.slug == $categorySlug]{
+        icon,
+        title,
+        description,
+        slug,
+        category->
+    }
+`;
+export const calculatorBySlugQuery = groq`
+    *[_type == 'calculator' && slug == $calculatorSlug]{
         ...,
-        icon {
-            ...,
-            asset ->
-        },
-        category ->
+        category->
     }
 `;
 
@@ -168,7 +173,7 @@ export const blogsQuery = groq`
 `;
 
 export const blogsRssQuery = groq`
-    *[_type == 'blog']{
+    *[_type == 'blog'] | order(orderrank){
         title,
         description,
         uplodedAt,

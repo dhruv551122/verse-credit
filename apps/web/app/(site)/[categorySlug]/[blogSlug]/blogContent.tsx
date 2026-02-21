@@ -53,10 +53,10 @@ const BlogContent = ({
                     <li
                       role="button"
                       key={tableIndex.id}
-                      onClick={(e) => handleScroll(tableIndex.id)}
+                      onClick={() => handleScroll(tableIndex.id)}
                       className={cn(
                         "duration-300 hover:text-chathams-blue cursor-pointer font-medium",
-                        activeId === tableIndex.id && "text-chathams-blue"
+                        activeId === tableIndex.id && "text-chathams-blue",
                       )}
                     >
                       {tableIndex.title}

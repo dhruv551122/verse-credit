@@ -50,7 +50,7 @@ const Sidebar = ({
         <div
           className={cn(
             "h-[calc(100vh-66px)] bg-chathams-blue w-full transition-transform left-0 top-16.5 duration-500 absolute -translate-x-full",
-            isSidebarOpen && "translate-x-0"
+            isSidebarOpen && "translate-x-0",
           )}
         >
           <div className="flex flex-col gap-2 p-4">

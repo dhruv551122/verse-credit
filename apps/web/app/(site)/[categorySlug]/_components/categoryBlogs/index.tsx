@@ -19,7 +19,7 @@ function CategoryBlogs({
       <div
         className={cn(
           "flex flex-col sm:flex-row gap-6 py-4 md:py-8",
-          blogs.length > 2 && "border-b border-gray-300"
+          blogs.length > 2 && "border-b border-gray-300",
         )}
       >
         {blogs.slice(0, 2).map((blog) => (
@@ -53,7 +53,7 @@ function CategoryBlogs({
           key={blog._id}
           className={cn(
             "py-6",
-            index !== blogs.length - 3 && "border-b border-gray-300"
+            index !== blogs.length - 3 && "border-b border-gray-300",
           )}
         >
           <CategoryPageBlogCard blog={blog} />

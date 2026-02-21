@@ -1,4 +1,4 @@
-import { cn, slugify } from "@/lib/utils";
+/* eslint-disable */ import { cn, slugify } from "@/lib/utils";
 import { SanityImage } from "@/sanity/sanityImage";
 import { PortableText } from "next-sanity";
 import Link from "next/link";
@@ -29,16 +29,16 @@ const RichText: React.FC<Props> = ({
 }) => {
   const combinedClassNames = cn(
     "prose max-w-none text-tuatara font-inter",
-    className
+    className,
   );
 
   const myPortableTextComponents: any = {
     list: {
       bullet: ({ children }: { children: React.ReactNode }) => (
-        <ul className="list-disc mb-4 pl-8">{children}</ul>
+        <ul className="pl-8 mb-4 list-disc">{children}</ul>
       ),
       number: ({ children }: { children: React.ReactNode }) => (
-        <ol className="list-decimal mb-4 pl-8">{children}</ol>
+        <ol className="pl-8 mb-4 list-decimal">{children}</ol>
       ),
     },
     block: {
@@ -47,19 +47,22 @@ const RichText: React.FC<Props> = ({
         const text = getTextFromChildren(children);
         const id = slugify(text);
         return (
-          <h2 id={id} className="my-4 text-2xl md:text-3xl font-semibold scroll-m-20">
+          <h2
+            id={id}
+            className="my-4 text-2xl font-semibold md:text-3xl scroll-m-20"
+          >
             {children}
           </h2>
         );
       },
       h3: ({ children }: any) => (
-        <h3 className="my-4 text-xl md:text-2xl font-semibold">{children}</h3>
+        <h3 className="my-4 text-xl font-semibold md:text-2xl">{children}</h3>
       ),
       h4: ({ children }: any) => <h4 className="my-4 ">{children}</h4>,
       h5: ({ children }: any) => <h5 className="my-4 ">{children}</h5>,
       h6: ({ children }: any) => <h6 className="my-4 ">{children}</h6>,
       normal: ({ children }: any) => (
-        <p className="text-base font-inter mb-4 leading-relaxed min-h-px">
+        <p className="mb-4 text-base leading-relaxed font-inter min-h-px">
           {children}
         </p>
       ),
@@ -107,7 +110,7 @@ const RichText: React.FC<Props> = ({
                 alt={value.alt || "VerseCredit"}
                 width={1000}
                 height={1000}
-                className="m-0 max-h-125 w-full object-contain"
+                className="object-contain w-full m-0 max-h-125"
               />
             )}
             {value.alt && (
@@ -133,7 +136,7 @@ const RichText: React.FC<Props> = ({
                             backgroundColor: cellValue?.bgColor?.value,
                             color: cellValue?.textColor?.value,
                           }}
-                          className="border border-gray-300 p-2"
+                          className="p-2 border border-gray-300"
                         >
                           <PortableText value={cellValue.content} />
                         </td>

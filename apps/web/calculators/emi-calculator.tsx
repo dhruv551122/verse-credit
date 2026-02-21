@@ -19,13 +19,13 @@ const MIN_TENURE_YEARS = 1;
 const EMICalculator = () => {
   const [loanAmount, setLoanAmount] = useState<number>(DEFAULT_AMOUNT_VALUE);
   const [interestRate, setInterestRate] = useState<number>(
-    DEFAULT_INTEREST_RATE
+    DEFAULT_INTEREST_RATE,
   );
   const [tenure, setTenure] = useState<number>(DEFAULT_TENURE_YEARS);
   const [loanAmountInput, setLoanAmountInput] =
     useState<number>(DEFAULT_AMOUNT_VALUE);
   const [interestRateInput, setInterestRateInput] = useState<number>(
-    DEFAULT_INTEREST_RATE
+    DEFAULT_INTEREST_RATE,
   );
   const [tenureInput, setTenureInput] = useState<number>(DEFAULT_TENURE_YEARS);
   const [startDate, setStartDate] = useState<Date>(new Date());
@@ -43,7 +43,7 @@ const EMICalculator = () => {
     const allMonthsEMIDetail = [];
 
     // clone startDate so state is untouched
-    let currentDate = new Date(startDate);
+    const currentDate = new Date(startDate);
 
     for (let i = 1; i <= months; i++) {
       const interestForMonth = balance * monthlyInterestRate;
@@ -51,7 +51,7 @@ const EMICalculator = () => {
       balance -= principalPaid;
 
       allMonthsEMIDetail.push({
-        year: currentDate.getFullYear(),
+        year: currentDate.getFullYear().toString(),
         month: currentDate.toLocaleString("default", { month: "short" }),
         interestForMonth: Math.round(interestForMonth),
         balance: Math.round(balance),
@@ -64,18 +64,24 @@ const EMICalculator = () => {
   };
   const allMonthEMIDetail = individualMonthsInterest();
 
-  function groupByKey(array: any[], key: string) {
-    return array.reduce((accumulator: any[], currentItem: any) => {
-      const groupValue = currentItem[key];
+  function groupByKey<
+    T extends Record<string, string | number>,
+    K extends keyof T,
+  >(array: T[], key: K): Record<T[K] & (string | number), T[]> {
+    return array.reduce(
+      (acc, item) => {
+        const groupValue = item[key] as T[K] & (string | number);
 
-      if (!accumulator[groupValue]) {
-        accumulator[groupValue] = [];
-      }
+        if (!acc[groupValue]) {
+          acc[groupValue] = [];
+        }
 
-      accumulator[groupValue].push(currentItem);
+        acc[groupValue].push(item);
 
-      return accumulator;
-    }, {});
+        return acc;
+      },
+      {} as Record<T[K] & (string | number), T[]>,
+    );
   }
 
   const groupedYearsDetail = groupByKey(allMonthEMIDetail, "year");
@@ -167,7 +173,7 @@ const EMICalculator = () => {
 
   return (
     <div className="max-width-container padding-container">
-      <div className="border border-gray-300 rounded-lg p-6 shadow-md flex flex-col gap-10">
+      <div className="flex flex-col gap-10 p-6 border border-gray-300 rounded-lg shadow-md">
         <CalculatorContainer
           title="EMI Calculator"
           fieldValues={fieldValues}
@@ -185,6 +191,6 @@ const EMICalculator = () => {
       </div>
     </div>
   );
-}
+};
 
-export default EMICalculator
+export default EMICalculator;
