@@ -1,17 +1,18 @@
 import { NextResponse } from "next/server";
-import { CalculatorCategoriesQueryResult } from "../../../../../packages/types/src";
+import { calculatorPageQuery } from "studio/sanity/lib/query";
 import { client } from "studio/sanity/lib/client";
-import { calculatorCategoriesQuery } from "studio/sanity/lib/query";
+import { CalculatorPageQueryResult } from "../../../../../packages/types/src";
 
 export async function GET() {
   try {
-    const data = await client.fetch<
-      NonNullable<CalculatorCategoriesQueryResult>
-    >(calculatorCategoriesQuery);
+    const data =
+      await client.fetch<NonNullable<CalculatorPageQueryResult>>(
+        calculatorPageQuery,
+      );
 
     if (!data) {
       return NextResponse.json(
-        { error: "No result for calculator categories." },
+        { error: "Calculator page is not found." },
         { status: 404 },
       );
     }

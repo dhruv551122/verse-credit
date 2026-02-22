@@ -42,31 +42,21 @@ export const blogCategoryBySlugQuery = groq`
     }
 `;
 
-export const calculatorCategoriesQuery = groq`
-    *[_type == 'calculatorCategory']{
-        _id,
-        title,
-        tagLine,
-        slug,
-    }
-`;
-
-export const calculatorCategoryPageQuery = groq`
-*[_type == 'calculatorCategory' && slug.current == $categorySlug]{
+export const calculatorPageQuery = groq`
+*[_type == 'calculatorPage'][0]{
     ...,
-    "calculatorList": *[_type == 'calculator' && category.slug == $categorySlug]{
+    "calculatorList": *[_type == 'calculator']{
+        _id,
         icon,
         title,
         description,
         slug,
-        category->
     }
 }
 `;
 export const calculatorBySlugQuery = groq`
-    *[_type == 'calculator' && slug == $calculatorSlug]{
+    *[_type == 'calculator' && slug.current == $calculatorSlug][0]{
         ...,
-        category->
     }
 `;
 

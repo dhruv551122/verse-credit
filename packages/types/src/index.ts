@@ -192,13 +192,6 @@ export type BlogCategory = {
   orderRank?: string;
 };
 
-export type CalculatorCategoryReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "calculatorCategory";
-};
-
 export type Calculator = {
   _id: string;
   _type: "calculator";
@@ -218,7 +211,6 @@ export type Calculator = {
   tagLine: string;
   description: string;
   slug: Slug;
-  category: CalculatorCategoryReference;
   aboutCalculator?: BlockContent;
   orderRank?: string;
 };
@@ -229,17 +221,15 @@ export type TextColor = {
   value?: string;
 };
 
-export type CalculatorCategory = {
+export type CalculatorPage = {
   _id: string;
-  _type: "calculatorCategory";
+  _type: "calculatorPage";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   seo: Seo;
-  title: string;
-  tagLine: string;
-  slug: string;
-  orderRank?: string;
+  calculatorPageTitle: string;
+  calculatorPageTagLine: string;
 };
 
 export type Contact_us = {
@@ -494,10 +484,9 @@ export type AllSanitySchemaTypes =
   | Slug
   | BlogAuthor
   | BlogCategory
-  | CalculatorCategoryReference
   | Calculator
   | TextColor
-  | CalculatorCategory
+  | CalculatorPage
   | Contact_us
   | BlogReference
   | BlogCategoryPage
@@ -749,30 +738,19 @@ export type BlogCategoryBySlugQueryResult = {
 } | null;
 
 // Source: sanity/lib/query.ts
-// Variable: calculatorCategoriesQuery
-// Query: *[_type == 'calculatorCategory']{        _id,        title,        tagLine,        slug,    }
-export type CalculatorCategoriesQueryResult = Array<{
+// Variable: calculatorPageQuery
+// Query: *[_type == 'calculatorPage'][0]{    ...,    "calculatorList": *[_type == 'calculator']{        _id,        icon,        title,        description,        slug,    }}
+export type CalculatorPageQueryResult = {
   _id: string;
-  title: string;
-  tagLine: string;
-  slug: string;
-}>;
-
-// Source: sanity/lib/query.ts
-// Variable: calculatorCategoryPageQuery
-// Query: *[_type == 'calculatorCategory' && slug.current == $categorySlug]{    ...,    "calculatorList": *[_type == 'calculator' && category.slug == $categorySlug]{        icon,        title,        description,        slug,        category->    }}
-export type CalculatorCategoryPageQueryResult = Array<{
-  _id: string;
-  _type: "calculatorCategory";
+  _type: "calculatorPage";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   seo: Seo;
-  title: string;
-  tagLine: string;
-  slug: string;
-  orderRank?: string;
+  calculatorPageTitle: string;
+  calculatorPageTagLine: string;
   calculatorList: Array<{
+    _id: string;
     icon: {
       asset?: SanityImageAssetReference;
       media?: unknown;
@@ -784,25 +762,13 @@ export type CalculatorCategoryPageQueryResult = Array<{
     title: string;
     description: string;
     slug: Slug;
-    category: {
-      _id: string;
-      _type: "calculatorCategory";
-      _createdAt: string;
-      _updatedAt: string;
-      _rev: string;
-      seo: Seo;
-      title: string;
-      tagLine: string;
-      slug: string;
-      orderRank?: string;
-    };
   }>;
-}>;
+} | null;
 
 // Source: sanity/lib/query.ts
 // Variable: calculatorBySlugQuery
-// Query: *[_type == 'calculator' && slug == $calculatorSlug]{        ...,        category->    }
-export type CalculatorBySlugQueryResult = Array<{
+// Query: *[_type == 'calculator' && slug.current == $calculatorSlug][0]{        ...,    }
+export type CalculatorBySlugQueryResult = {
   _id: string;
   _type: "calculator";
   _createdAt: string;
@@ -821,21 +787,9 @@ export type CalculatorBySlugQueryResult = Array<{
   tagLine: string;
   description: string;
   slug: Slug;
-  category: {
-    _id: string;
-    _type: "calculatorCategory";
-    _createdAt: string;
-    _updatedAt: string;
-    _rev: string;
-    seo: Seo;
-    title: string;
-    tagLine: string;
-    slug: string;
-    orderRank?: string;
-  };
   aboutCalculator?: BlockContent;
   orderRank?: string;
-}>;
+} | null;
 
 // Source: sanity/lib/query.ts
 // Variable: settingsQuery

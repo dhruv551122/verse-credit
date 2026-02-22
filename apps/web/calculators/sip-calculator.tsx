@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { cn } from "@/lib/utils";
 import CalculatorContainer from "@/components/common/calculator-common/calculator-container";
 
 const DEFAULT_MONTHLY_INVESTMENT = 1000;
@@ -19,7 +18,6 @@ const MIN_TENURE_YEARS = 1;
 // FV = P × ({[(1 + i)^n – 1] / i}) × (1 + i), while for Lumpsum it's FV = P * (1 + r/n)^(nt)
 
 const SIPCalculator = () => {
-  const [sipType, setSipType] = useState<"monthly" | "lumpsum">("monthly");
   const [monthlyInvestment, setMonthlyInvestment] = useState<number>(
     DEFAULT_MONTHLY_INVESTMENT,
   );
@@ -34,23 +32,15 @@ const SIPCalculator = () => {
 
   const monthlyInterestRate = returnRate / 100 / 12;
   const months = tenure * 12;
-
-  const estimatedReturn =
-    sipType === "monthly"
-      ? monthlyInvestment *
-        (((1 + monthlyInterestRate) ** months - 1) / monthlyInterestRate)
-      : monthlyInvestment * (1 + returnRate / 100) ** tenure;
-
-  const chartConfig = {
-    principle: {
-      name: "Investment",
-      color: "#2a2a2a",
-    },
-    interest: {
-      name: "Est. Returns",
-      color: "#9a9a9a",
-    },
-  };
+  let estimatedReturn;
+  if (monthlyInterestRate === 0) {
+    estimatedReturn = monthlyInvestment * months;
+  } else {
+    estimatedReturn =
+      monthlyInvestment *
+      (((1 + monthlyInterestRate) ** months - 1) / monthlyInterestRate) *
+      (1 + monthlyInterestRate);
+  }
 
   const fieldValues = [
     {
@@ -97,76 +87,55 @@ const SIPCalculator = () => {
   const outputValues = [
     {
       label: "Invested Amount",
-      value:
-        sipType === "monthly" ? monthlyInvestment * months : monthlyInvestment,
+      value: monthlyInvestment * months,
     },
-    {
-      label: "Estimated Return",
-      value:
-        sipType === "monthly"
-          ? Math.round(estimatedReturn - monthlyInvestment * months)
-          : Math.round(estimatedReturn - monthlyInvestment),
-    },
+
     {
       label: "Total value",
-      value: estimatedReturn,
+      value: estimatedReturn - monthlyInvestment * months,
     },
   ];
+
+  const maturity = {
+    label: "Maturity Value",
+    value: Math.round(estimatedReturn),
+  };
 
   const chartData = [
     {
       label: "Investment",
-      value:
-        sipType === "monthly" ? monthlyInvestment * months : monthlyInvestment,
-      fill: "#2a2a2a",
+      value: monthlyInvestment * months,
+      fill: "#1b5183",
     },
     {
       label: "Est. Returns",
-      value:
-        sipType === "monthly"
-          ? Math.round(estimatedReturn - monthlyInvestment * months)
-          : Math.round(estimatedReturn - monthlyInvestment),
-      fill: "#9a9a9a",
+      value: Math.round(estimatedReturn - monthlyInvestment * months),
+      fill: "#5ca81d",
     },
   ];
 
+  const chartConfig = {
+    principle: {
+      name: "Investment",
+      color: "#1b5183",
+    },
+    interest: {
+      name: "Est. Returns",
+      color: "#5ca81d",
+    },
+  };
+
   return (
-    <div>
-      <div className="max-width-container padding-container flex items-center pb-0!">
-        <div
-          role="button"
-          className={cn(
-            "cursor-pointer py-2 px-4 text-white border-b border-black  duration-300",
-            sipType === "monthly" ? "bg-[#9a9a9a] " : "bg-[#2a2a2a]",
-          )}
-          onClick={() => setSipType("monthly")}
-        >
-          Monthly
-        </div>
-        <div
-          role="button"
-          className={cn(
-            "cursor-pointer py-2 px-4 text-white border-b border-black duration-300",
-            sipType === "lumpsum" ? "bg-[#9a9a9a] " : "bg-[#2a2a2a] ",
-          )}
-          onClick={() => setSipType("lumpsum")}
-        >
-          Lumpsum
-        </div>
-      </div>
-      <div className="max-width-container padding-container">
-        <div className="border border-gray-300 rounded-lg p-6 shadow-md flex flex-col gap-10">
-          <CalculatorContainer
-            title="SIP Calculator"
-            fieldValues={fieldValues}
-            outputValues={outputValues}
-            outputLable="Estimated Investment Detail"
-            chartConfig={chartConfig}
-            chartData={chartData}
-            canShowYearsDetail={false}
-          />
-        </div>
-      </div>
+    <div className="max-width-container padding-container">
+      <CalculatorContainer
+        title="SIP Calculator"
+        fieldValues={fieldValues}
+        outputValues={outputValues}
+        chartConfig={chartConfig}
+        chartData={chartData}
+        canShowYearsDetail={false}
+        maturity={maturity}
+      />
     </div>
   );
 };

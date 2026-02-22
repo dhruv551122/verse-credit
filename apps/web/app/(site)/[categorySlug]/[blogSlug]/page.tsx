@@ -18,26 +18,28 @@ export async function generateMetadata({
     blogSlug,
   }).toString();
 
-  const res = await fetch(
-    `${process.env.BACKEND_URL}/api/blog?${searchParams}`,
-  );
+  let blog: NonNullable<BlogBySlugQueryResult>;
 
-  if (!res.ok) {
+  try {
+    const res = await fetch(
+      `${process.env.BACKEND_URL}/api/blog?${searchParams}`,
+    );
+
+    if (!res.ok) {
+      return notFound();
+    }
+
+    blog = await res.json();
     return {
-      title: "Blog not found",
-      description: "The requested blog post does not exist.",
+      title: blog.title,
+      description: blog.description,
+      alternates: {
+        canonical: `/blog/${categorySlug}/${blogSlug}`,
+      },
     };
+  } catch (error: unknown) {
+    return notFound();
   }
-
-  const blog: NonNullable<BlogBySlugQueryResult> = await res.json();
-
-  return {
-    title: blog.title,
-    description: blog.description,
-    alternates: {
-      canonical: `/blog/${categorySlug}/${blogSlug}`,
-    },
-  };
 }
 
 const BlogPage = async ({
@@ -51,7 +53,7 @@ const BlogPage = async ({
     `${process.env.BACKEND_URL}/api/blog?${searchParams}`,
   );
 
-  if (!res.ok) notFound();
+  if (!res.ok) return notFound();
   const blog: NonNullable<BlogBySlugQueryResult> = await res.json();
 
   // const blogsRes = await fetch(`${process.env.BACKEND_URL}/api/blogs`);
@@ -60,7 +62,7 @@ const BlogPage = async ({
   // const randomBlogs = blogs.sort(() => 0.5 - Math.random()).slice(0, 3);
 
   return (
-    <div className="mt-16.75 font-inter">
+    <div className="pt-16.75 font-inter">
       <div className="py-6! font-medium max-width-container padding-container">
         <div className="flex items-center gap-2 text-gray-500">
           <Link href="/" className="duration-300 hover:text-gray-700">

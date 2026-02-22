@@ -20,11 +20,9 @@ type CalculatorContainerProps = {
     fieldunit: string;
     unitRightSide?: boolean;
   }[];
-  outputLable: string;
-  outputValues: {
-    label: string;
-    value: number;
-  }[];
+  maturity: Record<string, string | number>;
+  // outputLable: string;
+  outputValues: Record<string, string | number>[];
   chartConfig: ChartConfig;
   chartData: { label: string; value: number; fill: string }[];
   canShowYearsDetail: boolean;
@@ -34,9 +32,10 @@ const CalculatorContainer = ({
   title,
   fieldValues,
   outputValues,
-  outputLable,
+  // outputLable,
   chartConfig,
   chartData,
+  maturity,
   // canShowYearsDetail,
 }: CalculatorContainerProps) => {
   const [errors, setErrors] = useState<string[]>([]);
@@ -55,7 +54,6 @@ const CalculatorContainer = ({
                 // setInputValue={fieldValue.setInputValue}
                 fieldValue={fieldValue.fieldValue}
                 // setError={setErrors}
-                errors={errors}
                 defaultFieldValue={fieldValue.defaultFieldValue}
                 step={fieldValue.step}
                 minFiledValue={fieldValue.minFieldValue}
@@ -66,23 +64,30 @@ const CalculatorContainer = ({
               />
             ))}
           </div>
-
-          <div className="flex flex-col gap-4 p-4 mt-6 text-base bg-gray-100 rounded-lg">
-            <h2 className="mb-2 text-2xl font-semibold">{outputLable}</h2>
+        </div>
+        <div className="self-stretch w-full h-px lg:w-px lg:min-h-full bg-pale-silver" />
+        <div className="flex flex-col items-center w-full gap-10">
+          <div className="flex flex-wrap justify-center w-full gap-10 p-4 text-base border-b rounded-lg border-pale-silver">
             {outputValues.map((outputValue) => (
               <div
                 key={outputValue.label}
-                className="flex flex-col w-full sm:flex-row sm:items-center sm:justify-between"
+                className="flex flex-col items-center shrink-0 "
               >
-                <span>{outputValue.label}</span>
-                <span className="font-bold">
-                  ₹{Math.round(outputValue.value)}
+                <span className="text-sm text-teal-grey">
+                  {outputValue.label}
+                </span>
+                <span className="text-xl font-medium">
+                  ₹{Math.round(Number(outputValue.value) ?? 0)}
                 </span>
               </div>
             ))}
           </div>
+          <CalculatorChart
+            maturity={maturity}
+            chartConfig={chartConfig}
+            data={chartData}
+          />
         </div>
-        <CalculatorChart chartConfig={chartConfig} data={chartData} />
       </div>
     </div>
   );

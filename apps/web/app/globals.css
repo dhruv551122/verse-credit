@@ -54,6 +54,10 @@
   --color-casual-navy: var(--color-casual-navy);
   --color-bright-royal-blue: var(--color-bright-royal-blue);
   --color-strong-amber: var(--color-strong-amber);
+  --color-teal-grey: var(--color-teal-grey);
+  --color-metallic-grey: var(--color-metallic-grey);
+  --color-pale-silver: var(--color-pale-silver);
+  --color-christi: var(--color-christi);
 }
 
 :root {
@@ -99,6 +103,10 @@
   --color-casual-navy: #060c1b;
   --color-bright-royal-blue: #101b43;
   --color-strong-amber: #ef9309;
+  --color-teal-grey: #5f8089;
+  --color-metallic-grey: #8e8e8e;
+  --color-pale-silver: #ebebeb;
+  --color-christi: #5ca81d;
 }
 
 .dark {

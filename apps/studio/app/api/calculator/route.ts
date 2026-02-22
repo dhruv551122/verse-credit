@@ -7,7 +7,6 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
 
   const calculatorSlug = searchParams.get("calculatorSlug");
-
   try {
     const data = await client.fetch<NonNullable<CalculatorBySlugQueryResult>>(
       calculatorBySlugQuery,

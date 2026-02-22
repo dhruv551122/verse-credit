@@ -33,7 +33,7 @@ const CategoriesPage = async ({
   }
 
   return (
-    <div className="mt-16.75 font-inter">
+    <div className="pt-16.75 font-inter">
       <div className="py-6! max-width-container padding-container">
         <div className="flex items-center gap-2 text-gray-500">
           <Link href="/" className="duration-300 hover:text-gray-700">

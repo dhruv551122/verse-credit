@@ -1088,36 +1088,6 @@
     }
   },
   {
-    "type": "type",
-    "name": "calculatorCategory.reference",
-    "value": {
-      "type": "object",
-      "attributes": {
-        "_ref": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string"
-          }
-        },
-        "_type": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "string",
-            "value": "reference"
-          }
-        },
-        "_weak": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
-        }
-      },
-      "dereferencesTo": "calculatorCategory"
-    }
-  },
-  {
     "name": "calculator",
     "type": "document",
     "attributes": {
@@ -1243,14 +1213,6 @@
         },
         "optional": false
       },
-      "category": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "calculatorCategory.reference"
-        },
-        "optional": false
-      },
       "aboutCalculator": {
         "type": "objectAttribute",
         "value": {
@@ -1299,7 +1261,7 @@
     }
   },
   {
-    "name": "calculatorCategory",
+    "name": "calculatorPage",
     "type": "document",
     "attributes": {
       "_id": {
@@ -1312,7 +1274,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "string",
-          "value": "calculatorCategory"
+          "value": "calculatorPage"
         }
       },
       "_createdAt": {
@@ -1341,33 +1303,19 @@
         },
         "optional": false
       },
-      "title": {
+      "calculatorPageTitle": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
         "optional": false
       },
-      "tagLine": {
+      "calculatorPageTagLine": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
         },
         "optional": false
-      },
-      "slug": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
-      "orderRank": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
       }
     }
   },

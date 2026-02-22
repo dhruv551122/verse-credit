@@ -130,10 +130,6 @@ const EMICalculator = () => {
 
   const outputValues = [
     {
-      label: "Monthly EMI",
-      value: EMI,
-    },
-    {
       label: "Principle Amount",
       value: loanAmount,
     },
@@ -147,14 +143,19 @@ const EMICalculator = () => {
     },
   ];
 
+  const maturity = {
+    label: "Monthly EMI",
+    value: Math.round(EMI),
+  };
+
   const chartConfig = {
     principle: {
       name: "Principle",
-      color: "#2a2a2a",
+      color: "#1b5183",
     },
     interest: {
       name: "Interest",
-      color: "#9a9a9a",
+      color: "#5ca81d",
     },
   };
 
@@ -162,26 +163,26 @@ const EMICalculator = () => {
     {
       label: "Loan Amount",
       value: loanAmount,
-      fill: "#2a2a2a",
+      fill: "#1b5183",
     },
     {
       label: "Interest",
       value: Math.round(EMI * months - loanAmount),
-      fill: "#9a9a9a",
+      fill: "#5ca81d",
     },
   ];
 
   return (
     <div className="max-width-container padding-container">
-      <div className="flex flex-col gap-10 p-6 border border-gray-300 rounded-lg shadow-md">
+      <div className="flex flex-col gap-10 ">
         <CalculatorContainer
           title="EMI Calculator"
           fieldValues={fieldValues}
           outputValues={outputValues}
-          outputLable="Your Amortization Details (Yearly/Monthl)"
           chartConfig={chartConfig}
           chartData={chartData}
           canShowYearsDetail={true}
+          maturity={maturity}
         />
         <Amortization
           groupedYearsDetail={groupedYearsDetail}

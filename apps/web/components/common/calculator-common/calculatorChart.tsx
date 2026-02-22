@@ -7,11 +7,12 @@ import {
 } from "@/components/ui/chart";
 import { capitalizeFirstLetter } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import { Pie, PieChart } from "recharts";
+import { Label, Pie, PieChart } from "recharts";
 
 const CalculatorChart = ({
   chartConfig,
   data,
+  maturity,
 }: {
   chartConfig: ChartConfig;
   data: {
@@ -19,6 +20,7 @@ const CalculatorChart = ({
     value: number;
     fill: string;
   }[];
+  maturity: Record<string, string | number>;
 }) => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   useEffect(() => {
@@ -37,22 +39,55 @@ const CalculatorChart = ({
         <CardTitle className="flex items-center justify-center gap-6 sm:gap-10">
           {data.map((data) => (
             <div key={data.label} className="flex items-center gap-2">
-              <div className="size-4" style={{ backgroundColor: data.fill }} />{" "}
+              <div
+                className="rounded-sm size-4"
+                style={{ backgroundColor: data.fill }}
+              />{" "}
               <span>{capitalizeFirstLetter(data.label)}</span>
             </div>
           ))}
         </CardTitle>
       </CardHeader>
-      <ChartContainer config={chartConfig} className="h-60 sm:h-100 text-gray">
+      <ChartContainer config={chartConfig} className="h-50 sm:h-100 text-gray">
         <PieChart>
           <ChartTooltip content={<ChartTooltipContent />} />
           <Pie
             dataKey="value"
             nameKey="label"
             data={data}
-            innerRadius={isSmallScreen ? 60 : 100}
+            innerRadius={isSmallScreen ? 65 : 120}
             isAnimationActive={true}
-          />
+          >
+            <Label
+              content={({ viewBox }) => {
+                if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                  return (
+                    <text
+                      x={viewBox.cx}
+                      y={viewBox.cy}
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                    >
+                      <tspan
+                        x={viewBox.cx}
+                        y={viewBox.cy}
+                        className="text-3xl font-bold fill-foreground"
+                      >
+                        {maturity.value.toLocaleString()}
+                      </tspan>
+                      <tspan
+                        x={viewBox.cx}
+                        y={(viewBox.cy || 0) + 24}
+                        className="fill-muted-foreground"
+                      >
+                        {maturity.label}
+                      </tspan>
+                    </text>
+                  );
+                }
+              }}
+            />
+          </Pie>
         </PieChart>
       </ChartContainer>
     </Card>

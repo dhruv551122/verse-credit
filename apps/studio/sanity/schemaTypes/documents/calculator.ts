@@ -64,14 +64,6 @@ export const calculator = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "category",
-      title: "Category",
-      type: "reference",
-      group: "calculator",
-      to: [{ type: "calculatorCategory" }],
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
       name: "aboutCalculator",
       title: "About Calculator",
       type: "blockContent",

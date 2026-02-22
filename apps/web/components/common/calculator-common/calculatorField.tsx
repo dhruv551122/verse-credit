@@ -21,7 +21,6 @@ const CalculatorField = ({
   filedUnit,
   unitRightSide,
   // setError,
-  errors,
 }: {
   // inputValue: number;
   setFieldValue: React.Dispatch<React.SetStateAction<number>>;
@@ -35,9 +34,7 @@ const CalculatorField = ({
   filedUnit?: string;
   // setError: React.Dispatch<SetStateAction<string[]>>;
   unitRightSide?: boolean;
-  errors: string[];
 }) => {
-  const isError = errors.includes(fieldLable);
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4 text-base md:flex-row md:items-center md:justify-between">
@@ -51,9 +48,7 @@ const CalculatorField = ({
               <p>Minimum value allowed is {minFiledValue}</p>
             </TooltipContent>
           </Tooltip>
-          <div
-            className={cn("relative font-semibold", isError && "text-red-600")}
-          >
+          <div className={cn("relative font-semibold")}>
             <span
               className={cn(
                 "absolute  top-1/2 -translate-y-1/2",
@@ -63,11 +58,7 @@ const CalculatorField = ({
               {filedUnit}
             </span>
             <Input
-              className={cn(
-                "! text-right",
-                unitRightSide ? "pr-6" : "pl-5",
-                isError && "border-red-600! bg-red-300/50 ring-red-300! ",
-              )}
+              className={cn("text-right!", unitRightSide ? "pr-6" : "pl-5")}
               value={fieldValue}
               onChange={(e) => {
                 const input = Number(e.target.value);
@@ -91,6 +82,8 @@ const CalculatorField = ({
         onValueChange={(e) => {
           setFieldValue(e[0]);
         }}
+        color="#ef9309"
+        className="bg-strong-amber [data-slot=slider-range]:bg-strong-amber"
       />
     </div>
   );
