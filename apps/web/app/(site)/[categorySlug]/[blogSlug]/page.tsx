@@ -103,3 +103,5 @@ export async function generateStaticParams() {
     blogSlug: blog.slug.current,
   }));
 }
+
+export const revalidate = 60;

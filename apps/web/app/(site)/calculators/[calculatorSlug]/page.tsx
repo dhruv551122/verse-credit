@@ -49,7 +49,6 @@ const CalculatorPage = async ({
 
     if (!res.ok) return notFound();
     data = await res.json();
-    console.log(data);
   } catch (error: unknown) {
     console.error(error);
     throw new Error("Error fetching data.");
@@ -88,3 +87,5 @@ export async function generateStaticParams() {
     calculatorSlug: calculator.slug.current,
   }));
 }
+
+export const revalidate = 60;

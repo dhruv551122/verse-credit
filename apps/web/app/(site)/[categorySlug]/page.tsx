@@ -76,3 +76,5 @@ export async function generateStaticParams() {
     categorySlug: category.slug.current,
   }));
 }
+
+export const revalidate = 60;
