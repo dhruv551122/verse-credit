@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { cn, formatDate } from "@/lib/utils";
-import { Link, SearchIcon, X } from "lucide-react";
+import { SearchIcon, X } from "lucide-react";
 import BlogHeader from "../blogHeader";
 import { SanityImage } from "@/sanity/sanityImage";
 import {
@@ -20,6 +20,7 @@ import {
   useState,
 } from "react";
 import { BlogsByTitleSlugResult } from "@sanity-types/*";
+import Link from "next/link";
 
 const SearchDialog = ({
   isMobile,
@@ -63,19 +64,16 @@ const SearchDialog = ({
   }, [isSearchMounted]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (inputText.trim() === "") {
-        setResultBlogs([]);
-        return;
-      }
+    const controller = new AbortController();
+
+    const timeoutId = setTimeout(async () => {
       try {
-        const controller = new AbortController();
         const res = await fetch(
           `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogsByTitle?titleSlug=${inputText}`,
           { signal: controller.signal },
         );
 
-        if (!res.ok) return null;
+        if (!res.ok) return;
 
         const blogs: NonNullable<BlogsByTitleSlugResult> = await res.json();
         setResultBlogs(blogs);
@@ -84,16 +82,26 @@ const SearchDialog = ({
           console.error(e);
         }
       }
-    };
+    }, 400); // debounce delay
 
-    fetchData();
+    return () => {
+      controller.abort(); // cancel previous fetch
+      clearTimeout(timeoutId); // cancel debounce
+    };
   }, [inputText]);
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
   ) => {
+    const value = e.target.value;
     if (timerRef.current) {
       clearTimeout(timerRef.current);
+    }
+
+    if (!value.trim()) {
+      setResultBlogs([]); // ✅ move here
+      setInputText("");
+      return;
     }
 
     timerRef.current = setTimeout(() => setInputText(e.target.value), 300);
@@ -157,10 +165,11 @@ const SearchDialog = ({
             </div>
           </DialogHeader>
           {resultBlogs.length > 0 ? (
-            <div className="flex flex-col w-full gap-4 py-2 overflow-y-scroll md:mt-4 max-h-150 md:min-h-80 md:max-h-80">
+            <div className="flex flex-col w-full gap-4 py-2 overflow-y-scroll md:mt-4 max-h-120 md:min-h-80 md:max-h-80">
               {resultBlogs.map((blog, index) => (
                 <DialogClose key={blog._id} asChild>
                   <Link
+                    key={blog._id}
                     href={`/${blog.category.slug.current}/${blog.slug.current}`}
                     className={cn(
                       "flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4",

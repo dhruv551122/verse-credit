@@ -43,14 +43,14 @@ export const calculator = defineType({
     }),
     defineField({
       name: "tagLine",
-      type: "string",
+      type: "text",
       title: "Tag Line",
       group: "calculator",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "description",
-      type: "string",
+      type: "text",
       title: "Description",
       group: "calculator",
       validation: (Rule) => Rule.required(),

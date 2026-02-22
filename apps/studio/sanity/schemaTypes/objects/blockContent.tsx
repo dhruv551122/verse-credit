@@ -14,6 +14,7 @@ export const commonRichFields = [
       { title: "H5", value: "h5" },
       { title: "H6", value: "h6" },
       { title: "Quote", value: "blockquote" },
+      { title: "Center", value: "center" },
     ],
     lists: [
       { title: "Bullet", value: "bullet" },
@@ -29,7 +30,7 @@ export const commonRichFields = [
         {
           title: "Highlighted Text",
           value: "highlightedText",
-          icon: () => <AArrowUp className="h-4 w-4" />,
+          icon: () => <AArrowUp className="w-4 h-4" />,
           component: ({ children }: { children: React.ReactNode }) => (
             <span className="text-xl font-bold">{children}</span>
           ),
@@ -40,7 +41,7 @@ export const commonRichFields = [
           type: "textColor",
           name: "textColor",
           title: "Text Color",
-          icon: () => <HighlighterIcon className="h-4 w-4" />,
+          icon: () => <HighlighterIcon className="w-4 h-4" />,
           component: ({
             value,
             children,

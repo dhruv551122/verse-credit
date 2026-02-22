@@ -66,6 +66,7 @@ const RichText: React.FC<Props> = ({
           {children}
         </p>
       ),
+      center: ({ children }: any) => <p className="text-center">{children}</p>,
     },
     marks: {
       link: ({

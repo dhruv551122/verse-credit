@@ -24,7 +24,7 @@ const Herobanner = ({
             <p className="truncate text-teal-grey/60">{data.title}</p>
           </div>
           <div className="flex flex-wrap items-end gap-4">
-            <div className="flex items-start gap-4">
+            <div className="flex items-center gap-4">
               <SanityImage
                 src={data.icon}
                 alt={data.icon.alt}
@@ -32,7 +32,7 @@ const Herobanner = ({
                 height={48}
                 className="object-contain w-8 h-8 shrink-0 md:w-12 md:h-12"
               />
-              <h2 className="text-3xl font-semibold md:text-5xl leading-[100%]">
+              <h2 className="text-2xl font-semibold md:text-5xl leading-[100%]">
                 {data.title}
               </h2>
             </div>

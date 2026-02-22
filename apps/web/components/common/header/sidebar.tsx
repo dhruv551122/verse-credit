@@ -30,7 +30,7 @@ const Sidebar = ({
               setIsSidebarOpen(false);
               timerRef.current = setTimeout(() => setIsMounted(false), 500);
             }}
-            className="duration-300 cursor-pointer text-white hover:text-white/80"
+            className="text-white duration-300 cursor-pointer hover:text-white/80"
           />
         ) : (
           <Menu
@@ -42,7 +42,7 @@ const Sidebar = ({
               timerRef.current = setTimeout(() => setIsSidebarOpen(true), 10);
               setIsMounted(true);
             }}
-            className="duration-300 cursor-pointer text-white hover:text-white/80"
+            className="text-white duration-300 cursor-pointer hover:text-white/80"
           />
         )}
       </div>
@@ -58,12 +58,12 @@ const Sidebar = ({
               <Link
                 href={link.url}
                 key={link._key}
-                className="duration-300 text-white hover:text-white/80 py-2 text-xl group flex otems-center gap-10"
+                className="flex gap-10 py-2 text-xl text-white duration-300 w-fit hover:text-white/80 group otems-center"
                 onClick={() => setIsSidebarOpen(false)}
               >
                 <span>{link.label}</span>
                 <span>
-                  <ArrowRight className="text-white/80 duration-300 -translate-x-10 group-hover:translate-x-0 group-hover:opacity-100 opacity-0" />
+                  <ArrowRight className="duration-300 -translate-x-10 opacity-0 text-white/80 group-hover:translate-x-0 group-hover:opacity-100" />
                 </span>
               </Link>
             ))}
