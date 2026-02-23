@@ -10,7 +10,7 @@ const CalculatorCard = ({
   return (
     <Link
       href={`/calculators/${calculatorDetail.slug.current}`}
-      className="flex flex-col gap-4 p-4 border border-pale-silver rounded-xl text-tuatara"
+      className="flex flex-col gap-4 p-4 border border-pale-silver rounded-xl text-tuatara hover:shadow-chathams-blue hover:shadow-xl/30 duration-300"
     >
       <SanityImage
         src={calculatorDetail.icon}

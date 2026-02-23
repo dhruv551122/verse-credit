@@ -67,7 +67,7 @@ const Header = ({
           <div className="flex gap-10">
             {data.headerLinks.map((link) => (
               <Link
-                href={`/${link.url}`}
+                href={`${link.url}`}
                 key={link._key}
                 className="text-white duration-300 hover:text-white/80 "
               >

@@ -23,12 +23,6 @@ const SIPCalculator = () => {
   );
   const [returnRate, setReturnRate] = useState<number>(DEFAULT_RETURN_RATE);
   const [tenure, setTenure] = useState<number>(DEFAULT_TENURE_YEARS);
-  const [monthlyInvestmentInput, setmonthlyInvestmentInput] = useState<number>(
-    DEFAULT_MONTHLY_INVESTMENT,
-  );
-  const [returnRateInput, setReturnRateInput] =
-    useState<number>(DEFAULT_RETURN_RATE);
-  const [tenureInput, setTenureInput] = useState<number>(DEFAULT_TENURE_YEARS);
 
   const monthlyInterestRate = returnRate / 100 / 12;
   const months = tenure * 12;
@@ -44,9 +38,7 @@ const SIPCalculator = () => {
 
   const fieldValues = [
     {
-      inputValue: monthlyInvestmentInput,
       setFieldValue: setMonthlyInvestment,
-      setInputValue: setmonthlyInvestmentInput,
       fieldValue: monthlyInvestment,
       step: 1500,
       defaultFieldValue: DEFAULT_MONTHLY_INVESTMENT,
@@ -57,9 +49,7 @@ const SIPCalculator = () => {
       unitRightSide: false,
     },
     {
-      inputValue: returnRateInput,
       setFieldValue: setReturnRate,
-      setInputValue: setReturnRateInput,
       fieldValue: returnRate,
       step: 0.01,
       defaultFieldValue: DEFAULT_RETURN_RATE,
@@ -70,9 +60,7 @@ const SIPCalculator = () => {
       unitRightSide: true,
     },
     {
-      inputValue: tenureInput,
       setFieldValue: setTenure,
-      setInputValue: setTenureInput,
       fieldValue: tenure,
       step: 0.5,
       defaultFieldValue: DEFAULT_TENURE_YEARS,
@@ -127,15 +115,16 @@ const SIPCalculator = () => {
 
   return (
     <div className="max-width-container padding-container">
-      <CalculatorContainer
-        title="SIP Calculator"
-        fieldValues={fieldValues}
-        outputValues={outputValues}
-        chartConfig={chartConfig}
-        chartData={chartData}
-        canShowYearsDetail={false}
-        maturity={maturity}
-      />
+      <div className="flex flex-col gap-10">
+        <h1 className="text-2xl font-medium">Calculate SIP returns:</h1>
+        <CalculatorContainer
+          fieldValues={fieldValues}
+          outputValues={outputValues}
+          chartConfig={chartConfig}
+          chartData={chartData}
+          maturity={maturity}
+        />
+      </div>
     </div>
   );
 };

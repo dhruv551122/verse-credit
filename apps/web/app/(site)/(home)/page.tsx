@@ -4,10 +4,14 @@ import { BlogsQueryResult, HomePageQueryResult } from "@sanity-types/*";
 import NewsBlogs from "./_components/newsBlogs";
 
 const HomePage = async () => {
-  const homeData = await fetch(`${process.env.BACKEND_URL}/api/home`);
+  const homeData = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home`,
+  );
   const homePage: NonNullable<HomePageQueryResult> = await homeData.json();
 
-  const blogsData = await fetch(`${process.env.BACKEND_URL}/api/blogs`);
+  const blogsData = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs`,
+  );
   const blogsPage: NonNullable<BlogsQueryResult> = await blogsData.json();
   return (
     <div className="pt-16.75 font-inter">

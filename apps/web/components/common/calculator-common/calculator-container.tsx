@@ -6,11 +6,8 @@ import CalculatorField from "./calculatorField";
 import CalculatorChart from "./calculatorChart";
 
 type CalculatorContainerProps = {
-  title: string;
   fieldValues: {
-    inputValue: number;
     setFieldValue: React.Dispatch<SetStateAction<number>>;
-    setInputValue: React.Dispatch<SetStateAction<number>>;
     fieldValue: number;
     step: number;
     defaultFieldValue: number;
@@ -20,40 +17,29 @@ type CalculatorContainerProps = {
     fieldunit: string;
     unitRightSide?: boolean;
   }[];
-  maturity: Record<string, string | number>;
-  // outputLable: string;
+  maturity?: Record<string, string | number>;
   outputValues: Record<string, string | number>[];
   chartConfig: ChartConfig;
   chartData: { label: string; value: number; fill: string }[];
-  canShowYearsDetail: boolean;
 };
 
 const CalculatorContainer = ({
-  title,
   fieldValues,
   outputValues,
-  // outputLable,
   chartConfig,
   chartData,
   maturity,
-  // canShowYearsDetail,
 }: CalculatorContainerProps) => {
-  const [errors, setErrors] = useState<string[]>([]);
-
   return (
     <div>
-      <h1 className="mb-4 text-3xl font-bold">{title}</h1>
       <div className="flex flex-col items-center gap-10 lg:flex-row lg:items-start ">
         <div className="w-full ">
           <div className="flex flex-col gap-10">
             {fieldValues.map((fieldValue) => (
               <CalculatorField
                 key={fieldValue.fieldLable}
-                // inputValue={fieldValue.inputValue}
                 setFieldValue={fieldValue.setFieldValue}
-                // setInputValue={fieldValue.setInputValue}
                 fieldValue={fieldValue.fieldValue}
-                // setError={setErrors}
                 defaultFieldValue={fieldValue.defaultFieldValue}
                 step={fieldValue.step}
                 minFiledValue={fieldValue.minFieldValue}
@@ -77,13 +63,14 @@ const CalculatorContainer = ({
                   {outputValue.label}
                 </span>
                 <span className="text-xl font-medium">
-                  ₹{Math.round(Number(outputValue.value) ?? 0)}
+                  {outputValue.unit}
+                  {Math.round(Number(outputValue.value) ?? 0)}
                 </span>
               </div>
             ))}
           </div>
           <CalculatorChart
-            maturity={maturity}
+            maturity={maturity ?? false}
             chartConfig={chartConfig}
             data={chartData}
           />

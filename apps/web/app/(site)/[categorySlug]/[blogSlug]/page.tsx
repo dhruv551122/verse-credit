@@ -22,7 +22,7 @@ export async function generateMetadata({
 
   try {
     const res = await fetch(
-      `${process.env.BACKEND_URL}/api/blog?${searchParams}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blog?${searchParams}`,
     );
 
     if (!res.ok) {
@@ -50,13 +50,13 @@ const BlogPage = async ({
   const blogParams = await params;
   const searchParams = new URLSearchParams(blogParams).toString();
   const res = await fetch(
-    `${process.env.BACKEND_URL}/api/blog?${searchParams}`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blog?${searchParams}`,
   );
 
   if (!res.ok) return notFound();
   const blog: NonNullable<BlogBySlugQueryResult> = await res.json();
 
-  // const blogsRes = await fetch(`${process.env.BACKEND_URL}/api/blogs`);
+  // const blogsRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs`);
 
   // const blogs = await blogsRes.json();
   // const randomBlogs = blogs.sort(() => 0.5 - Math.random()).slice(0, 3);
@@ -87,7 +87,7 @@ const BlogPage = async ({
 export default BlogPage;
 
 export async function generateStaticParams() {
-  const res = await fetch(`${process.env.BACKEND_URL}/api/blogs`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs`);
 
   if (!res.ok && !res.ok) return [];
 

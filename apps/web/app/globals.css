@@ -58,6 +58,7 @@
   --color-metallic-grey: var(--color-metallic-grey);
   --color-pale-silver: var(--color-pale-silver);
   --color-christi: var(--color-christi);
+  --color-sporty-orange: var(--color-sporty-orange);
 }
 
 :root {
@@ -107,6 +108,7 @@
   --color-metallic-grey: #8e8e8e;
   --color-pale-silver: #ebebeb;
   --color-christi: #5ca81d;
+  --color-sporty-orange: #fe6a2a;
 }
 
 .dark {

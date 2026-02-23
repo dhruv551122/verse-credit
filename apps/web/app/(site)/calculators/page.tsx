@@ -8,7 +8,9 @@ export async function generateMetadata(): Promise<Metadata> {
   let calculatorsPage: NonNullable<CalculatorPageQueryResult>;
 
   try {
-    const res = await fetch(`${process.env.BACKEND_URL}/api/calculatorsPage`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/calculatorsPage`,
+    );
 
     if (!res.ok) {
       return notFound();
@@ -30,7 +32,9 @@ export async function generateMetadata(): Promise<Metadata> {
 const CalculatorsPage = async () => {
   let calculatorsPage: NonNullable<CalculatorPageQueryResult>;
   try {
-    const res = await fetch(`${process.env.BACKEND_URL}/api/calculatorsPage`);
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/calculatorsPage`,
+    );
     if (!res.ok) return notFound();
     calculatorsPage = await res.json();
   } catch (error: unknown) {

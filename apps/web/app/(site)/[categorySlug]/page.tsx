@@ -20,7 +20,7 @@ const CategoriesPage = async ({
   let categoryPage: NonNullable<BlogCategoryPageQueryResult>;
   try {
     const categoryPageData = await fetch(
-      `${process.env.BACKEND_URL}/api/blogCategoryPage?${searchParams}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogCategoryPage?${searchParams}`,
     );
 
     categoryPage = await categoryPageData.json();
@@ -61,9 +61,12 @@ const CategoriesPage = async ({
 export default CategoriesPage;
 
 export async function generateStaticParams() {
-  const res = await fetch(`${process.env.BACKEND_URL}/api/blogCategories`, {
-    cache: "force-cache",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogCategories`,
+    {
+      cache: "force-cache",
+    },
+  );
 
   if (!res.ok) return [];
   const categories: NonNullable<BlogCategoriesQueryResult> = await res.json();

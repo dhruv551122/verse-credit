@@ -2,44 +2,50 @@
 
 import { useState } from "react";
 import CalculatorContainer from "@/components/common/calculator-common/calculator-container";
+import { Switch } from "@/components/ui/switch";
 
 const DEFAULT_INVESTMENT = 10000;
 const DEFAULT_RETURN_RATE = 5;
+const DEFAULT_INFLATION_RATE = 5;
 const DEFAULT_TENURE_YEARS = 3;
 
 const MAX_INVESTMENT = 1000000;
 const MAX_RETURN_RATE = 35;
+const MAX_INFLATION_RATE = 35;
 const MAX_TENURE_YEARS = 35;
 
 const MIN_INVESTMENT = 100;
 const MIN_RETURN_RATE = 1;
+const MIN_INFLATION_RATE = 1;
 const MIN_TENURE_YEARS = 1;
 
 // FV = P × ({[(1 + i)^n – 1] / i}) × (1 + i), while for Lumpsum it's FV = P * (1 + r/n)^(nt)
 
 const LumpsumCalculator = () => {
   const [investment, setInvestment] = useState<number>(DEFAULT_INVESTMENT);
-  const [returnRate, setReturnRate] = useState<number>(DEFAULT_RETURN_RATE);
-  const [tenure, setTenure] = useState<number>(DEFAULT_TENURE_YEARS);
-  const [investmentInput, setInvestmentInput] =
-    useState<number>(DEFAULT_INVESTMENT);
-  const [returnRateInput, setReturnRateInput] =
+
+  const [withInflation, setWithInflation] = useState<boolean>(false);
+  const [inflationRate, setInflationRate] =
     useState<number>(DEFAULT_RETURN_RATE);
-  const [tenureInput, setTenureInput] = useState<number>(DEFAULT_TENURE_YEARS);
+
+  const [returnRate, setReturnRate] = useState<number>(DEFAULT_RETURN_RATE);
+
+  const [tenure, setTenure] = useState<number>(DEFAULT_TENURE_YEARS);
 
   const interestRate = returnRate / 100;
   let estimatedReturn;
   if (interestRate === 0) {
     estimatedReturn = investment;
+  } else if (withInflation) {
+    estimatedReturn =
+      investment * ((1 + interestRate) / (1 + inflationRate / 100)) ** tenure;
   } else {
     estimatedReturn = investment * (1 + interestRate) ** tenure;
   }
 
-  const fieldValues = [
+  let fieldValues = [
     {
-      inputValue: investmentInput,
       setFieldValue: setInvestment,
-      setInputValue: setInvestmentInput,
       fieldValue: investment,
       step: 1500,
       defaultFieldValue: DEFAULT_INVESTMENT,
@@ -50,9 +56,7 @@ const LumpsumCalculator = () => {
       unitRightSide: false,
     },
     {
-      inputValue: returnRateInput,
       setFieldValue: setReturnRate,
-      setInputValue: setReturnRateInput,
       fieldValue: returnRate,
       step: 0.01,
       defaultFieldValue: DEFAULT_RETURN_RATE,
@@ -63,9 +67,7 @@ const LumpsumCalculator = () => {
       unitRightSide: true,
     },
     {
-      inputValue: tenureInput,
       setFieldValue: setTenure,
-      setInputValue: setTenureInput,
       fieldValue: tenure,
       step: 0.5,
       defaultFieldValue: DEFAULT_TENURE_YEARS,
@@ -76,6 +78,23 @@ const LumpsumCalculator = () => {
       unitRightSide: true,
     },
   ];
+  if (withInflation) {
+    fieldValues = [
+      ...fieldValues,
+      {
+        setFieldValue: setInflationRate,
+        fieldValue: inflationRate,
+        step: 0.01,
+        defaultFieldValue: DEFAULT_INFLATION_RATE,
+        minFieldValue: MIN_INFLATION_RATE,
+        maxFieldValue: MAX_INFLATION_RATE,
+        fieldLable: "Inflation Rate (p. a.)",
+        fieldunit: "%",
+        unitRightSide: true,
+      },
+    ];
+  }
+  console.log(withInflation);
 
   const outputValues = [
     {
@@ -120,15 +139,25 @@ const LumpsumCalculator = () => {
 
   return (
     <div className="max-width-container padding-container">
-      <CalculatorContainer
-        title="Lumpsum Calculator"
-        fieldValues={fieldValues}
-        outputValues={outputValues}
-        chartConfig={chartConfig}
-        chartData={chartData}
-        canShowYearsDetail={false}
-        maturity={maturity}
-      />
+      <div className="flex flex-col gap-10">
+        <div className="flex gap-4 items-end">
+          <h1 className="text-2xl font-medium">Calculate Lumpsum returns:</h1>
+          <div className="flex gap-2 items-center">
+            <p>With Inflation</p>
+            <Switch
+              onClick={() => setWithInflation((prev) => !prev)}
+              className="data-[state=checked]:bg-strong-amber"
+            />
+          </div>
+        </div>
+        <CalculatorContainer
+          fieldValues={fieldValues}
+          outputValues={outputValues}
+          chartConfig={chartConfig}
+          chartData={chartData}
+          maturity={maturity}
+        />
+      </div>
     </div>
   );
 };

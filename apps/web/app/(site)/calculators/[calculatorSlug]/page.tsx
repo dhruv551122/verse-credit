@@ -17,7 +17,7 @@ export async function generateMetadata({
   let data: NonNullable<CalculatorBySlugQueryResult>;
   try {
     const res = await fetch(
-      `${process.env.BACKEND_URL}/api/calculator?${searchParams}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/calculator?${searchParams}`,
     );
 
     data = await res.json();
@@ -44,7 +44,7 @@ const CalculatorPage = async ({
   let data: NonNullable<CalculatorBySlugQueryResult>;
   try {
     const res = await fetch(
-      `${process.env.BACKEND_URL}/api/calculator?${searchParams}`,
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/calculator?${searchParams}`,
     );
 
     if (!res.ok) return notFound();
@@ -68,9 +68,12 @@ const CalculatorPage = async ({
 export default CalculatorPage;
 
 export async function generateStaticParams() {
-  const res = await fetch(`${process.env.BACKEND_URL}/api/calculatorsPage`, {
-    cache: "force-cache",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/calculatorsPage`,
+    {
+      cache: "force-cache",
+    },
+  );
 
   if (!res.ok) return [];
   const calculatorsPage: NonNullable<CalculatorPageQueryResult> =

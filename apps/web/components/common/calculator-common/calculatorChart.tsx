@@ -20,7 +20,7 @@ const CalculatorChart = ({
     value: number;
     fill: string;
   }[];
-  maturity: Record<string, string | number>;
+  maturity: Record<string, string | number> | false;
 }) => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
   useEffect(() => {
@@ -58,35 +58,37 @@ const CalculatorChart = ({
             innerRadius={isSmallScreen ? 65 : 120}
             isAnimationActive={true}
           >
-            <Label
-              content={({ viewBox }) => {
-                if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-                  return (
-                    <text
-                      x={viewBox.cx}
-                      y={viewBox.cy}
-                      textAnchor="middle"
-                      dominantBaseline="middle"
-                    >
-                      <tspan
+            {maturity && (
+              <Label
+                content={({ viewBox }) => {
+                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                    return (
+                      <text
                         x={viewBox.cx}
                         y={viewBox.cy}
-                        className="text-3xl font-bold fill-foreground"
+                        textAnchor="middle"
+                        dominantBaseline="middle"
                       >
-                        {maturity.value.toLocaleString()}
-                      </tspan>
-                      <tspan
-                        x={viewBox.cx}
-                        y={(viewBox.cy || 0) + 24}
-                        className="fill-muted-foreground"
-                      >
-                        {maturity.label}
-                      </tspan>
-                    </text>
-                  );
-                }
-              }}
-            />
+                        <tspan
+                          x={viewBox.cx}
+                          y={viewBox.cy}
+                          className="text-2xl font-medium fill-foreground"
+                        >
+                          ₹ {maturity.value.toLocaleString()}
+                        </tspan>
+                        <tspan
+                          x={viewBox.cx}
+                          y={(viewBox.cy || 0) + 24}
+                          className="fill-muted-foreground"
+                        >
+                          {maturity.label}
+                        </tspan>
+                      </text>
+                    );
+                  }
+                }}
+              />
+            )}
           </Pie>
         </PieChart>
       </ChartContainer>

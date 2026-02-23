@@ -174,21 +174,23 @@ const EMICalculator = () => {
 
   return (
     <div className="max-width-container padding-container">
-      <div className="flex flex-col gap-10 ">
-        <CalculatorContainer
-          title="EMI Calculator"
-          fieldValues={fieldValues}
-          outputValues={outputValues}
-          chartConfig={chartConfig}
-          chartData={chartData}
-          canShowYearsDetail={true}
-          maturity={maturity}
-        />
-        <Amortization
-          groupedYearsDetail={groupedYearsDetail}
-          startDate={startDate}
-          setStartDate={setStartDate}
-        />
+      <div className="flex flex-col gap-10">
+        <h1 className="text-2xl font-medium">Calculate Lumpsum returns:</h1>
+        <div className="flex flex-col gap-10 ">
+          <CalculatorContainer
+            fieldValues={fieldValues}
+            outputValues={outputValues}
+            chartConfig={chartConfig}
+            chartData={chartData}
+            // canShowYearsDetail={true}
+            maturity={maturity}
+          />
+          <Amortization
+            groupedYearsDetail={groupedYearsDetail}
+            startDate={startDate}
+            setStartDate={setStartDate}
+          />
+        </div>
       </div>
     </div>
   );

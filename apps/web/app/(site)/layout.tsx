@@ -10,9 +10,11 @@ const SiteLayout = async ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const data = await fetch(`${process.env.BACKEND_URL}/api/settings`);
+  const data = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/settings`,
+  );
   const categoriesRes = await fetch(
-    `${process.env.BACKEND_URL}/api/blogCategories`,
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogCategories`,
   );
   const settingsData: NonNullable<SettingsQueryResult> = await data.json();
   const categoriesData: NonNullable<BlogCategoriesQueryResult> =

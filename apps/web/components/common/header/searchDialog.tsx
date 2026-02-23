@@ -69,7 +69,7 @@ const SearchDialog = ({
     const timeoutId = setTimeout(async () => {
       try {
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogsByTitle?titleSlug=${inputText}`,
+          `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_BACKEND_URL}/api/blogsByTitle?titleSlug=${inputText}`,
           { signal: controller.signal },
         );
 

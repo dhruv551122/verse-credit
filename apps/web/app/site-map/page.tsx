@@ -15,7 +15,9 @@ const sitePages = [
 ];
 
 export default async function SitemapPage() {
-  const res = await fetch(`${process.env.BACKEND_URL}/api/site-map`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/site-map`,
+  );
 
   const data: NonNullable<SiteMapQueryResult> = await res.json();
   return (

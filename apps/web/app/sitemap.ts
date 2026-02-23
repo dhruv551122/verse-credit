@@ -2,7 +2,9 @@ import { SiteMapQueryResult } from "@sanity-types/*";
 import type { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const res = await fetch(`${process.env.BACKEND_URL}/api/site-map`);
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/site-map`,
+  );
 
   const data: NonNullable<SiteMapQueryResult> = await res.json();
 

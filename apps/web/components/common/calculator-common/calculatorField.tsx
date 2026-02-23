@@ -7,11 +7,8 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { InfoIcon } from "lucide-react";
-import { SetStateAction } from "react";
 const CalculatorField = ({
-  // inputValue,
   setFieldValue,
-  // setInputValue,
   fieldValue,
   step,
   minFiledValue,
@@ -20,11 +17,8 @@ const CalculatorField = ({
   fieldLable,
   filedUnit,
   unitRightSide,
-  // setError,
 }: {
-  // inputValue: number;
   setFieldValue: React.Dispatch<React.SetStateAction<number>>;
-  // setInputValue: React.Dispatch<React.SetStateAction<number>>;
   fieldValue: number;
   defaultFieldValue: number;
   step: number;
@@ -32,7 +26,6 @@ const CalculatorField = ({
   maxFieldValue: number;
   fieldLable: string;
   filedUnit?: string;
-  // setError: React.Dispatch<SetStateAction<string[]>>;
   unitRightSide?: boolean;
 }) => {
   return (
@@ -73,18 +66,32 @@ const CalculatorField = ({
           </div>
         </div>
       </div>
-      <Slider
-        defaultValue={[defaultFieldValue]}
-        value={[fieldValue]}
-        step={step}
-        min={minFiledValue}
-        max={maxFieldValue}
-        onValueChange={(e) => {
-          setFieldValue(e[0]);
-        }}
-        color="#ef9309"
-        className="bg-strong-amber [data-slot=slider-range]:bg-strong-amber"
-      />
+      <div className="flex flex-col gap-2">
+        <Slider
+          defaultValue={[defaultFieldValue]}
+          value={[fieldValue]}
+          step={step}
+          min={minFiledValue}
+          max={maxFieldValue}
+          onValueChange={(e) => {
+            setFieldValue(e[0]);
+          }}
+          // color="#ef9309"
+          // className="bg-strong-amber [data-slot=slider-range]:bg-strong-amber"
+        />
+        <div className="flex justify-between items-center text-metallic-grey">
+          <span>
+            {unitRightSide
+              ? `${minFiledValue}${filedUnit}`
+              : `${filedUnit}${minFiledValue}`}
+          </span>
+          <span>
+            {unitRightSide
+              ? `${maxFieldValue}${filedUnit}`
+              : `${filedUnit}${maxFieldValue}`}
+          </span>
+        </div>
+      </div>
     </div>
   );
 };
