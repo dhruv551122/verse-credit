@@ -1,37 +1,39 @@
 import {
   CalculatorBySlugQueryResult,
   CalculatorPageQueryResult,
+  CalculatorsQueryResult,
 } from "@sanity-types/*";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Herobanner from "./_components/herobanner";
 import Calculator from "./_components/calculator";
+import { sanityFetch } from "@/sanity/lib/live";
+import { calculatorBySlugQuery } from "@/sanity/lib/query";
+import { client } from "@/sanity/lib/client";
+import { calculatorsQuery } from "@/sanity/lib/query";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ calculatorSlug: string }>;
 }): Promise<Metadata> {
-  const calculatorParams = await params;
-  const searchParams = new URLSearchParams(calculatorParams);
-  let data: NonNullable<CalculatorBySlugQueryResult>;
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/calculator?${searchParams}`,
-    );
+  const { calculatorSlug } = await params;
+  const { data } = await sanityFetch<NonNullable<CalculatorBySlugQueryResult>>({
+    query: calculatorBySlugQuery,
+    params: { calculatorSlug },
+  });
 
-    data = await res.json();
-
-    return {
-      title: data.title,
-      description: data.description,
-      alternates: {
-        canonical: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/calculators/${calculatorParams.calculatorSlug}`,
-      },
-    };
-  } catch (error: unknown) {
+  if (!data) {
     return notFound();
   }
+
+  return {
+    title: data.title,
+    description: data.description,
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/calculators/${calculatorSlug}`,
+    },
+  };
 }
 
 const CalculatorPage = async ({
@@ -39,28 +41,20 @@ const CalculatorPage = async ({
 }: {
   params: Promise<{ calculatorSlug: string }>;
 }) => {
-  const calculatorParams = await params;
-  const searchParams = new URLSearchParams(calculatorParams).toString();
-  let data: NonNullable<CalculatorBySlugQueryResult>;
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/calculator?${searchParams}`,
-    );
+  const { calculatorSlug } = await params;
+  const { data } = await sanityFetch<NonNullable<CalculatorBySlugQueryResult>>({
+    query: calculatorBySlugQuery,
+    params: { calculatorSlug },
+  });
 
-    if (!res.ok) return notFound();
-    data = await res.json();
-  } catch (error: unknown) {
-    console.error(error);
-    throw new Error("Error fetching data.");
+  if (!data) {
+    return notFound();
   }
 
   return (
     <div className="pt-16.75">
       <Herobanner data={data} />
-      <Calculator
-        data={data}
-        calculatorSlug={calculatorParams.calculatorSlug}
-      />
+      <Calculator data={data} calculatorSlug={calculatorSlug} />
     </div>
   );
 };
@@ -68,27 +62,14 @@ const CalculatorPage = async ({
 export default CalculatorPage;
 
 export async function generateStaticParams() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/calculatorsPage`,
-    {
-      cache: "force-cache",
-    },
-  );
+  const data =
+    await client.fetch<NonNullable<CalculatorsQueryResult>>(calculatorsQuery);
 
-  if (!res.ok) return [];
-  const calculatorsPage: NonNullable<CalculatorPageQueryResult> =
-    await res.json();
-
-  if (
-    !calculatorsPage.calculatorList ||
-    !Array.isArray(calculatorsPage.calculatorList)
-  ) {
+  if (!data || !Array.isArray(data)) {
     return [];
   }
 
-  return calculatorsPage.calculatorList.map((calculator) => ({
+  return data.map((calculator) => ({
     calculatorSlug: calculator.slug.current,
   }));
 }
-
-export const revalidate = 60;

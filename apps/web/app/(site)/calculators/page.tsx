@@ -3,43 +3,34 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Herobanner from "./_components/herobanner";
 import CalculatorsList from "./_components/calculatosList";
+import { sanityFetch } from "@/sanity/lib/live";
+import { calculatorPageQuery } from "@/sanity/lib/query";
 
 export async function generateMetadata(): Promise<Metadata> {
-  let calculatorsPage: NonNullable<CalculatorPageQueryResult>;
+  const { data: calculatorsPage } = await sanityFetch<
+    NonNullable<CalculatorPageQueryResult>
+  >({ query: calculatorPageQuery });
 
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/calculatorsPage`,
-    );
-
-    if (!res.ok) {
-      return notFound();
-    }
-
-    calculatorsPage = await res.json();
-    return {
-      title: calculatorsPage.calculatorPageTitle,
-      description: calculatorsPage.calculatorPageTagLine,
-      alternates: {
-        canonical: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/calculators`,
-      },
-    };
-  } catch (error: unknown) {
+  if (!calculatorsPage) {
     return notFound();
   }
+
+  return {
+    title: calculatorsPage.calculatorPageTitle,
+    description: calculatorsPage.calculatorPageTagLine,
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/calculators`,
+    },
+  };
 }
 
 const CalculatorsPage = async () => {
-  let calculatorsPage: NonNullable<CalculatorPageQueryResult>;
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/calculatorsPage`,
-    );
-    if (!res.ok) return notFound();
-    calculatorsPage = await res.json();
-  } catch (error: unknown) {
-    console.error(error);
-    throw new Error("Error fetching data.");
+  const { data: calculatorsPage } = await sanityFetch<
+    NonNullable<CalculatorPageQueryResult>
+  >({ query: calculatorPageQuery });
+
+  if (!calculatorsPage) {
+    return notFound();
   }
   return (
     <div className="pt-16.75 font-inter">

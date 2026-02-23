@@ -1,5 +1,7 @@
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
+import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+import { blogCategoriesQuery, settingsQuery } from "@/sanity/lib/query";
 import {
   BlogCategoriesQueryResult,
   SettingsQueryResult,
@@ -10,21 +12,22 @@ const SiteLayout = async ({
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
-  const data = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/settings`,
-  );
-  const categoriesRes = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogCategories`,
-  );
-  const settingsData: NonNullable<SettingsQueryResult> = await data.json();
-  const categoriesData: NonNullable<BlogCategoriesQueryResult> =
-    await categoriesRes.json();
+  const { data: settingsData } = await sanityFetch<
+    NonNullable<SettingsQueryResult>
+  >({ query: settingsQuery });
+
+  const { data: categoriesData } = await sanityFetch<
+    NonNullable<BlogCategoriesQueryResult>
+  >({
+    query: blogCategoriesQuery,
+  });
 
   return (
     <div>
       <Header data={settingsData} categoriesData={categoriesData} />
       {children}
       <Footer data={settingsData} />
+      <SanityLive />
     </div>
   );
 };

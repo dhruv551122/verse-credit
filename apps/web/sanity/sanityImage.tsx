@@ -1,8 +1,8 @@
 "use client";
 
 import Image, { ImageProps } from "next/image";
-import { urlForImage } from "./image";
 import { SanityImageSource } from "@sanity/image-url";
+import { urlForImage } from "./lib/image";
 
 type Props = Omit<ImageProps, "src"> & {
   src: SanityImageSource;

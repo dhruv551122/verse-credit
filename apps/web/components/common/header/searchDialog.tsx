@@ -21,6 +21,10 @@ import {
 } from "react";
 import { BlogsByTitleSlugResult } from "@sanity-types/*";
 import Link from "next/link";
+import { blogsByTitleSlug } from "@/sanity/lib/query";
+import { sanityFetch } from "@/sanity/lib/live";
+import { client } from "@/sanity/lib/client";
+import { sanityClient } from "@/sanity/lib/sanityClient";
 
 const SearchDialog = ({
   isMobile,
@@ -64,30 +68,21 @@ const SearchDialog = ({
   }, [isSearchMounted]);
 
   useEffect(() => {
-    const controller = new AbortController();
+    if (!inputText.trim()) return;
 
     const timeoutId = setTimeout(async () => {
       try {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_NEXT_PUBLIC_BACKEND_URL}/api/blogsByTitle?titleSlug=${inputText}`,
-          { signal: controller.signal },
-        );
+        const blogs = await sanityClient.fetch<
+          NonNullable<BlogsByTitleSlugResult>
+        >(blogsByTitleSlug, { titleSlug: inputText });
 
-        if (!res.ok) return;
-
-        const blogs: NonNullable<BlogsByTitleSlugResult> = await res.json();
         setResultBlogs(blogs);
-      } catch (e) {
-        if ((e as DOMException).name !== "AbortError") {
-          console.error(e);
-        }
+      } catch (error) {
+        console.error(error);
       }
-    }, 400); // debounce delay
+    }, 400);
 
-    return () => {
-      controller.abort(); // cancel previous fetch
-      clearTimeout(timeoutId); // cancel debounce
-    };
+    return () => clearTimeout(timeoutId);
   }, [inputText]);
 
   const handleInputChange = (

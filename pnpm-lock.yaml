@@ -130,6 +130,9 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.2.8
         version: 1.2.8(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.1(react@19.2.1))(react@19.2.1)
+      '@sanity/client':
+        specifier: ^7.15.0
+        version: 7.15.0(debug@4.4.3)
       '@sanity/image-url':
         specifier: ^2.0.2
         version: 2.0.3

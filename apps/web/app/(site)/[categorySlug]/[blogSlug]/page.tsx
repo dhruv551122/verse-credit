@@ -5,41 +5,33 @@ import BlogContent from "./blogContent";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import RecommandedBlogs from "./recommandedBlog";
+import { blogBySlugQuery, blogsQuery } from "@/sanity/lib/query";
+import { sanityFetch } from "@/sanity/lib/live";
+import { client } from "@/sanity/lib/client";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ categorySlug: string; blogSlug: string }>;
 }): Promise<Metadata> {
-  const { categorySlug, blogSlug } = await params;
+  const { blogSlug, categorySlug } = await params;
 
-  const searchParams = new URLSearchParams({
-    categorySlug,
-    blogSlug,
-  }).toString();
+  const { data: blog } = await sanityFetch<NonNullable<BlogBySlugQueryResult>>({
+    query: blogBySlugQuery,
+    params: { blogSlug },
+  });
 
-  let blog: NonNullable<BlogBySlugQueryResult>;
-
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blog?${searchParams}`,
-    );
-
-    if (!res.ok) {
-      return notFound();
-    }
-
-    blog = await res.json();
-    return {
-      title: blog.title,
-      description: blog.description,
-      alternates: {
-        canonical: `/blog/${categorySlug}/${blogSlug}`,
-      },
-    };
-  } catch (error: unknown) {
+  if (!blog) {
     return notFound();
   }
+
+  return {
+    title: blog.title,
+    description: blog.description,
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/blog/${categorySlug}/${blogSlug}`,
+    },
+  };
 }
 
 const BlogPage = async ({
@@ -47,14 +39,12 @@ const BlogPage = async ({
 }: {
   params: Promise<{ categorySlug: string; blogSlug: string }>;
 }) => {
-  const blogParams = await params;
-  const searchParams = new URLSearchParams(blogParams).toString();
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blog?${searchParams}`,
-  );
+  const { blogSlug } = await params;
 
-  if (!res.ok) return notFound();
-  const blog: NonNullable<BlogBySlugQueryResult> = await res.json();
+  const { data: blog } = await sanityFetch<NonNullable<BlogBySlugQueryResult>>({
+    query: blogBySlugQuery,
+    params: { blogSlug },
+  });
 
   // const blogsRes = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs`);
 
@@ -87,12 +77,7 @@ const BlogPage = async ({
 export default BlogPage;
 
 export async function generateStaticParams() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs`);
-
-  if (!res.ok && !res.ok) return [];
-
-  if (!res.ok && !res.ok) return [];
-  const data: NonNullable<BlogsQueryResult> = await res.json();
+  const data = await client.fetch<NonNullable<BlogsQueryResult>>(blogsQuery);
 
   if (!data || !Array.isArray(data)) {
     return [];
@@ -103,5 +88,3 @@ export async function generateStaticParams() {
     blogSlug: blog.slug.current,
   }));
 }
-
-export const revalidate = 60;

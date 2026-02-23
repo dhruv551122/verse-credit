@@ -1,6 +1,5 @@
 import { ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { URLSearchParams } from "url";
 import CategoryBlogs from "./_components/categoryBlogs";
 import {
   BlogCategoriesQueryResult,
@@ -8,27 +7,50 @@ import {
 } from "@sanity-types/*";
 import CategoryPageRight from "./_components/categoryPageRight";
 import { notFound } from "next/navigation";
+import { sanityFetch } from "@/sanity/lib/live";
+import { blogCategoriesQuery, blogCategoryPageQuery } from "@/sanity/lib/query";
+import { client } from "@/sanity/lib/client";
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: { categorySlug: string };
+}) => {
+  const { categorySlug } = await params;
+  const { data: categoryPage } = await sanityFetch<
+    NonNullable<BlogCategoryPageQueryResult>
+  >({
+    query: blogCategoryPageQuery,
+    params: { categorySlug },
+  });
+
+  if (!categoryPage || !categoryPage.category) {
+    return notFound();
+  }
+
+  return {
+    title: categoryPage.category.label,
+    description: categoryPage.seo.seoDescription,
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/${categoryPage.category.slug}`,
+    },
+  };
+};
 
 const CategoriesPage = async ({
   params,
 }: {
   params: { categorySlug: string };
 }) => {
-  const param = await params;
-  const searchParams = new URLSearchParams(param).toString();
+  const { categorySlug } = await params;
+  const { data: categoryPage } = await sanityFetch<
+    NonNullable<BlogCategoryPageQueryResult>
+  >({
+    query: blogCategoryPageQuery,
+    params: { categorySlug },
+  });
 
-  let categoryPage: NonNullable<BlogCategoryPageQueryResult>;
-  try {
-    const categoryPageData = await fetch(
-      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogCategoryPage?${searchParams}`,
-    );
-
-    categoryPage = await categoryPageData.json();
-    if (!categoryPage.category) {
-      return notFound();
-    }
-  } catch (error: unknown) {
-    console.error(error);
+  if (!categoryPage || !categoryPage.category) {
     return notFound();
   }
 
@@ -61,15 +83,10 @@ const CategoriesPage = async ({
 export default CategoriesPage;
 
 export async function generateStaticParams() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogCategories`,
-    {
-      cache: "force-cache",
-    },
-  );
-
-  if (!res.ok) return [];
-  const categories: NonNullable<BlogCategoriesQueryResult> = await res.json();
+  const categories =
+    await client.fetch<NonNullable<BlogCategoriesQueryResult>>(
+      blogCategoriesQuery,
+    );
 
   if (!categories || !Array.isArray(categories)) {
     return [];
@@ -79,5 +96,3 @@ export async function generateStaticParams() {
     categorySlug: category.slug.current,
   }));
 }
-
-export const revalidate = 60;

@@ -747,6 +747,32 @@ export type BlogCategoryBySlugQueryResult = {
 } | null;
 
 // Source: sanity/lib/query.ts
+// Variable: calculatorsQuery
+// Query: *[_type == 'calculator']{    ...,}
+export type CalculatorsQueryResult = Array<{
+  _id: string;
+  _type: "calculator";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo: Seo;
+  title: string;
+  icon: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  tagLine: string;
+  description: string;
+  slug: Slug;
+  aboutCalculator?: BlockContent;
+  orderRank?: string;
+}>;
+
+// Source: sanity/lib/query.ts
 // Variable: calculatorPageQuery
 // Query: *[_type == 'calculatorPage'][0]{    ...,    "calculatorList": *[_type == 'calculator']{        _id,        icon,        title,        description,        slug,    }}
 export type CalculatorPageQueryResult = {

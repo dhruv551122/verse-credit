@@ -1,6 +1,9 @@
 import { SiteMapQueryResult } from "@sanity-types/*";
 import Link from "next/link";
 import SitemapBlogs from "./_components/sitemapBlogs";
+import { sanityFetch } from "@/sanity/lib/live";
+import { siteMapQuery } from "@/sanity/lib/query";
+import { notFound } from "next/navigation";
 
 export const metadata = {
   title: "VerseCredit: Sitemap",
@@ -15,11 +18,14 @@ const sitePages = [
 ];
 
 export default async function SitemapPage() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/site-map`,
-  );
+  const { data } = await sanityFetch<NonNullable<SiteMapQueryResult>>({
+    query: siteMapQuery,
+  });
 
-  const data: NonNullable<SiteMapQueryResult> = await res.json();
+  if (!data) {
+    return notFound();
+  }
+
   return (
     <div className="">
       <section className="sticky top-0 z-10 bg-bright-royal-blue rounded-b-2xl">

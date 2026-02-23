@@ -2,21 +2,45 @@ import HeroBanner from "./_components/heroBanner";
 import CategoriesGroup from "./_components/categoriesGroups";
 import { BlogsQueryResult, HomePageQueryResult } from "@sanity-types/*";
 import NewsBlogs from "./_components/newsBlogs";
+import { sanityFetch } from "@/sanity/lib/live";
+import { blogsQuery, homePageQuery } from "@/sanity/lib/query";
+import { notFound } from "next/navigation";
+
+export const generateMetadata = async () => {
+  const { data: homePage } = await sanityFetch<
+    NonNullable<HomePageQueryResult>
+  >({
+    query: homePageQuery,
+  });
+
+  if (!homePage) {
+    return notFound();
+  }
+
+  return {
+    title: homePage.seo.seoTitle,
+    description: homePage.seo.seoDescription,
+    alternates: {
+      canonical: `${process.env.NEXT_PUBLIC_DOMAIN_URL}`,
+    },
+  };
+};
 
 const HomePage = async () => {
-  const homeData = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/home`,
-  );
-  const homePage: NonNullable<HomePageQueryResult> = await homeData.json();
+  const { data: homePage } = await sanityFetch<
+    NonNullable<HomePageQueryResult>
+  >({
+    query: homePageQuery,
+  });
 
-  const blogsData = await fetch(
-    `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/blogs`,
-  );
-  const blogsPage: NonNullable<BlogsQueryResult> = await blogsData.json();
+  const { data: blogsData } = await sanityFetch<NonNullable<BlogsQueryResult>>({
+    query: blogsQuery,
+  });
+
   return (
     <div className="pt-16.75 font-inter">
-      <HeroBanner homePage={homePage} blogData={blogsPage} />
-      <CategoriesGroup homePage={homePage} blogData={blogsPage} />
+      <HeroBanner homePage={homePage} blogData={blogsData} />
+      <CategoriesGroup homePage={homePage} blogData={blogsData} />
       <NewsBlogs homePage={homePage} />
     </div>
   );
