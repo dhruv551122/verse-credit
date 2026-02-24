@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import CalculatorContainer from "@/components/common/calculator-common/calculator-container";
-import { Switch } from "@/components/ui/switch";
 
 const DEFAULT_INVESTMENT = 10000;
 const DEFAULT_RISK_BOUNDARY = 5;
@@ -18,8 +17,6 @@ const MIN_INVESTMENT = 100;
 const MIN_RISK_BOUNDARY = 1;
 const MIN_BUY_PRICE = 1;
 const MIN_STOPLOSS = 1;
-
-// FV = P × ({[(1 + i)^n – 1] / i}) × (1 + i), while for Lumpsum it's FV = P * (1 + r/n)^(nt)
 
 const PositionSizeCalculator = () => {
   const [investment, setInvestment] = useState<number>(DEFAULT_INVESTMENT);
@@ -125,20 +122,14 @@ const PositionSizeCalculator = () => {
   };
 
   return (
-    <div className="max-width-container padding-container">
-      <div className="flex flex-col gap-10">
-        <h1 className="text-2xl font-medium">
-          Calculate Your Total Investment Amount:
-        </h1>
-
-        <CalculatorContainer
-          fieldValues={fieldValues}
-          outputValues={outputValues}
-          chartConfig={chartConfig}
-          chartData={chartData}
-        />
-      </div>
-    </div>
+    <>
+      <CalculatorContainer
+        fieldValues={fieldValues}
+        outputValues={outputValues}
+        chartConfig={chartConfig}
+        chartData={chartData}
+      />
+    </>
   );
 };
 

@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -35,27 +35,14 @@ const CalculatorChart = ({
   }, []);
   return (
     <Card className="gap-0 p-0 border-none shadow-none max-w-70 sm:max-w-100">
-      <CardHeader className="p-0">
-        <CardTitle className="flex items-center justify-center gap-6 sm:gap-10">
-          {data.map((data) => (
-            <div key={data.label} className="flex items-center gap-2">
-              <div
-                className="rounded-sm size-4"
-                style={{ backgroundColor: data.fill }}
-              />{" "}
-              <span>{capitalizeFirstLetter(data.label)}</span>
-            </div>
-          ))}
-        </CardTitle>
-      </CardHeader>
-      <ChartContainer config={chartConfig} className="h-50 sm:h-100 text-gray">
+      <ChartContainer config={chartConfig} className="h-70 sm:h-100 text-gray">
         <PieChart>
           <ChartTooltip content={<ChartTooltipContent />} />
           <Pie
             dataKey="value"
             nameKey="label"
             data={data}
-            innerRadius={isSmallScreen ? 65 : 120}
+            innerRadius={isSmallScreen ? 85 : 120}
             isAnimationActive={true}
           >
             {maturity && (
@@ -72,7 +59,7 @@ const CalculatorChart = ({
                         <tspan
                           x={viewBox.cx}
                           y={viewBox.cy}
-                          className="text-2xl font-medium fill-foreground"
+                          className="text-xl font-medium md:text-2xl fill-foreground"
                         >
                           ₹ {maturity.value.toLocaleString()}
                         </tspan>
@@ -92,6 +79,19 @@ const CalculatorChart = ({
           </Pie>
         </PieChart>
       </ChartContainer>
+      <CardFooter className="p-0">
+        <CardTitle className="flex items-center justify-center w-full gap-6 sm:gap-10">
+          {data.map((data) => (
+            <div key={data.label} className="flex items-center gap-2">
+              <div
+                className="rounded-sm size-4"
+                style={{ backgroundColor: data.fill }}
+              />{" "}
+              <span>{capitalizeFirstLetter(data.label)}</span>
+            </div>
+          ))}
+        </CardTitle>
+      </CardFooter>
     </Card>
   );
 };

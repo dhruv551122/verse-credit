@@ -34,7 +34,7 @@ const CalculatorContainer = ({
     <div>
       <div className="flex flex-col items-center gap-10 lg:flex-row lg:items-start ">
         <div className="w-full ">
-          <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-6 md:gap-10">
             {fieldValues.map((fieldValue) => (
               <CalculatorField
                 key={fieldValue.fieldLable}
@@ -52,8 +52,8 @@ const CalculatorContainer = ({
           </div>
         </div>
         <div className="self-stretch w-full h-px lg:w-px lg:min-h-full bg-pale-silver" />
-        <div className="flex flex-col items-center w-full gap-10">
-          <div className="flex flex-wrap justify-center w-full gap-10 p-4 text-base border-b rounded-lg border-pale-silver">
+        <div className="flex flex-col items-center w-full gap-4">
+          <div className="flex flex-wrap justify-center w-full gap-10 pb-4 text-base border-b rounded-lg border-pale-silver">
             {outputValues.map((outputValue) => (
               <div
                 key={outputValue.label}
@@ -62,9 +62,9 @@ const CalculatorContainer = ({
                 <span className="text-sm text-teal-grey">
                   {outputValue.label}
                 </span>
-                <span className="text-xl font-medium">
-                  {outputValue.unit}
-                  {Math.round(Number(outputValue.value) ?? 0)}
+                <span className="flex items-center gap-1 text-xl font-medium">
+                  <span>{outputValue.unit}</span>
+                  <span>{Math.round(Number(outputValue.value) ?? 0)}</span>
                 </span>
               </div>
             ))}

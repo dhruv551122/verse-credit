@@ -126,32 +126,35 @@ const RichText: React.FC<Props> = ({
           </figure>
         );
       },
+
       styledTable: ({ value }: any) => {
         return (
-          <table className="w-full mb-4 0 border border-gray-30 rounded-xl overflow-hidden">
-            <tbody className="">
-              {value.rows?.map((row: any, i: number) => {
-                return (
-                  <tr key={i}>
-                    {row.cells?.map((cellValue: any, j: number) => {
-                      return (
-                        <td
-                          key={j}
-                          style={{
-                            backgroundColor: cellValue?.bgColor?.value,
-                            color: cellValue?.textColor?.value,
-                          }}
-                          className="p-2 "
-                        >
-                          <PortableText value={cellValue.content} />
-                        </td>
-                      );
-                    })}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <div className="overflow-x-scroll">
+            <table className="w-full mb-4 overflow-hidden border 0 border-gray-30 rounded-xl">
+              <tbody className="">
+                {value.rows?.map((row: any, i: number) => {
+                  return (
+                    <tr key={i}>
+                      {row.cells?.map((cellValue: any, j: number) => {
+                        return (
+                          <td
+                            key={j}
+                            style={{
+                              backgroundColor: cellValue?.bgColor?.value,
+                              color: cellValue?.textColor?.value,
+                            }}
+                            className="p-2 "
+                          >
+                            <PortableText value={cellValue.content} />
+                          </td>
+                        );
+                      })}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         );
       },
     },

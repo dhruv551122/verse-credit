@@ -132,14 +132,17 @@ const EMICalculator = () => {
     {
       label: "Principle Amount",
       value: loanAmount,
+      unit: "₹",
     },
     {
       label: "Total Interest",
       value: EMI * months - loanAmount,
+      unit: "%",
     },
     {
       label: "Total Amount",
       value: EMI * months,
+      unit: "₹",
     },
   ];
 
@@ -173,26 +176,21 @@ const EMICalculator = () => {
   ];
 
   return (
-    <div className="max-width-container padding-container">
-      <div className="flex flex-col gap-10">
-        <h1 className="text-2xl font-medium">Calculate Lumpsum returns:</h1>
-        <div className="flex flex-col gap-10 ">
-          <CalculatorContainer
-            fieldValues={fieldValues}
-            outputValues={outputValues}
-            chartConfig={chartConfig}
-            chartData={chartData}
-            // canShowYearsDetail={true}
-            maturity={maturity}
-          />
-          <Amortization
-            groupedYearsDetail={groupedYearsDetail}
-            startDate={startDate}
-            setStartDate={setStartDate}
-          />
-        </div>
-      </div>
-    </div>
+    <>
+      <CalculatorContainer
+        fieldValues={fieldValues}
+        outputValues={outputValues}
+        chartConfig={chartConfig}
+        chartData={chartData}
+        // canShowYearsDetail={true}
+        maturity={maturity}
+      />
+      <Amortization
+        groupedYearsDetail={groupedYearsDetail}
+        startDate={startDate}
+        setStartDate={setStartDate}
+      />
+    </>
   );
 };
 

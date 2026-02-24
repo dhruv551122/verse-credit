@@ -76,11 +76,13 @@ const SIPCalculator = () => {
     {
       label: "Invested Amount",
       value: monthlyInvestment * months,
+      unit: "₹",
     },
 
     {
       label: "Total value",
       value: estimatedReturn - monthlyInvestment * months,
+      unit: "₹",
     },
   ];
 
@@ -114,18 +116,13 @@ const SIPCalculator = () => {
   };
 
   return (
-    <div className="max-width-container padding-container">
-      <div className="flex flex-col gap-10">
-        <h1 className="text-2xl font-medium">Calculate SIP returns:</h1>
-        <CalculatorContainer
-          fieldValues={fieldValues}
-          outputValues={outputValues}
-          chartConfig={chartConfig}
-          chartData={chartData}
-          maturity={maturity}
-        />
-      </div>
-    </div>
+    <CalculatorContainer
+      fieldValues={fieldValues}
+      outputValues={outputValues}
+      chartConfig={chartConfig}
+      chartData={chartData}
+      maturity={maturity}
+    />
   );
 };
 

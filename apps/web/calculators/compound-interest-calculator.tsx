@@ -20,10 +20,7 @@ const CompoundInterestCalculator = () => {
 
   const [returnRate, setReturnRate] = useState<number>(DEFAULT_RETURN_RATE);
 
-  const [interestFrequency, setInterestFrequency] = useState<number>(1);
-
   const [timePeriod, setTimePeriod] = useState<number>(DEFAULT_TIME_PERIOD);
-  console.log(interestFrequency);
   const interestRate = returnRate / 100;
   const compoundInterest = investment * ((1 + interestRate) ** timePeriod - 1);
 
@@ -106,20 +103,15 @@ const CompoundInterestCalculator = () => {
   };
 
   return (
-    <div className="max-width-container padding-container">
-      <div className="flex flex-col gap-10">
-        <h1 className="text-2xl font-medium">
-          Calculate your estimated returns:
-        </h1>
-        <CalculatorContainer
-          fieldValues={fieldValues}
-          outputValues={outputValues}
-          chartConfig={chartConfig}
-          chartData={chartData}
-          maturity={maturity}
-        />
-      </div>
-    </div>
+    <>
+      <CalculatorContainer
+        fieldValues={fieldValues}
+        outputValues={outputValues}
+        chartConfig={chartConfig}
+        chartData={chartData}
+        maturity={maturity}
+      />
+    </>
   );
 };
 

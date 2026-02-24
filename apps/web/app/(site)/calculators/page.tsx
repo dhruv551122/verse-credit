@@ -41,3 +41,5 @@ const CalculatorsPage = async () => {
 };
 
 export default CalculatorsPage;
+
+export const dynamic = "force-dynamic";

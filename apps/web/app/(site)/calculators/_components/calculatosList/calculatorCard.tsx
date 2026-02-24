@@ -7,10 +7,11 @@ const CalculatorCard = ({
 }: {
   calculatorDetail: NonNullable<CalculatorPageQueryResult>["calculatorList"][number];
 }) => {
+  console.log(calculatorDetail);
   return (
     <Link
       href={`/calculators/${calculatorDetail.slug.current}`}
-      className="flex flex-col gap-4 p-4 border border-pale-silver rounded-xl text-tuatara hover:shadow-chathams-blue hover:shadow-xl/30 duration-300"
+      className="flex flex-col gap-4 p-4 duration-300 border border-pale-silver rounded-xl text-tuatara hover:shadow-chathams-blue hover:shadow-xl/30"
     >
       <SanityImage
         src={calculatorDetail.icon}
@@ -20,9 +21,9 @@ const CalculatorCard = ({
         className="object-contain"
       />
       <div className="flex flex-col gap-2">
-        <h3 className="text-2xl font-semibold">
+        <p className="text-2xl font-semibold">
           {calculatorDetail.calculatorName}
-        </h3>
+        </p>
         <p className="text-sm font-medium text-metallic-grey">
           {calculatorDetail.description}
         </p>

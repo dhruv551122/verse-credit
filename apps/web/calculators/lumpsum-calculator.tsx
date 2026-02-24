@@ -19,8 +19,6 @@ const MIN_RETURN_RATE = 1;
 const MIN_INFLATION_RATE = 1;
 const MIN_TENURE_YEARS = 1;
 
-// FV = P × ({[(1 + i)^n – 1] / i}) × (1 + i), while for Lumpsum it's FV = P * (1 + r/n)^(nt)
-
 const LumpsumCalculator = () => {
   const [investment, setInvestment] = useState<number>(DEFAULT_INVESTMENT);
 
@@ -100,11 +98,13 @@ const LumpsumCalculator = () => {
     {
       label: "Invested Amount",
       value: investment,
+      unit: "₹",
     },
 
     {
       label: "Total value",
       value: estimatedReturn - investment,
+      unit: "₹",
     },
   ];
 
@@ -138,27 +138,22 @@ const LumpsumCalculator = () => {
   };
 
   return (
-    <div className="max-width-container padding-container">
-      <div className="flex flex-col gap-10">
-        <div className="flex gap-4 items-end">
-          <h1 className="text-2xl font-medium">Calculate Lumpsum returns:</h1>
-          <div className="flex gap-2 items-center">
-            <p>With Inflation</p>
-            <Switch
-              onClick={() => setWithInflation((prev) => !prev)}
-              className="data-[state=checked]:bg-strong-amber"
-            />
-          </div>
-        </div>
-        <CalculatorContainer
-          fieldValues={fieldValues}
-          outputValues={outputValues}
-          chartConfig={chartConfig}
-          chartData={chartData}
-          maturity={maturity}
+    <>
+      <div className="flex items-center gap-2">
+        <p>With Inflation</p>
+        <Switch
+          onClick={() => setWithInflation((prev) => !prev)}
+          className="data-[state=checked]:bg-strong-amber"
         />
       </div>
-    </div>
+      <CalculatorContainer
+        fieldValues={fieldValues}
+        outputValues={outputValues}
+        chartConfig={chartConfig}
+        chartData={chartData}
+        maturity={maturity}
+      />
+    </>
   );
 };
 

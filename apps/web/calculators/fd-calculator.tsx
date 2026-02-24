@@ -124,48 +124,39 @@ const FDCalculator = () => {
   };
 
   return (
-    <div className="max-width-container padding-container">
-      <div className="flex flex-col gap-10">
-        <div className="flex flex-col gap-4 ">
-          <h1 className="text-2xl font-medium">
-            Calculate your estimated returns:
-          </h1>
-          <div className="flex flex-col gap-2">
-            <p className="font-medium">
-              Select Interest Compounding Frequency:
-            </p>
-            <Select
-              value={`${interestFrequency}`}
-              onValueChange={(value) =>
-                Number(value)
-                  ? setInterestFrequency(Number(value))
-                  : setInterestFrequency(1)
-              }
-            >
-              <SelectTrigger>
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent className="z-111">
-                <SelectGroup>
-                  {dropdownItems.map((item) => (
-                    <SelectItem key={item.label} value={`${item.value}`}>
-                      {item.label}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-        <CalculatorContainer
-          fieldValues={fieldValues}
-          outputValues={outputValues}
-          chartConfig={chartConfig}
-          chartData={chartData}
-          maturity={maturity}
-        />
+    <>
+      <div className="flex flex-col gap-2">
+        <p className="font-medium">Select Interest Compounding Frequency:</p>
+        <Select
+          value={`${interestFrequency}`}
+          onValueChange={(value) =>
+            Number(value)
+              ? setInterestFrequency(Number(value))
+              : setInterestFrequency(1)
+          }
+        >
+          <SelectTrigger>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="z-111">
+            <SelectGroup>
+              {dropdownItems.map((item) => (
+                <SelectItem key={item.label} value={`${item.value}`}>
+                  {item.label}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
-    </div>
+      <CalculatorContainer
+        fieldValues={fieldValues}
+        outputValues={outputValues}
+        chartConfig={chartConfig}
+        chartData={chartData}
+        maturity={maturity}
+      />
+    </>
   );
 };
 
