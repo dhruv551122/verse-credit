@@ -28,8 +28,8 @@ export async function generateMetadata({
   }
 
   return {
-    title: data.title,
-    description: data.description,
+    title: data.seo.seoTitle,
+    description: data.seo.seoDescription,
     alternates: {
       canonical: `${process.env.NEXT_PUBLIC_DOMAIN_URL}/calculators/${calculatorSlug}`,
     },

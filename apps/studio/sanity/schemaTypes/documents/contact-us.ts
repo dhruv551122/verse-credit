@@ -1,9 +1,11 @@
+import { LucidePhoneOutgoing } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
 export const contactUs = defineType({
   name: "contact_us",
   title: "Contact Us",
   type: "document",
+  icon: LucidePhoneOutgoing,
   groups: [
     {
       name: "seo",

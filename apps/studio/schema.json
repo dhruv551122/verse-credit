@@ -1134,7 +1134,7 @@
         },
         "optional": false
       },
-      "title": {
+      "calculatorName": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
@@ -1214,6 +1214,13 @@
         "value": {
           "type": "inline",
           "name": "slug"
+        },
+        "optional": false
+      },
+      "calculatorTitle": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
         },
         "optional": false
       },

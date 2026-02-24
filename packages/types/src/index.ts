@@ -208,7 +208,7 @@ export type Calculator = {
   _updatedAt: string;
   _rev: string;
   seo: Seo;
-  title: string;
+  calculatorName: string;
   icon: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -220,6 +220,7 @@ export type Calculator = {
   tagLine: string;
   description: string;
   slug: Slug;
+  calculatorTitle: string;
   aboutCalculator?: BlockContent;
   orderRank?: string;
 };
@@ -756,7 +757,7 @@ export type CalculatorsQueryResult = Array<{
   _updatedAt: string;
   _rev: string;
   seo: Seo;
-  title: string;
+  calculatorName: string;
   icon: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -768,13 +769,14 @@ export type CalculatorsQueryResult = Array<{
   tagLine: string;
   description: string;
   slug: Slug;
+  calculatorTitle: string;
   aboutCalculator?: BlockContent;
   orderRank?: string;
 }>;
 
 // Source: sanity/lib/query.ts
 // Variable: calculatorPageQuery
-// Query: *[_type == 'calculatorPage'][0]{    ...,    "calculatorList": *[_type == 'calculator']{        _id,        icon,        title,        description,        slug,    }}
+// Query: *[_type == 'calculatorPage'][0]{    ...,    "calculatorList": *[_type == 'calculator']{        _id,        icon,        calculatorName,        description,        slug,    }}
 export type CalculatorPageQueryResult = {
   _id: string;
   _type: "calculatorPage";
@@ -794,7 +796,7 @@ export type CalculatorPageQueryResult = {
       alt: string;
       _type: "image";
     };
-    title: string;
+    calculatorName: string;
     description: string;
     slug: Slug;
   }>;
@@ -810,7 +812,7 @@ export type CalculatorBySlugQueryResult = {
   _updatedAt: string;
   _rev: string;
   seo: Seo;
-  title: string;
+  calculatorName: string;
   icon: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -822,6 +824,7 @@ export type CalculatorBySlugQueryResult = {
   tagLine: string;
   description: string;
   slug: Slug;
+  calculatorTitle: string;
   aboutCalculator?: BlockContent;
   orderRank?: string;
 } | null;

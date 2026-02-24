@@ -58,7 +58,11 @@ const RichText: React.FC<Props> = ({
       h3: ({ children }: any) => (
         <h3 className="my-4 text-xl font-semibold md:text-2xl">{children}</h3>
       ),
-      h4: ({ children }: any) => <h4 className="my-4 ">{children}</h4>,
+      h4: ({ children }: any) => (
+        <h4 className="my-4 text-[18px] font-semibold md:text-xl">
+          {children}
+        </h4>
+      ),
       h5: ({ children }: any) => <h5 className="my-4 ">{children}</h5>,
       h6: ({ children }: any) => <h6 className="my-4 ">{children}</h6>,
       normal: ({ children }: any) => (
@@ -124,8 +128,8 @@ const RichText: React.FC<Props> = ({
       },
       styledTable: ({ value }: any) => {
         return (
-          <table className="w-full mb-4">
-            <tbody>
+          <table className="w-full mb-4 0 border border-gray-30 rounded-xl overflow-hidden">
+            <tbody className="">
               {value.rows?.map((row: any, i: number) => {
                 return (
                   <tr key={i}>
@@ -137,7 +141,7 @@ const RichText: React.FC<Props> = ({
                             backgroundColor: cellValue?.bgColor?.value,
                             color: cellValue?.textColor?.value,
                           }}
-                          className="p-2 border border-gray-300"
+                          className="p-2 "
                         >
                           <PortableText value={cellValue.content} />
                         </td>

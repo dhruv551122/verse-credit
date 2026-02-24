@@ -28,7 +28,7 @@ const SitemapBlogs = ({ data }: { data: NonNullable<SiteMapQueryResult> }) => {
             href={`${category.slug}`}
             className="flex items-center gap-1 font-medium duration-300 text-strong-amber hover:brightness-80"
           >
-            <span> All blogs</span>
+            <span>All blogs</span>
             <LucideArrowUpRight className="size-4" />
           </Link>
         </div>

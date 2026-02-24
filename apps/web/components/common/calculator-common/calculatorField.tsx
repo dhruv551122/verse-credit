@@ -31,7 +31,7 @@ const CalculatorField = ({
   return (
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4 text-base md:flex-row md:items-center md:justify-between">
-        <h4 className="font-semibold ">{fieldLable}</h4>
+        <h4 className="font-semibold uppercase text-gray-500">{fieldLable}</h4>
         <div className="flex items-center gap-4">
           <Tooltip>
             <TooltipTrigger>
@@ -44,14 +44,17 @@ const CalculatorField = ({
           <div className={cn("relative font-semibold")}>
             <span
               className={cn(
-                "absolute  top-1/2 -translate-y-1/2",
+                "absolute top-1/2 -translate-y-1/2",
                 unitRightSide ? "right-2" : "left-2",
               )}
             >
               {filedUnit}
             </span>
             <Input
-              className={cn("text-right!", unitRightSide ? "pr-6" : "pl-5")}
+              className={cn(
+                "text-right! text-base!",
+                unitRightSide ? "pr-6" : "pl-5",
+              )}
               value={fieldValue}
               onChange={(e) => {
                 const input = Number(e.target.value);
@@ -66,7 +69,7 @@ const CalculatorField = ({
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-3">
         <Slider
           defaultValue={[defaultFieldValue]}
           value={[fieldValue]}
@@ -79,7 +82,7 @@ const CalculatorField = ({
           // color="#ef9309"
           // className="bg-strong-amber [data-slot=slider-range]:bg-strong-amber"
         />
-        <div className="flex justify-between items-center text-metallic-grey">
+        <div className="flex justify-between items-center text-sm text-metallic-grey">
           <span>
             {unitRightSide
               ? `${minFiledValue}${filedUnit}`
