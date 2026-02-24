@@ -155,6 +155,6 @@ export const siteMapQuery = groq`
             "slug": slug.current,
             "categorySlug": category->slug.current,
             _updatedAt
-        }
+        },
     }
 `;

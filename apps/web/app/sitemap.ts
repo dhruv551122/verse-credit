@@ -1,11 +1,17 @@
 import { sanityFetch } from "@/sanity/lib/live";
-import { siteMapQuery } from "@/sanity/lib/query";
-import { SiteMapQueryResult } from "@sanity-types/*";
+import { calculatorsQuery, siteMapQuery } from "@/sanity/lib/query";
+import { CalculatorsQueryResult, SiteMapQueryResult } from "@sanity-types/*";
 import type { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const { data } = await sanityFetch<NonNullable<SiteMapQueryResult>>({
     query: siteMapQuery,
+  });
+
+  const { data: calculators } = await sanityFetch<
+    NonNullable<CalculatorsQueryResult>
+  >({
+    query: calculatorsQuery,
   });
 
   const baseUrl = `${process.env.NEXT_PUBLIC_DOMAIN_URL}`;
@@ -57,5 +63,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   );
 
-  return [...staticRoutes, ...categoryRoutes, ...blogRoutes];
+  const calculatorsRoutes = calculators.map((calculator) => ({
+    url: `${baseUrl}/calculator/${calculator.slug.current}`,
+    lastModified: new Date(),
+    priority: 0.8,
+  }));
+
+  return [
+    ...staticRoutes,
+    ...categoryRoutes,
+    ...blogRoutes,
+    ...calculatorsRoutes,
+  ];
 }

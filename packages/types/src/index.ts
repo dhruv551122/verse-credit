@@ -1158,7 +1158,7 @@ export type ContactPageQueryResult = {
 
 // Source: sanity/lib/query.ts
 // Variable: siteMapQuery
-// Query: *[_type == 'blogCategory']{        _id,        "title": label,        "slug": slug.current,        "blogs": *[_type == "blog" && references(^._id)]{            title,            "slug": slug.current,            "categorySlug": category->slug.current,            _updatedAt        }    }
+// Query: *[_type == 'blogCategory']{        _id,        "title": label,        "slug": slug.current,        "blogs": *[_type == "blog" && references(^._id)]{            title,            "slug": slug.current,            "categorySlug": category->slug.current,            _updatedAt        },    }
 export type SiteMapQueryResult = Array<{
   _id: string;
   title: string;
