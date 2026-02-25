@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Amortization from "@/components/common/calculator-common/amortization";
 import CalculatorContainer from "@/components/common/calculator-common/calculator-container";
+import { formatINR } from "@/lib/utils";
 
 const DEFAULT_AMOUNT_VALUE = 100000;
 const DEFAULT_INTEREST_RATE = 3.8;
@@ -131,24 +132,21 @@ const EMICalculator = () => {
   const outputValues = [
     {
       label: "Principle Amount",
-      value: loanAmount,
-      unit: "₹",
+      value: "₹ " + formatINR(Math.round(loanAmount)),
     },
     {
       label: "Total Interest",
-      value: EMI * months - loanAmount,
-      unit: "%",
+      value: "₹ " + formatINR(Math.round(EMI * months - loanAmount)),
     },
     {
       label: "Total Amount",
-      value: EMI * months,
-      unit: "₹",
+      value: "₹ " + formatINR(Math.round(EMI * months)),
     },
   ];
 
   const maturity = {
     label: "Monthly EMI",
-    value: Math.round(EMI),
+    value: "₹ " + formatINR(Math.round(EMI)),
   };
 
   const chartConfig = {

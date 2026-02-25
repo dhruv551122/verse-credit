@@ -1,6 +1,5 @@
 import {
   CalculatorBySlugQueryResult,
-  CalculatorPageQueryResult,
   CalculatorsQueryResult,
 } from "@sanity-types/*";
 import { Metadata } from "next";

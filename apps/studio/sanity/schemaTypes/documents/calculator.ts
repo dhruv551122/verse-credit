@@ -39,7 +39,7 @@ export const calculator = defineType({
           validation: (Rule) => Rule.required(),
         }),
       ],
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().assetRequired(),
     }),
     defineField({
       name: "tagLine",

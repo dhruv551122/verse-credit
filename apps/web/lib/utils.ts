@@ -31,3 +31,7 @@ export const slugify = (text: string) =>
     .trim()
     .replace(/[^\w\s-]/g, "")
     .replace(/\s+/g, "-");
+
+export function formatINR(value: number) {
+  return value.toLocaleString("en-IN");
+}

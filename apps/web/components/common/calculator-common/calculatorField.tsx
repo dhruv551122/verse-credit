@@ -1,12 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { cn } from "@/lib/utils";
-import { InfoIcon } from "lucide-react";
+import { cn, formatINR } from "@/lib/utils";
 const CalculatorField = ({
   setFieldValue,
   fieldValue,
@@ -44,12 +38,12 @@ const CalculatorField = ({
           </span>
           <Input
             className={cn(
-              "text-right! text-base!",
+              "text-right! text-base! font-source-sans-3",
               unitRightSide ? "pr-6" : "pl-5",
             )}
-            value={fieldValue}
+            value={formatINR(fieldValue)}
             onChange={(e) => {
-              const input = Number(e.target.value);
+              const input = Number(e.target.value.replace(/,/g, ""));
               if (Number.isNaN(input)) return;
               if (input > maxFieldValue) {
                 setFieldValue(maxFieldValue);
@@ -70,19 +64,17 @@ const CalculatorField = ({
           onValueChange={(e) => {
             setFieldValue(e[0]);
           }}
-          // color="#ef9309"
-          // className="bg-strong-amber [data-slot=slider-range]:bg-strong-amber"
         />
         <div className="flex justify-between items-center text-sm text-metallic-grey">
           <span>
             {unitRightSide
-              ? `${minFiledValue}${filedUnit}`
-              : `${filedUnit}${minFiledValue}`}
+              ? `${formatINR(minFiledValue)}${filedUnit}`
+              : `${filedUnit}${formatINR(minFiledValue)}`}
           </span>
           <span>
             {unitRightSide
-              ? `${maxFieldValue}${filedUnit}`
-              : `${filedUnit}${maxFieldValue}`}
+              ? `${formatINR(maxFieldValue)}${filedUnit}`
+              : `${filedUnit}${formatINR(maxFieldValue)}`}
           </span>
         </div>
       </div>

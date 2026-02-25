@@ -22,8 +22,6 @@ import {
 import { BlogsByTitleSlugResult } from "@sanity-types/*";
 import Link from "next/link";
 import { blogsByTitleSlug } from "@/sanity/lib/query";
-import { sanityFetch } from "@/sanity/lib/live";
-import { client } from "@/sanity/lib/client";
 import { sanityClient } from "@/sanity/lib/sanityClient";
 
 const SearchDialog = ({

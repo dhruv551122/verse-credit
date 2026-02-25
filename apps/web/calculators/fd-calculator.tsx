@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { formatINR } from "@/lib/utils";
 
 const DEFAULT_INVESTMENT = 10000;
 const DEFAULT_RETURN_RATE = 5;
@@ -39,7 +40,6 @@ const FDCalculator = () => {
   const [interestFrequency, setInterestFrequency] = useState<number>(1);
 
   const [timePeriod, setTimePeriod] = useState<number>(DEFAULT_TIME_PERIOD);
-  interestFrequency;
   const interestRate = returnRate / 100;
   const finalValue =
     investment *
@@ -84,13 +84,11 @@ const FDCalculator = () => {
   const outputValues = [
     {
       label: "Total Investment",
-      value: investment,
-      unit: "₹",
+      value: "₹ " + formatINR(Math.round(investment)),
     },
     {
       label: "Returns",
-      value: finalValue - investment,
-      unit: "₹",
+      value: "₹ " + formatINR(Math.round(finalValue - investment)),
     },
   ];
 
@@ -109,7 +107,7 @@ const FDCalculator = () => {
 
   const maturity = {
     label: "Maturity Value",
-    value: Math.round(finalValue),
+    value: "₹ " + formatINR(Math.round(finalValue)),
   };
 
   const chartConfig = {

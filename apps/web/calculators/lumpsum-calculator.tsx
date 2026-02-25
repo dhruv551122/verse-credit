@@ -3,6 +3,7 @@
 import { useState } from "react";
 import CalculatorContainer from "@/components/common/calculator-common/calculator-container";
 import { Switch } from "@/components/ui/switch";
+import { formatINR } from "@/lib/utils";
 
 const DEFAULT_INVESTMENT = 10000;
 const DEFAULT_RETURN_RATE = 5;
@@ -96,20 +97,18 @@ const LumpsumCalculator = () => {
   const outputValues = [
     {
       label: "Invested Amount",
-      value: investment,
-      unit: "₹",
+      value: "₹ " + formatINR(Math.round(investment)),
     },
 
     {
       label: "Total value",
-      value: estimatedReturn - investment,
-      unit: "₹",
+      value: "₹ " + formatINR(Math.round(estimatedReturn - investment)),
     },
   ];
 
   const maturity = {
     label: "Maturity Value",
-    value: Math.round(estimatedReturn),
+    value: "₹ " + formatINR(Math.round(estimatedReturn)),
   };
 
   const chartData = [

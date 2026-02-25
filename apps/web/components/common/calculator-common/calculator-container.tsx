@@ -1,7 +1,7 @@
 "use client";
 
 import { ChartConfig } from "@/components/ui/chart";
-import { SetStateAction, useState } from "react";
+import { SetStateAction } from "react";
 import CalculatorField from "./calculatorField";
 import CalculatorChart from "./calculatorChart";
 
@@ -52,7 +52,7 @@ const CalculatorContainer = ({
           </div>
         </div>
         <div className="self-stretch w-full h-px lg:w-px lg:h-auto bg-pale-silver" />
-        <div className="flex flex-col items-center w-full gap-4">
+        <div className="flex flex-col items-center w-full gap-4 font-source-sans-3">
           <div className="flex flex-wrap justify-center w-full gap-10 pb-4 text-base border-b rounded-lg border-pale-silver">
             {outputValues.map((outputValue) => (
               <div
@@ -62,9 +62,11 @@ const CalculatorContainer = ({
                 <span className="text-sm text-teal-grey">
                   {outputValue.label}
                 </span>
-                <span className="flex items-center gap-1 text-xl font-medium">
-                  <span>{outputValue.unit}</span>
-                  <span>{Math.round(Number(outputValue.value) ?? 0)}</span>
+                <span
+                  className="flex items-center gap-1 text-xl font-medium"
+                  style={{ color: `${outputValue.color}` }}
+                >
+                  {outputValue.value}
                 </span>
               </div>
             ))}

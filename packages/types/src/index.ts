@@ -142,7 +142,7 @@ export type Blog = {
   title: string;
   description: string;
   heroImage: {
-    asset?: SanityImageAssetReference;
+    asset: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -210,7 +210,7 @@ export type Calculator = {
   seo: Seo;
   calculatorName: string;
   icon: {
-    asset?: SanityImageAssetReference;
+    asset: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -302,7 +302,7 @@ export type Home = {
   }>;
   newsTitle: string;
   newsBackgroundImage: {
-    asset?: SanityImageAssetReference;
+    asset: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -323,7 +323,7 @@ export type Settings = {
   _updatedAt: string;
   _rev: string;
   headerLogo: {
-    asset?: SanityImageAssetReference;
+    asset: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -539,7 +539,7 @@ export type HomePageQueryResult = {
     title: string;
     description: string;
     heroImage: {
-      asset?: SanityImageAssetReference;
+      asset: SanityImageAssetReference;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
@@ -587,7 +587,7 @@ export type HomePageQueryResult = {
   }>;
   newsTitle: string;
   newsBackgroundImage: {
-    asset?: SanityImageAssetReference;
+    asset: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -605,7 +605,7 @@ export type HomePageQueryResult = {
     title: string;
     description: string;
     heroImage: {
-      asset?: SanityImageAssetReference;
+      asset: SanityImageAssetReference;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
@@ -653,7 +653,7 @@ export type BlogsByCategoryQueryResult = Array<{
   title: string;
   description: string;
   heroImage: {
-    asset?: SanityImageAssetReference;
+    asset: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -700,7 +700,7 @@ export type BlogBySlugQueryResult = {
   title: string;
   description: string;
   heroImage: {
-    asset?: SanityImageAssetReference;
+    asset: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -759,7 +759,7 @@ export type CalculatorsQueryResult = Array<{
   seo: Seo;
   calculatorName: string;
   icon: {
-    asset?: SanityImageAssetReference;
+    asset: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -789,7 +789,7 @@ export type CalculatorPageQueryResult = {
   calculatorList: Array<{
     _id: string;
     icon: {
-      asset?: SanityImageAssetReference;
+      asset: SanityImageAssetReference;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
@@ -814,7 +814,7 @@ export type CalculatorBySlugQueryResult = {
   seo: Seo;
   calculatorName: string;
   icon: {
-    asset?: SanityImageAssetReference;
+    asset: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -839,7 +839,7 @@ export type SettingsQueryResult = {
   _updatedAt: string;
   _rev: string;
   headerLogo: {
-    asset?: SanityImageAssetReference;
+    asset: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -927,7 +927,7 @@ export type BlogCategoryPageQueryResult = {
     title: string;
     description: string;
     heroImage: {
-      asset?: SanityImageAssetReference;
+      asset: SanityImageAssetReference;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
@@ -981,7 +981,7 @@ export type BlogCategoryPageQueryResult = {
     title: string;
     description: string;
     heroImage: {
-      asset?: SanityImageAssetReference;
+      asset: SanityImageAssetReference;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
@@ -1053,7 +1053,7 @@ export type BlogsByTitleSlugResult = Array<{
   };
   slug: Slug;
   heroImage: {
-    asset?: SanityImageAssetReference;
+    asset: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -1079,7 +1079,7 @@ export type BlogsQueryResult = Array<{
   title: string;
   description: string;
   heroImage: {
-    asset?: SanityImageAssetReference;
+    asset: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
@@ -1132,7 +1132,7 @@ export type BlogsRssQueryResult = Array<{
     orderRank?: string;
   };
   heroImage: {
-    asset?: SanityImageAssetReference;
+    asset: SanityImageAssetReference;
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;

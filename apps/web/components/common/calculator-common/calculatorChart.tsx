@@ -1,4 +1,4 @@
-import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardFooter, CardTitle } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -61,7 +61,7 @@ const CalculatorChart = ({
                           y={viewBox.cy}
                           className="text-xl font-medium md:text-2xl fill-foreground"
                         >
-                          ₹ {maturity.value.toLocaleString()}
+                          {maturity.value}
                         </tspan>
                         <tspan
                           x={viewBox.cx}

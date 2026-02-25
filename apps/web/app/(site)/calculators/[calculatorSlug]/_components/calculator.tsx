@@ -1,7 +1,6 @@
 import { calculators } from "@/calculators";
 import RichText from "@/components/ui/rich-text";
 import { CalculatorBySlugQueryResult } from "@sanity-types/*";
-import { redirect } from "next/navigation";
 import { ReactNode } from "react";
 
 const Calculator = ({

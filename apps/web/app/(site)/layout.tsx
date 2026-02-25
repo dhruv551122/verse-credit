@@ -23,7 +23,7 @@ const SiteLayout = async ({
   });
 
   return (
-    <div>
+    <div className="font-inter">
       <Header data={settingsData} categoriesData={categoriesData} />
       {children}
       <Footer data={settingsData} />

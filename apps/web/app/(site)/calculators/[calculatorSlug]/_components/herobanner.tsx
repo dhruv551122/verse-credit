@@ -28,11 +28,11 @@ const Herobanner = ({
               <SanityImage
                 src={data.icon}
                 alt={data.icon.alt}
-                width={48}
-                height={48}
-                className="object-contain w-8 h-8 shrink-0 md:w-12 md:h-12"
+                width={42}
+                height={42}
+                className="object-contain w-8 h-8 shrink-0 md:w-11 md:h-11"
               />
-              <h2 className="text-2xl font-semibold md:text-5xl leading-[100%]">
+              <h2 className="text-2xl font-semibold md:text-4xl leading-[100%]">
                 {data.calculatorName}
               </h2>
             </div>

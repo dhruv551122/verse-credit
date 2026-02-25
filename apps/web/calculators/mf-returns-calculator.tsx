@@ -11,84 +11,70 @@ import {
 import { Bar, BarChart, XAxis } from "recharts";
 import { capitalizeFirstLetter, formatINR } from "@/lib/utils";
 
-const DEFAULT_YEARLY_INVESTMENT = 10000;
+const DEFAULT_INVESTMENT = 10000;
 const DEFAULT_RETURN_RATE = 12;
 const DEFAULT_TENURE_YEARS = 5;
 
-const MAX_YEARLY_INVESTMENT = 1000000;
+const MAX_INVESTMENT = 1000000;
 const MAX_RETURN_RATE = 35;
 const MAX_TENURE_YEARS = 35;
 
-const MIN_YEARLY_INVESTMENT = 100;
+const MIN_INVESTMENT = 100;
 const MIN_RETURN_RATE = 1;
 const MIN_TENURE_YEARS = 1;
 
-const YearlySIPCalculator = () => {
-  const [yearlyInvestment, setYearlyInvestment] = useState<number>(
-    DEFAULT_YEARLY_INVESTMENT,
-  );
+const MFReturnsCalculator = () => {
+  const [investment, setInvestment] = useState<number>(DEFAULT_INVESTMENT);
   const [returnRate, setReturnRate] = useState<number>(DEFAULT_RETURN_RATE);
   const [tenure, setTenure] = useState<number>(DEFAULT_TENURE_YEARS);
 
-  const yearlyInterestRate = returnRate / 100;
+  const interestRate = returnRate / 100;
   let estimatedReturn;
-  if (yearlyInterestRate === 0) {
-    estimatedReturn = yearlyInvestment * tenure;
+  if (interestRate === 0) {
+    estimatedReturn = investment;
   } else {
-    estimatedReturn =
-      yearlyInvestment *
-      (((1 + yearlyInterestRate) ** tenure - 1) / yearlyInterestRate) *
-      (1 + yearlyInterestRate);
+    estimatedReturn = investment * (1 + interestRate) ** tenure;
   }
 
-  function yearlySIPBreakdown(P: number, r: number, n: number) {
-    let amount = 0;
-    let totalInvested = 0;
+  function MFBreakdown(P: number, r: number, n: number) {
+    let amount = P; // Initial investment
     const result = [];
 
     for (let year = 1; year <= n; year++) {
-      totalInvested += P;
+      amount = Math.round(amount * (1 + r));
 
-      const beforeReturn = amount + P;
-      amount = Math.round(beforeReturn * (1 + r));
-
-      const yearlyReturn = amount - totalInvested;
+      const totalReturn = amount - P;
 
       result.push({
         year,
-        investedThisYear: P,
-        totalInvested,
+        investedAmount: P, // remains constant (lumpsum)
         yearEndValue: amount,
-        totalReturn: yearlyReturn,
+        totalReturn,
       });
     }
 
     return result;
   }
 
-  const yearlyInvestmentValues = yearlySIPBreakdown(
-    yearlyInvestment,
-    yearlyInterestRate,
-    tenure,
-  );
+  const investmentValues = MFBreakdown(investment, interestRate, tenure);
 
-  const barChartData = yearlyInvestmentValues.map(
-    ({ year, totalInvested, totalReturn }) => ({
+  const barChartData = investmentValues.map(
+    ({ year, investedAmount, totalReturn }) => ({
       year,
-      totalInvested,
+      investedAmount,
       totalReturn,
     }),
   );
 
   const fieldValues = [
     {
-      setFieldValue: setYearlyInvestment,
-      fieldValue: yearlyInvestment,
+      setFieldValue: setInvestment,
+      fieldValue: investment,
       step: 1500,
-      defaultFieldValue: DEFAULT_YEARLY_INVESTMENT,
-      minFieldValue: MIN_YEARLY_INVESTMENT,
-      maxFieldValue: MAX_YEARLY_INVESTMENT,
-      fieldLable: "Yearly Investment",
+      defaultFieldValue: DEFAULT_INVESTMENT,
+      minFieldValue: MIN_INVESTMENT,
+      maxFieldValue: MAX_INVESTMENT,
+      fieldLable: "Investment",
       fieldunit: "₹",
       unitRightSide: false,
     },
@@ -119,14 +105,12 @@ const YearlySIPCalculator = () => {
   const outputValues = [
     {
       label: "Invested Amount",
-      value: "₹ " + formatINR(Math.round(yearlyInvestment * tenure)),
+      value: `₹ ${formatINR(Math.round(Number(investment)))}`,
     },
 
     {
       label: "Total value",
-      value:
-        "₹ " +
-        formatINR(Math.round(estimatedReturn - yearlyInvestment * tenure)),
+      value: `₹ ${formatINR(Math.round(Number(estimatedReturn - investment)))}`,
     },
   ];
 
@@ -138,12 +122,12 @@ const YearlySIPCalculator = () => {
   const chartData = [
     {
       label: "Investment",
-      value: yearlyInvestment * tenure,
+      value: investment,
       fill: "#1b5183",
     },
     {
       label: "Est. Returns",
-      value: Math.round(estimatedReturn - yearlyInvestment * tenure),
+      value: Math.round(estimatedReturn - investment),
       fill: "#5ca81d",
     },
   ];
@@ -169,7 +153,7 @@ const YearlySIPCalculator = () => {
         maturity={maturity}
       />
       <div className="h-px w-full bg-pale-silver" />
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-start font-source-sans-3">
         <Card className="gap-0 order-2 lg:order-1 lg:col-span-3 w-full p-0 shadow-none h-full max-h-100 border border-pale-silver rounded-md">
           <ChartContainer
             config={chartConfig}
@@ -194,7 +178,7 @@ const YearlySIPCalculator = () => {
                 }
               />
               <Bar
-                dataKey="totalInvested"
+                dataKey="investedAmount"
                 label="Total Invested"
                 fill="#1b5183"
                 radius={4}
@@ -238,7 +222,7 @@ const YearlySIPCalculator = () => {
                 </tr>
               </thead>
               <tbody className="text-gray-500">
-                {yearlyInvestmentValues.map((values, index) => (
+                {investmentValues.map((values, index) => (
                   <tr
                     key={index}
                     className="[&>td]:px-4 [&>td]:py-2 border-b border-pale-silver [&>td]:text-right [&>td]:whitespace-nowrap"
@@ -246,7 +230,7 @@ const YearlySIPCalculator = () => {
                     <td className="text-left!  sticky left-0 bg-white ">
                       {values.year}
                     </td>
-                    <td>₹ {formatINR(values.totalInvested)}</td>
+                    <td>₹ {formatINR(values.investedAmount)}</td>
                     <td>₹ {formatINR(values.totalReturn)}</td>
                     <td>₹ {formatINR(values.yearEndValue)}</td>
                   </tr>
@@ -260,4 +244,4 @@ const YearlySIPCalculator = () => {
   );
 };
 
-export default YearlySIPCalculator;
+export default MFReturnsCalculator;

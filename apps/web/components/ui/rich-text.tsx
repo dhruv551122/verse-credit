@@ -27,10 +27,7 @@ const RichText: React.FC<Props> = ({
   className,
   highlightedTextClassName,
 }) => {
-  const combinedClassNames = cn(
-    "prose max-w-none text-tuatara font-inter",
-    className,
-  );
+  const combinedClassNames = cn("prose max-w-none text-tuatara ", className);
 
   const myPortableTextComponents: any = {
     list: {
@@ -66,9 +63,7 @@ const RichText: React.FC<Props> = ({
       h5: ({ children }: any) => <h5 className="my-4 ">{children}</h5>,
       h6: ({ children }: any) => <h6 className="my-4 ">{children}</h6>,
       normal: ({ children }: any) => (
-        <p className="mb-4 text-base leading-relaxed font-inter min-h-px">
-          {children}
-        </p>
+        <p className="mb-4 text-base leading-relaxed min-h-px">{children}</p>
       ),
       center: ({ children }: any) => <p className="text-center">{children}</p>,
     },

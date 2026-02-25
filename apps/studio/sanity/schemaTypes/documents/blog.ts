@@ -56,7 +56,7 @@ const blog = defineType({
           validation: (Rule) => Rule.required(),
         }),
       ],
-      validation: (Rule) => Rule.required(),
+      validation: (Rule) => Rule.required().assetRequired(),
     }),
     defineField({
       name: "content",

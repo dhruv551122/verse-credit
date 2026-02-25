@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import CalculatorContainer from "@/components/common/calculator-common/calculator-container";
+import { formatINR } from "@/lib/utils";
 
 const DEFAULT_INVESTMENT = 10000;
 const DEFAULT_RETURN_RATE = 5;
@@ -63,13 +64,11 @@ const CompoundInterestCalculator = () => {
   const outputValues = [
     {
       label: "Total Investment",
-      value: investment,
-      unit: "₹",
+      value: "₹ " + formatINR(Math.round(investment)),
     },
     {
       label: "Returns",
-      value: compoundInterest,
-      unit: "₹",
+      value: "₹ " + formatINR(Math.round(compoundInterest)),
     },
   ];
 
@@ -88,7 +87,7 @@ const CompoundInterestCalculator = () => {
 
   const maturity = {
     label: "Maturity Value",
-    value: Math.round(compoundInterest + investment),
+    value: "₹ " + formatINR(Math.round(compoundInterest + investment)),
   };
 
   const chartConfig = {

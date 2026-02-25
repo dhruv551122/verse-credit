@@ -53,7 +53,7 @@ const Header = ({
 
   return (
     <div className="fixed top-0 left-0 w-full z-100 bg-chathams-blue">
-      <div className="flex items-center justify-between p-4 max-width-container md:px-10 text-sandstone font-inter">
+      <div className="flex items-center justify-between p-4 max-width-container md:px-10 text-sandstone ">
         <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
           <SanityImage
             src={data.headerLogo}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import CalculatorContainer from "@/components/common/calculator-common/calculator-container";
+import { formatINR } from "@/lib/utils";
 
 const DEFAULT_INVESTMENT = 10000;
 const DEFAULT_RISK_BOUNDARY = 5;
@@ -82,18 +83,15 @@ const PositionSizeCalculator = () => {
   const outputValues = [
     {
       label: "Investment Amount",
-      value: shares * buyPrice,
-      unit: "₹",
+      value: "₹ " + formatINR(Math.round(shares * buyPrice)),
     },
     {
       label: "Potential Risk",
-      value: (buyPrice - stoploss) * shares,
-      unit: "₹",
+      value: "₹ " + formatINR(Math.round((buyPrice - stoploss) * shares)),
     },
     {
       label: "Shares to Buy",
-      value: shares,
-      unit: "",
+      value: formatINR(Math.round(shares)),
     },
   ];
 

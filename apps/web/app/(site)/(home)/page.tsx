@@ -38,7 +38,7 @@ const HomePage = async () => {
   });
 
   return (
-    <div className="pt-16.75 font-inter">
+    <div className="pt-16.75">
       <HeroBanner homePage={homePage} blogData={blogsData} />
       <CategoriesGroup homePage={homePage} blogData={blogsData} />
       <NewsBlogs homePage={homePage} />

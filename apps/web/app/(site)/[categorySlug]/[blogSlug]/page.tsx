@@ -52,7 +52,7 @@ const BlogPage = async ({
   // const randomBlogs = blogs.sort(() => 0.5 - Math.random()).slice(0, 3);
 
   return (
-    <div className="pt-16.75 font-inter">
+    <div className="pt-16.75 ">
       <div className="py-6! font-medium max-width-container padding-container">
         <div className="flex items-center gap-2 text-gray-500">
           <Link href="/" className="duration-300 hover:text-gray-700">

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import CalculatorContainer from "@/components/common/calculator-common/calculator-container";
+import { formatINR } from "@/lib/utils";
 
 const DEFAULT_MONTHLY_INVESTMENT = 1000;
 const DEFAULT_RETURN_RATE = 3.8;
@@ -14,8 +15,6 @@ const MAX_TENURE_YEARS = 35;
 const MIN_MONTHLY_INVESTMENT = 100;
 const MIN_RETURN_RATE = 1;
 const MIN_TENURE_YEARS = 1;
-
-// FV = P × ({[(1 + i)^n – 1] / i}) × (1 + i), while for Lumpsum it's FV = P * (1 + r/n)^(nt)
 
 const SIPCalculator = () => {
   const [monthlyInvestment, setMonthlyInvestment] = useState<number>(
@@ -75,20 +74,20 @@ const SIPCalculator = () => {
   const outputValues = [
     {
       label: "Invested Amount",
-      value: monthlyInvestment * months,
-      unit: "₹",
+      value: "₹ " + formatINR(Math.round(monthlyInvestment * months)),
     },
 
     {
       label: "Total value",
-      value: estimatedReturn - monthlyInvestment * months,
-      unit: "₹",
+      value:
+        "₹ " +
+        formatINR(Math.round(estimatedReturn - monthlyInvestment * months)),
     },
   ];
 
   const maturity = {
     label: "Maturity Value",
-    value: Math.round(estimatedReturn),
+    value: "₹ " + formatINR(Math.round(estimatedReturn)),
   };
 
   const chartData = [

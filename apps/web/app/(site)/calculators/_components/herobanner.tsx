@@ -19,7 +19,7 @@ const Herobanner = ({
             <div className="truncate text-teal-grey/60">Calculators</div>
           </div>
           <div className="flex flex-wrap items-end gap-4">
-            <h2 className="text-5xl font-semibold">
+            <h2 className="text-2xl md:text-4xl font-semibold">
               {calculatorsPage.calculatorPageTitle}
             </h2>
             <p className="text-[18px] text-teal-grey font-normal">
