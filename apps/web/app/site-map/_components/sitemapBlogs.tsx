@@ -1,5 +1,3 @@
-"use client";
-
 import { SiteMapQueryResult } from "@sanity-types/*";
 import { ArrowRight, LucideArrowUpRight } from "lucide-react";
 import Link from "next/link";

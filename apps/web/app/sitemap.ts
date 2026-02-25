@@ -1,3 +1,5 @@
+export const revalidate = 60;
+
 import { sanityFetch } from "@/sanity/lib/live";
 import { calculatorsQuery, siteMapQuery } from "@/sanity/lib/query";
 import { CalculatorsQueryResult, SiteMapQueryResult } from "@sanity-types/*";
