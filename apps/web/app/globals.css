@@ -59,6 +59,8 @@
   --color-pale-silver: var(--color-pale-silver);
   --color-christi: var(--color-christi);
   --color-sporty-orange: var(--color-sporty-orange);
+  --color-isabelline: var(--color-isabelline);
+  --color-dark-aquamarine-green: var(--color-dark-aquamarine-green);
 }
 
 :root {
@@ -109,6 +111,8 @@
   --color-pale-silver: #ebebeb;
   --color-christi: #5ca81d;
   --color-sporty-orange: #fe6a2a;
+  --color-isabelline: #f4f2ec;
+  --color-dark-aquamarine-green: #034540;
 }
 
 .dark {
@@ -182,4 +186,35 @@ input[type="number"] {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+}
+
+/* Width */
+/* .custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #1b5183;
+  border-radius: 999px;
+  background-clip: content-box; 
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  overflow: hidden;
+} */
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #ebebeb;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: "transparent";
+  border-radius: 10px;
 }

@@ -32,41 +32,32 @@ const CalculatorField = ({
     <div className="flex flex-col gap-6">
       <div className="flex flex-col gap-4 text-base md:flex-row md:items-center md:justify-between">
         <h4 className="font-semibold uppercase text-gray-500">{fieldLable}</h4>
-        <div className="flex items-center gap-4">
-          <Tooltip>
-            <TooltipTrigger>
-              <InfoIcon />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>Minimum value allowed is {minFiledValue}</p>
-            </TooltipContent>
-          </Tooltip>
-          <div className={cn("relative font-semibold")}>
-            <span
-              className={cn(
-                "absolute top-1/2 -translate-y-1/2",
-                unitRightSide ? "right-2" : "left-2",
-              )}
-            >
-              {filedUnit}
-            </span>
-            <Input
-              className={cn(
-                "text-right! text-base!",
-                unitRightSide ? "pr-6" : "pl-5",
-              )}
-              value={fieldValue}
-              onChange={(e) => {
-                const input = Number(e.target.value);
-                if (Number.isNaN(input)) return;
-                if (input > maxFieldValue) {
-                  setFieldValue(maxFieldValue);
-                  return;
-                }
-                setFieldValue(input);
-              }}
-            />
-          </div>
+
+        <div className={cn("relative font-semibold")}>
+          <span
+            className={cn(
+              "absolute top-1/2 -translate-y-1/2",
+              unitRightSide ? "right-2" : "left-2",
+            )}
+          >
+            {filedUnit}
+          </span>
+          <Input
+            className={cn(
+              "text-right! text-base!",
+              unitRightSide ? "pr-6" : "pl-5",
+            )}
+            value={fieldValue}
+            onChange={(e) => {
+              const input = Number(e.target.value);
+              if (Number.isNaN(input)) return;
+              if (input > maxFieldValue) {
+                setFieldValue(maxFieldValue);
+                return;
+              }
+              setFieldValue(input);
+            }}
+          />
         </div>
       </div>
       <div className="flex flex-col gap-3">

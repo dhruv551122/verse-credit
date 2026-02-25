@@ -92,7 +92,6 @@ const LumpsumCalculator = () => {
       },
     ];
   }
-  console.log(withInflation);
 
   const outputValues = [
     {

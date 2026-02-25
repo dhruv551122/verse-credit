@@ -9,7 +9,7 @@ export const calculator = defineType({
   icon: CalculatorIcon,
   groups: [
     { name: "seo", title: "Seo" },
-    { name: "calculator", title: "Calculator" },
+    { name: "calculatorDetail", title: "Calculator Detail" },
   ],
   fields: [
     defineField({
@@ -23,14 +23,14 @@ export const calculator = defineType({
       name: "calculatorName",
       type: "string",
       title: "Calculator Name",
-      group: "calculator",
+      group: "calculatorDetail",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "icon",
       type: "image",
       title: "Icon",
-      group: "calculator",
+      group: "calculatorDetail",
       fields: [
         defineField({
           name: "alt",
@@ -45,14 +45,14 @@ export const calculator = defineType({
       name: "tagLine",
       type: "text",
       title: "Tag Line",
-      group: "calculator",
+      group: "calculatorDetail",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "description",
       type: "text",
       title: "Description",
-      group: "calculator",
+      group: "calculatorDetail",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -60,21 +60,21 @@ export const calculator = defineType({
       type: "slug",
       title: "Slug",
       options: { source: "calculatorName" },
-      group: "calculator",
+      group: "calculatorDetail",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "calculatorTitle",
       title: "Calculator Title",
       type: "text",
-      group: "calculator",
+      group: "calculatorDetail",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: "aboutCalculator",
       title: "About Calculator",
       type: "blockContent",
-      group: "calculator",
+      group: "calculatorDetail",
     }),
     orderRankField({ type: "calculator" }),
   ],

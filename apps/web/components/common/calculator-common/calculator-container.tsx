@@ -51,7 +51,7 @@ const CalculatorContainer = ({
             ))}
           </div>
         </div>
-        <div className="self-stretch w-full h-px lg:w-px lg:min-h-full bg-pale-silver" />
+        <div className="self-stretch w-full h-px lg:w-px lg:h-auto bg-pale-silver" />
         <div className="flex flex-col items-center w-full gap-4">
           <div className="flex flex-wrap justify-center w-full gap-10 pb-4 text-base border-b rounded-lg border-pale-silver">
             {outputValues.map((outputValue) => (

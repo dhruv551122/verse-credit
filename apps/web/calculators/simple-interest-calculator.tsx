@@ -2,17 +2,9 @@
 
 import { useState } from "react";
 import CalculatorContainer from "@/components/common/calculator-common/calculator-container";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
-const DEFAULT_INVESTMENT = 10000;
-const DEFAULT_RETURN_RATE = 5;
+const DEFAULT_INVESTMENT = 100000;
+const DEFAULT_INTEREST_RATE = 10;
 const DEFAULT_TIME_PERIOD = 10;
 
 const MAX_INVESTMENT = 1000000;
@@ -23,27 +15,14 @@ const MIN_INVESTMENT = 100;
 const MIN_RETURN_RATE = 1;
 const MIN_TIME_PERIOD = 1;
 
-const dropdownItems = [
-  { label: "Annnualy", value: 1 },
-  { label: "Half-Yearly", value: 2 },
-  { label: "Quarterly", value: 4 },
-  { label: "Monthly", value: 12 },
-  { label: "Daily", value: 365 },
-];
-
-const FDCalculator = () => {
+const SimpleInterestCalculator = () => {
   const [investment, setInvestment] = useState<number>(DEFAULT_INVESTMENT);
 
-  const [returnRate, setReturnRate] = useState<number>(DEFAULT_RETURN_RATE);
-
-  const [interestFrequency, setInterestFrequency] = useState<number>(1);
+  const [returnRate, setReturnRate] = useState<number>(DEFAULT_INTEREST_RATE);
 
   const [timePeriod, setTimePeriod] = useState<number>(DEFAULT_TIME_PERIOD);
-  interestFrequency;
   const interestRate = returnRate / 100;
-  const finalValue =
-    investment *
-    (1 + interestRate / interestFrequency) ** (interestFrequency * timePeriod);
+  const interest = investment * interestRate * timePeriod;
 
   const fieldValues = [
     {
@@ -53,7 +32,7 @@ const FDCalculator = () => {
       defaultFieldValue: DEFAULT_INVESTMENT,
       minFieldValue: MIN_INVESTMENT,
       maxFieldValue: MAX_INVESTMENT,
-      fieldLable: "Available Balance",
+      fieldLable: "Principal Amount",
       fieldunit: "₹",
       unitRightSide: false,
     },
@@ -61,10 +40,10 @@ const FDCalculator = () => {
       setFieldValue: setReturnRate,
       fieldValue: returnRate,
       step: 0.01,
-      defaultFieldValue: DEFAULT_RETURN_RATE,
+      defaultFieldValue: DEFAULT_INTEREST_RATE,
       minFieldValue: MIN_RETURN_RATE,
       maxFieldValue: MAX_RETURN_RATE,
-      fieldLable: "Risk Boundary (%)",
+      fieldLable: "Expected Return Rate (p.a)",
       fieldunit: "%",
       unitRightSide: true,
     },
@@ -75,7 +54,7 @@ const FDCalculator = () => {
       defaultFieldValue: DEFAULT_TIME_PERIOD,
       minFieldValue: MIN_TIME_PERIOD,
       maxFieldValue: MAX_TIME_PERIOD,
-      fieldLable: "timePeriod",
+      fieldLable: "Time Period",
       fieldunit: "Yr",
       unitRightSide: true,
     },
@@ -89,7 +68,7 @@ const FDCalculator = () => {
     },
     {
       label: "Returns",
-      value: finalValue - investment,
+      value: interest,
       unit: "₹",
     },
   ];
@@ -102,14 +81,14 @@ const FDCalculator = () => {
     },
     {
       label: "Returns",
-      value: finalValue - investment,
+      value: interest,
       fill: "#5ca81d",
     },
   ];
 
   const maturity = {
     label: "Maturity Value",
-    value: Math.round(finalValue),
+    value: Math.round(interest + investment),
   };
 
   const chartConfig = {
@@ -125,30 +104,6 @@ const FDCalculator = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-2">
-        <p className="font-medium">Select Interest Compounding Frequency:</p>
-        <Select
-          value={`${interestFrequency}`}
-          onValueChange={(value) =>
-            Number(value)
-              ? setInterestFrequency(Number(value))
-              : setInterestFrequency(1)
-          }
-        >
-          <SelectTrigger>
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent className="z-111">
-            <SelectGroup>
-              {dropdownItems.map((item) => (
-                <SelectItem key={item.label} value={`${item.value}`}>
-                  {item.label}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          </SelectContent>
-        </Select>
-      </div>
       <CalculatorContainer
         fieldValues={fieldValues}
         outputValues={outputValues}
@@ -160,4 +115,4 @@ const FDCalculator = () => {
   );
 };
 
-export default FDCalculator;
+export default SimpleInterestCalculator;

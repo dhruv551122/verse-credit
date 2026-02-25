@@ -54,7 +54,7 @@ export const calculatorPageQuery = groq`
     "calculatorList": *[_type == 'calculator']{
         _id,
         icon,
-        title,
+        calculatorName,
         description,
         slug,
     }
