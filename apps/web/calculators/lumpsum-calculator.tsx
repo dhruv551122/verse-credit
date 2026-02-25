@@ -5,14 +5,14 @@ import CalculatorContainer from "@/components/common/calculator-common/calculato
 import { Switch } from "@/components/ui/switch";
 import { formatINR } from "@/lib/utils";
 
-const DEFAULT_INVESTMENT = 10000;
-const DEFAULT_RETURN_RATE = 5;
+const DEFAULT_INVESTMENT = 50000;
+const DEFAULT_RETURN_RATE = 12;
 const DEFAULT_INFLATION_RATE = 5;
 const DEFAULT_TENURE_YEARS = 3;
 
 const MAX_INVESTMENT = 1000000;
 const MAX_RETURN_RATE = 35;
-const MAX_INFLATION_RATE = 35;
+const MAX_INFLATION_RATE = 15;
 const MAX_TENURE_YEARS = 35;
 
 const MIN_INVESTMENT = 100;
@@ -24,8 +24,9 @@ const LumpsumCalculator = () => {
   const [investment, setInvestment] = useState<number>(DEFAULT_INVESTMENT);
 
   const [withInflation, setWithInflation] = useState<boolean>(false);
-  const [inflationRate, setInflationRate] =
-    useState<number>(DEFAULT_RETURN_RATE);
+  const [inflationRate, setInflationRate] = useState<number>(
+    DEFAULT_INFLATION_RATE,
+  );
 
   const [returnRate, setReturnRate] = useState<number>(DEFAULT_RETURN_RATE);
 
@@ -98,11 +99,13 @@ const LumpsumCalculator = () => {
     {
       label: "Invested Amount",
       value: "₹ " + formatINR(Math.round(investment)),
+      color: "",
     },
 
     {
-      label: "Total value",
+      label: "Returns",
       value: "₹ " + formatINR(Math.round(estimatedReturn - investment)),
+      color: "#5ca81d",
     },
   ];
 

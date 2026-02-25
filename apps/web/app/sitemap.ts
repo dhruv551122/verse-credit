@@ -43,7 +43,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/sitemap`,
+      url: `${baseUrl}/site-map`,
       lastModified: new Date(),
       priority: 0.8,
     },
@@ -64,7 +64,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   );
 
   const calculatorsRoutes = calculators.map((calculator) => ({
-    url: `${baseUrl}/calculator/${calculator.slug.current}`,
+    url: `${baseUrl}/calculators/${calculator.slug.current}`,
     lastModified: new Date(),
     priority: 0.8,
   }));

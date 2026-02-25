@@ -7,7 +7,6 @@ const CalculatorCard = ({
 }: {
   calculatorDetail: NonNullable<CalculatorPageQueryResult>["calculatorList"][number];
 }) => {
-  console.log(calculatorDetail);
   return (
     <Link
       href={`/calculators/${calculatorDetail.slug.current}`}

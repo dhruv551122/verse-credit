@@ -5,7 +5,7 @@ import CalculatorContainer from "@/components/common/calculator-common/calculato
 import { formatINR } from "@/lib/utils";
 
 const DEFAULT_INITIAL_INVESTMENT = 10000;
-const DEFAULT_MATURITY_RATE = 12500;
+const DEFAULT_MATURITY_RATE = 20000;
 const DEFAULT_TENURE_YEARS = 3;
 
 const MAX_INITIAL_INVESTMENT = 10000000;
@@ -16,7 +16,7 @@ const MIN_INITIAL_INVESTMENT = 100;
 const MIN_MATURITY_RATE = 100;
 const MIN_TENURE_YEARS = 1;
 
-const CAGRCalculator = () => {
+const ROICalculator = () => {
   const [initialInvestment, setInitialInvestment] = useState<number>(
     DEFAULT_INITIAL_INVESTMENT,
   );
@@ -25,8 +25,8 @@ const CAGRCalculator = () => {
   );
   const [tenure, setTenure] = useState<number>(DEFAULT_TENURE_YEARS);
 
-  const estimatedReturnRate =
-    ((maturityValue / initialInvestment) ** (1 / tenure) - 1) * 100;
+  const cagr = ((maturityValue / initialInvestment) ** (1 / tenure) - 1) * 100;
+  const roi = ((maturityValue - initialInvestment) / initialInvestment) * 100;
 
   const fieldValues = [
     {
@@ -64,33 +64,28 @@ const CAGRCalculator = () => {
 
   const outputValues = [
     {
-      label: "Invested Amount",
-      value: "₹ " + formatINR(Math.round(initialInvestment)),
-      color: "",
+      label: "CAGR",
+      value: cagr.toFixed(2) + " %",
+      color: cagr < 0 ? "#dd6565" : "#5ca81d",
     },
 
     {
-      label: "Total Returns",
-      value: "₹ " + formatINR(Math.round(maturityValue - initialInvestment)),
-      color: maturityValue - initialInvestment < 0 ? "#dd6565" : "#5ca81d",
+      label: "Returns",
+      value: roi.toFixed(2) + " %",
+      color: roi < 0 ? "#dd6565" : "#5ca81d",
     },
   ];
 
   const maturity = {
-    label: "Maturity Value",
-    value: estimatedReturnRate.toFixed(2) + " %",
+    label: "Gain / Loss",
+    value: formatINR(maturityValue - initialInvestment),
   };
 
   const chartData = [
     {
-      label: "Investment",
-      value: initialInvestment,
-      fill: "#1b5183",
-    },
-    {
-      label: "Est. Returns",
+      label: "Returns",
       value: Math.abs(maturityValue - initialInvestment),
-      fill: maturityValue - initialInvestment < 0 ? "#dd6565" : "#5ca81d",
+      fill: maturityValue - initialInvestment > 0 ? "#5ca81d" : "#dd6565",
     },
   ];
 
@@ -116,4 +111,4 @@ const CAGRCalculator = () => {
   );
 };
 
-export default CAGRCalculator;
+export default ROICalculator;

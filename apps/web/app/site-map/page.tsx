@@ -1,9 +1,10 @@
-import { SiteMapQueryResult } from "@sanity-types/*";
+import { CalculatorsQueryResult, SiteMapQueryResult } from "@sanity-types/*";
 import Link from "next/link";
 import SitemapBlogs from "./_components/sitemapBlogs";
 import { sanityFetch } from "@/sanity/lib/live";
-import { siteMapQuery } from "@/sanity/lib/query";
+import { calculatorsQuery, siteMapQuery } from "@/sanity/lib/query";
 import { notFound } from "next/navigation";
+import SitemapCalculators from "./_components/siteMapCalculators";
 
 export const metadata = {
   title: "VerseCredit: Sitemap",
@@ -20,6 +21,12 @@ const sitePages = [
 export default async function SitemapPage() {
   const { data } = await sanityFetch<NonNullable<SiteMapQueryResult>>({
     query: siteMapQuery,
+  });
+
+  const { data: calculators } = await sanityFetch<
+    NonNullable<CalculatorsQueryResult>
+  >({
+    query: calculatorsQuery,
   });
 
   if (!data) {
@@ -52,10 +59,21 @@ export default async function SitemapPage() {
 
       {/* Blog Sitemap */}
       <section className="max-width-container padding-container">
-        <h2 className="mb-3 text-xl font-semibold text-tuatara">Blogs</h2>
+        <h2 className="mb-3 text-xl font-semibold md:text-2xl text-tuatara">
+          Blogs
+        </h2>
 
         <div>
           <SitemapBlogs data={data} />
+        </div>
+      </section>
+      <section className="max-width-container padding-container">
+        <h2 className="mb-3 text-xl font-semibold md:text-2xl text-tuatara">
+          Calculators
+        </h2>
+
+        <div>
+          <SitemapCalculators calculators={calculators} />
         </div>
       </section>
     </div>

@@ -9,6 +9,8 @@ import SimpleInterestCalculator from "./simple-interest-calculator";
 import YearlySIPCalculator from "./yearly-sip-calculator";
 import MFReturnsCalculator from "./mf-returns-calculator";
 import CAGRCalculator from "./cagr-calculator";
+import ReverseCAGRCalculator from "./reverse-cagr-calculator";
+import ROICalculator from "./roi-calculator";
 
 export const calculators: { [key: string]: ReactNode } = {
   "emi-calculator": <EMICalculator />,
@@ -21,4 +23,6 @@ export const calculators: { [key: string]: ReactNode } = {
   "yearly-sip-calculator": <YearlySIPCalculator />,
   "mf-returns-calculator": <MFReturnsCalculator />,
   "cagr-calculator": <CAGRCalculator />,
+  "reverse-cagr-calculator": <ReverseCAGRCalculator />,
+  "roi-calculator": <ROICalculator />,
 };

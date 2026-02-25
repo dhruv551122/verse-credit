@@ -56,6 +56,7 @@ export default defineConfig({
         { label: "black", value: "#000" },
         { label: "white", value: "#fff" },
         { label: "tuatara", value: "#363636" },
+        { label: "Metallic Grey", value: "#8e8e8e" },
       ],
       enableSearch: true,
       showColorValue: true,

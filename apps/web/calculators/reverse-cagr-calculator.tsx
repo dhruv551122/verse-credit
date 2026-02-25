@@ -4,53 +4,45 @@ import { useState } from "react";
 import CalculatorContainer from "@/components/common/calculator-common/calculator-container";
 import { formatINR } from "@/lib/utils";
 
-const DEFAULT_MONTHLY_INVESTMENT = 1000;
-const DEFAULT_RETURN_RATE = 12;
+const DEFAULT_INITIAL_INVESTMENT = 10000;
+const DEFAULT_RETURN_RATE = 7;
 const DEFAULT_TENURE_YEARS = 3;
 
-const MAX_MONTHLY_INVESTMENT = 1000000;
+const MAX_INITIAL_INVESTMENT = 10000000;
 const MAX_RETURN_RATE = 35;
 const MAX_TENURE_YEARS = 35;
 
-const MIN_MONTHLY_INVESTMENT = 100;
+const MIN_INITIAL_INVESTMENT = 100;
 const MIN_RETURN_RATE = 1;
 const MIN_TENURE_YEARS = 1;
 
-const SIPCalculator = () => {
-  const [monthlyInvestment, setMonthlyInvestment] = useState<number>(
-    DEFAULT_MONTHLY_INVESTMENT,
+const ReverseCAGRCalculator = () => {
+  const [initialInvestment, setInitialInvestment] = useState<number>(
+    DEFAULT_INITIAL_INVESTMENT,
   );
   const [returnRate, setReturnRate] = useState<number>(DEFAULT_RETURN_RATE);
   const [tenure, setTenure] = useState<number>(DEFAULT_TENURE_YEARS);
 
-  const monthlyInterestRate = returnRate / 100 / 12;
-  const months = tenure * 12;
-  let estimatedReturn;
-  if (monthlyInterestRate === 0) {
-    estimatedReturn = monthlyInvestment * months;
-  } else {
-    estimatedReturn =
-      monthlyInvestment *
-      (((1 + monthlyInterestRate) ** months - 1) / monthlyInterestRate) *
-      (1 + monthlyInterestRate);
-  }
+  const interestRate = returnRate / 100;
+  const totalValue = Math.round(
+    initialInvestment * (1 + interestRate) ** tenure,
+  );
 
   const fieldValues = [
     {
-      setFieldValue: setMonthlyInvestment,
-      fieldValue: monthlyInvestment,
+      setFieldValue: setInitialInvestment,
+      fieldValue: initialInvestment,
       step: 1500,
-      defaultFieldValue: DEFAULT_MONTHLY_INVESTMENT,
-      minFieldValue: MIN_MONTHLY_INVESTMENT,
-      maxFieldValue: MAX_MONTHLY_INVESTMENT,
-      fieldLable: "Monthly Investment",
+      defaultFieldValue: DEFAULT_INITIAL_INVESTMENT,
+      minFieldValue: MIN_INITIAL_INVESTMENT,
+      maxFieldValue: MAX_INITIAL_INVESTMENT,
+      fieldLable: "Total Investment",
       fieldunit: "₹",
-      unitRightSide: false,
     },
     {
       setFieldValue: setReturnRate,
       fieldValue: returnRate,
-      step: 0.01,
+      step: 1500,
       defaultFieldValue: DEFAULT_RETURN_RATE,
       minFieldValue: MIN_RETURN_RATE,
       maxFieldValue: MAX_RETURN_RATE,
@@ -74,33 +66,31 @@ const SIPCalculator = () => {
   const outputValues = [
     {
       label: "Invested Amount",
-      value: "₹ " + formatINR(Math.round(monthlyInvestment * months)),
+      value: "₹ " + formatINR(Math.round(initialInvestment)),
       color: "",
     },
 
     {
-      label: "Returns",
-      value:
-        "₹ " +
-        formatINR(Math.round(estimatedReturn - monthlyInvestment * months)),
+      label: "Total Returns",
+      value: "₹ " + formatINR(totalValue - initialInvestment),
       color: "#5ca81d",
     },
   ];
 
   const maturity = {
     label: "Maturity Value",
-    value: "₹ " + formatINR(Math.round(estimatedReturn)),
+    value: "₹ " + formatINR(Math.round(totalValue)),
   };
 
   const chartData = [
     {
       label: "Investment",
-      value: monthlyInvestment * months,
+      value: initialInvestment,
       fill: "#1b5183",
     },
     {
       label: "Est. Returns",
-      value: Math.round(estimatedReturn - monthlyInvestment * months),
+      value: totalValue - initialInvestment,
       fill: "#5ca81d",
     },
   ];
@@ -127,4 +117,4 @@ const SIPCalculator = () => {
   );
 };
 
-export default SIPCalculator;
+export default ReverseCAGRCalculator;

@@ -6,7 +6,7 @@ import CalculatorContainer from "@/components/common/calculator-common/calculato
 import { formatINR } from "@/lib/utils";
 
 const DEFAULT_AMOUNT_VALUE = 100000;
-const DEFAULT_INTEREST_RATE = 3.8;
+const DEFAULT_INTEREST_RATE = 8.8;
 const DEFAULT_TENURE_YEARS = 3;
 
 const MAX_AMOUNT_VALUE = 100000000;

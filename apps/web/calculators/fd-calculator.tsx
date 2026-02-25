@@ -85,10 +85,12 @@ const FDCalculator = () => {
     {
       label: "Total Investment",
       value: "₹ " + formatINR(Math.round(investment)),
+      color: "",
     },
     {
       label: "Returns",
       value: "₹ " + formatINR(Math.round(finalValue - investment)),
+      color: "#5ca81d",
     },
   ];
 

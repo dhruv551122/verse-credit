@@ -52,7 +52,10 @@ const Amortization = ({
 
       {groupedYearsDetail && isAccordianOpen && (
         <div>
-          <MonthPicker setDate={setStartDate} date={startDate} />
+          <div className="flex flex-wrap items-center gap-2">
+            <p className="text-[18px] font-semibold">Select EMI Start month:</p>
+            <MonthPicker setDate={setStartDate} date={startDate} />
+          </div>
           <Accordion type="multiple" className="w-full">
             {Object.keys(groupedYearsDetail)
               .slice(0, yearsDetailPageCount * 5)

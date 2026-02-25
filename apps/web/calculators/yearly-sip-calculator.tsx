@@ -120,13 +120,15 @@ const YearlySIPCalculator = () => {
     {
       label: "Invested Amount",
       value: "₹ " + formatINR(Math.round(yearlyInvestment * tenure)),
+      color: "",
     },
 
     {
-      label: "Total value",
+      label: "Returns",
       value:
         "₹ " +
         formatINR(Math.round(estimatedReturn - yearlyInvestment * tenure)),
+      color: "#5ca81d",
     },
   ];
 
@@ -168,9 +170,9 @@ const YearlySIPCalculator = () => {
         chartData={chartData}
         maturity={maturity}
       />
-      <div className="h-px w-full bg-pale-silver" />
-      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 items-start">
-        <Card className="gap-0 order-2 lg:order-1 lg:col-span-3 w-full p-0 shadow-none h-full max-h-100 border border-pale-silver rounded-md">
+      <div className="w-full h-px bg-pale-silver" />
+      <div className="grid items-start grid-cols-1 gap-6 lg:grid-cols-5">
+        <Card className="order-2 w-full h-full gap-0 p-0 border rounded-md shadow-none lg:order-1 lg:col-span-3 max-h-100 border-pale-silver">
           <ChartContainer
             config={chartConfig}
             className="max-h-90 text-gray shrink"
@@ -198,17 +200,19 @@ const YearlySIPCalculator = () => {
                 label="Total Invested"
                 fill="#1b5183"
                 radius={4}
+                maxBarSize={30}
               />
               <Bar
                 dataKey="totalReturn"
                 label="Total Return"
                 fill="#5ca81d"
                 radius={4}
+                maxBarSize={30}
               />
             </BarChart>
           </ChartContainer>
           <CardFooter>
-            <CardTitle className="flex items-center justify-center w-full text-sm text-gray-500 gap-6 sm:gap-10">
+            <CardTitle className="flex items-center justify-center w-full gap-6 text-sm text-gray-500 sm:gap-10">
               <div className="flex items-center gap-2">
                 <div
                   className="rounded-[4px] size-3"
@@ -226,12 +230,12 @@ const YearlySIPCalculator = () => {
             </CardTitle>
           </CardFooter>
         </Card>
-        <div className="rounded-xl order-1 lg:order-2 lg:col-span-2 overflow-hidden w-full">
-          <div className="custom-scrollbar rounded-xl border border-pale-silver max-h-100 overflow-auto w-full">
+        <div className="order-1 w-full overflow-hidden rounded-xl lg:order-2 lg:col-span-2">
+          <div className="w-full overflow-auto border custom-scrollbar rounded-xl border-pale-silver max-h-100">
             <table className="w-full">
               <thead className="sticky top-0 left-0 z-1">
                 <tr className="[&>th]:px-4 [&>th]:py-2 bg-isabelline text-dark-aquamarine-green [&>th]:whitespace-nowrap">
-                  <th className="sticky left-0 top-0 bg-isabelline ">Year</th>
+                  <th className="sticky top-0 left-0 bg-isabelline ">Year</th>
                   <th>Total Investment</th>
                   <th>Retruns</th>
                   <th>Maturity Value</th>

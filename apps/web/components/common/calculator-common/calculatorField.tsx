@@ -23,9 +23,9 @@ const CalculatorField = ({
   unitRightSide?: boolean;
 }) => {
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-4 text-base md:flex-row md:items-center md:justify-between">
-        <h4 className="font-semibold uppercase text-gray-500">{fieldLable}</h4>
+        <h4 className="font-medium text-gray-500 Capitalize">{fieldLable}</h4>
 
         <div className={cn("relative font-semibold")}>
           <span
@@ -65,7 +65,7 @@ const CalculatorField = ({
             setFieldValue(e[0]);
           }}
         />
-        <div className="flex justify-between items-center text-sm text-metallic-grey">
+        <div className="flex items-center justify-between text-sm text-metallic-grey">
           <span>
             {unitRightSide
               ? `${formatINR(minFiledValue)}${filedUnit}`

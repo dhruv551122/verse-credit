@@ -10,7 +10,7 @@ const DEFAULT_BUY_PRICE = 100;
 const DEFAULT_STOPLOSS = 80;
 
 const MAX_INVESTMENT = 1000000;
-const MAX_RISK_BOUNDARY = 35;
+const MAX_RISK_BOUNDARY = 100;
 const MAX_BUY_PRICE = 100000;
 const MAX_STOPLOSS = 100000;
 
@@ -31,7 +31,11 @@ const PositionSizeCalculator = () => {
   const [stoploss, setStoploss] = useState<number>(DEFAULT_STOPLOSS);
 
   const interestRate = riskBoundary / 100;
-  const shares = (investment * interestRate) / (buyPrice - stoploss);
+
+  const shares =
+    buyPrice - stoploss > 0
+      ? (investment * interestRate) / (buyPrice - stoploss)
+      : 0;
 
   const fieldValues = [
     {
@@ -84,14 +88,20 @@ const PositionSizeCalculator = () => {
     {
       label: "Investment Amount",
       value: "₹ " + formatINR(Math.round(shares * buyPrice)),
+      color: "",
     },
     {
       label: "Potential Risk",
-      value: "₹ " + formatINR(Math.round((buyPrice - stoploss) * shares)),
+      value:
+        "₹ " + (buyPrice - stoploss > 0)
+          ? formatINR(Math.round((buyPrice - stoploss) * shares))
+          : 0,
+      color: "#dd6565",
     },
     {
       label: "Shares to Buy",
       value: formatINR(Math.round(shares)),
+      color: "",
     },
   ];
 

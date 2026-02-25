@@ -17,9 +17,9 @@ const SitemapBlogs = ({ data }: { data: NonNullable<SiteMapQueryResult> }) => {
               <Link
                 href={`/${blog.categorySlug}/${blog.slug}`}
                 key={blog.slug}
-                className="flex items-center gap-2 duration-300 cursor-pointer hover:text-black group w-fit"
+                className="flex items-center gap-2 duration-300 cursor-pointer text-tuatara hover:text-strong-amber group w-fit"
               >
-                <ArrowRight className="duration-300 group-hover:translate-x-2" />
+                <ArrowRight className="duration-300 shrink-0 group-hover:translate-x-1" />
                 <span className="font-medium">{blog.title}</span>
               </Link>
             ))}
