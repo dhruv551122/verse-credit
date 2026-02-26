@@ -47,8 +47,7 @@
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
 
-  --font-inter: var(--font-inter);
-  --font-karla: var(--font-karla);
+  --font-poppins: var(--font-poppins);
   --font-source-sans-3: var(--font-source-sans-3);
 
   --color-chathams-blue: var(--color-chathams-blue);
@@ -101,9 +100,8 @@
   --sidebar-border: oklch(0.92 0.004 286.32);
   --sidebar-ring: oklch(0.705 0.015 286.067);
 
-  --font-inter: "Inter", sans-serif;
-  --font-karla: "Karla", sans-serif;
   --font-source-sans-3: "Source Sans 3", sans-serif;
+  --font-poppins:  "Poppins", sans-serif;
 
   --color-chathams-blue: #1b5183;
   --color-sandstone: #7d6f5f;

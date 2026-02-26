@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import {
   Geist,
   Geist_Mono,
-  Inter,
-  Karla,
+  Poppins,
   Source_Sans_3,
 } from "next/font/google";
 import "./globals.css";
@@ -18,25 +17,15 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const PTSans = Karla({
-  variable: "--font-karla",
-  subsets: ["latin"],
-  weight: ["200", "300", "400", "500", "600", "700", "800"],
-  display: "swap",
-  fallback: ["system-ui", "sans-serif"],
-  adjustFontFallback: true,
-  preload: true,
-});
-
-const ingrid_darling = Inter({
+const poppins = Poppins({
   subsets: ["latin"],
   weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-  variable: "--font-inter",
+  variable: "--font-poppins",
   display: "swap",
   fallback: ["system-ui", "sans-serif"],
   adjustFontFallback: true,
   preload: true,
-});
+})
 
 const sourceSans3 = Source_Sans_3({
   subsets: ["latin"],
@@ -62,7 +51,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth no-scrollbar">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${ingrid_darling.variable} ${PTSans.variable} ${sourceSans3.variable} antialiased `}
+        className={`${geistSans.variable} ${geistMono.variable} ${sourceSans3.variable} ${poppins.variable} antialiased `}
       >
         {children}
       </body>

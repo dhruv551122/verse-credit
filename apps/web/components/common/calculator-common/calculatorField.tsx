@@ -1,6 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { cn, formatINR } from "@/lib/utils";
+import { NumericFormat } from "react-number-format";
 const CalculatorField = ({
   setFieldValue,
   fieldValue,
@@ -36,7 +37,26 @@ const CalculatorField = ({
           >
             {filedUnit}
           </span>
-          <Input
+          <NumericFormat
+            value={fieldValue}
+            thousandSeparator=","
+            decimalScale={2}
+            thousandsGroupStyle="lakh"
+            allowNegative={false}
+            customInput={Input}
+            className={cn(
+              "text-right! text-base! font-source-sans-3",
+              unitRightSide ? "pr-6" : "pl-5",
+            )}
+            isAllowed={(values) => {
+              const { floatValue } = values;
+              return floatValue == null || floatValue <= maxFieldValue;
+            }}
+            onValueChange={(values) => {
+              setFieldValue(values.floatValue || 0);
+            }}
+          />
+          {/* <Input
             className={cn(
               "text-right! text-base! font-source-sans-3",
               unitRightSide ? "pr-6" : "pl-5",
@@ -51,7 +71,7 @@ const CalculatorField = ({
               }
               setFieldValue(input);
             }}
-          />
+          /> */}
         </div>
       </div>
       <div className="flex flex-col gap-3">
@@ -65,16 +85,16 @@ const CalculatorField = ({
             setFieldValue(e[0]);
           }}
         />
-        <div className="flex items-center justify-between text-sm text-metallic-grey">
+        <div className="flex items-center justify-between text-sm text-metallic-grey font-source-sans-3">
           <span>
             {unitRightSide
               ? `${formatINR(minFiledValue)}${filedUnit}`
-              : `${filedUnit}${formatINR(minFiledValue)}`}
+              : `${filedUnit} ${formatINR(minFiledValue)}`}
           </span>
           <span>
             {unitRightSide
               ? `${formatINR(maxFieldValue)}${filedUnit}`
-              : `${filedUnit}${formatINR(maxFieldValue)}`}
+              : `${filedUnit} ${formatINR(maxFieldValue)}`}
           </span>
         </div>
       </div>

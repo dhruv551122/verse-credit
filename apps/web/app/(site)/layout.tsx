@@ -23,7 +23,7 @@ const SiteLayout = async ({
   });
 
   return (
-    <div className="font-inter">
+    <div className="font-poppins">
       <Header data={settingsData} categoriesData={categoriesData} />
       {children}
       <Footer data={settingsData} />

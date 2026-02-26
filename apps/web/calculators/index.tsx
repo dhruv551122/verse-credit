@@ -11,6 +11,8 @@ import MFReturnsCalculator from "./mf-returns-calculator";
 import CAGRCalculator from "./cagr-calculator";
 import ReverseCAGRCalculator from "./reverse-cagr-calculator";
 import ROICalculator from "./roi-calculator";
+import NPSCalculator from "./nps-calculator";
+import StockAverageCalculator from "./stock-average-calculator";
 
 export const calculators: { [key: string]: ReactNode } = {
   "emi-calculator": <EMICalculator />,
@@ -25,4 +27,6 @@ export const calculators: { [key: string]: ReactNode } = {
   "cagr-calculator": <CAGRCalculator />,
   "reverse-cagr-calculator": <ReverseCAGRCalculator />,
   "roi-calculator": <ROICalculator />,
+  "nps-calculator": <NPSCalculator/>,
+  "stock-average-calculator": <StockAverageCalculator/>,
 };
