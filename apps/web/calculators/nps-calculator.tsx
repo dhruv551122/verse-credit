@@ -159,7 +159,9 @@ const NPSCalculator = () => {
     },
     {
       label: "Est. Returns",
-      value: Math.round(estimatedReturn - periodicInvestment * investmentDuration),
+      value: Math.round(
+        estimatedReturn - periodicInvestment * investmentDuration,
+      ),
       fill: "#5ca81d",
     },
   ];

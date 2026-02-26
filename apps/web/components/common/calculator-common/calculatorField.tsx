@@ -1,28 +1,25 @@
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
 import { cn, formatINR } from "@/lib/utils";
+import { CalculatorFieldType } from "@/types";
 import { NumericFormat } from "react-number-format";
 const CalculatorField = ({
-  setFieldValue,
-  fieldValue,
-  step,
-  minFiledValue,
-  maxFieldValue,
-  defaultFieldValue,
-  fieldLable,
-  filedUnit,
-  unitRightSide,
+  fieldValues,
 }: {
-  setFieldValue: React.Dispatch<React.SetStateAction<number>>;
-  fieldValue: number;
-  defaultFieldValue: number;
-  step: number;
-  minFiledValue: number;
-  maxFieldValue: number;
-  fieldLable: string;
-  filedUnit?: string;
-  unitRightSide?: boolean;
+  fieldValues: CalculatorFieldType;
 }) => {
+  const {
+    setFieldValue,
+    fieldValue,
+    step,
+    defaultFieldValue,
+    minFieldValue,
+    maxFieldValue,
+    fieldLable,
+    fieldunit,
+    unitRightSide,
+    disabled,
+  } = fieldValues;
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-4 text-base md:flex-row md:items-center md:justify-between">
@@ -35,7 +32,7 @@ const CalculatorField = ({
               unitRightSide ? "right-2" : "left-2",
             )}
           >
-            {filedUnit}
+            {fieldunit}
           </span>
           <NumericFormat
             value={fieldValue}
@@ -43,6 +40,7 @@ const CalculatorField = ({
             decimalScale={2}
             thousandsGroupStyle="lakh"
             allowNegative={false}
+            disabled={disabled}
             customInput={Input}
             className={cn(
               "text-right! text-base! font-source-sans-3",
@@ -56,48 +54,34 @@ const CalculatorField = ({
               setFieldValue(values.floatValue || 0);
             }}
           />
-          {/* <Input
-            className={cn(
-              "text-right! text-base! font-source-sans-3",
-              unitRightSide ? "pr-6" : "pl-5",
-            )}
-            value={formatINR(fieldValue)}
-            onChange={(e) => {
-              const input = Number(e.target.value.replace(/,/g, ""));
-              if (Number.isNaN(input)) return;
-              if (input > maxFieldValue) {
-                setFieldValue(maxFieldValue);
-                return;
-              }
-              setFieldValue(input);
+        </div>
+      </div>
+      {!disabled && (
+        <div className="flex flex-col gap-3">
+          <Slider
+            defaultValue={[defaultFieldValue]}
+            value={[fieldValue]}
+            step={step}
+            min={minFieldValue}
+            max={maxFieldValue}
+            onValueChange={(e) => {
+              setFieldValue(e[0]);
             }}
-          /> */}
+          />
+          <div className="flex items-center justify-between text-sm text-metallic-grey font-source-sans-3">
+            <span>
+              {unitRightSide
+                ? `${formatINR(minFieldValue)}${fieldunit}`
+                : `${fieldunit} ${formatINR(minFieldValue)}`}
+            </span>
+            <span>
+              {unitRightSide
+                ? `${formatINR(maxFieldValue)}${fieldunit}`
+                : `${fieldunit} ${formatINR(maxFieldValue)}`}
+            </span>
+          </div>
         </div>
-      </div>
-      <div className="flex flex-col gap-3">
-        <Slider
-          defaultValue={[defaultFieldValue]}
-          value={[fieldValue]}
-          step={step}
-          min={minFiledValue}
-          max={maxFieldValue}
-          onValueChange={(e) => {
-            setFieldValue(e[0]);
-          }}
-        />
-        <div className="flex items-center justify-between text-sm text-metallic-grey font-source-sans-3">
-          <span>
-            {unitRightSide
-              ? `${formatINR(minFiledValue)}${filedUnit}`
-              : `${filedUnit} ${formatINR(minFiledValue)}`}
-          </span>
-          <span>
-            {unitRightSide
-              ? `${formatINR(maxFieldValue)}${filedUnit}`
-              : `${filedUnit} ${formatINR(maxFieldValue)}`}
-          </span>
-        </div>
-      </div>
+      )}
     </div>
   );
 };

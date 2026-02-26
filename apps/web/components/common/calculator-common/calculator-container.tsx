@@ -1,26 +1,16 @@
 "use client";
 
 import { ChartConfig } from "@/components/ui/chart";
-import { SetStateAction } from "react";
 import CalculatorField from "./calculatorField";
 import CalculatorChart from "./calculatorChart";
+import { CalculatorFieldType } from "@/types";
 
 type CalculatorContainerProps = {
-  fieldValues: {
-    setFieldValue: React.Dispatch<SetStateAction<number>>;
-    fieldValue: number;
-    step: number;
-    defaultFieldValue: number;
-    minFieldValue: number;
-    maxFieldValue: number;
-    fieldLable: string;
-    fieldunit: string;
-    unitRightSide?: boolean;
-  }[];
+  fieldValues: CalculatorFieldType[];
   maturity?: Record<string, string | number>;
   outputValues: Record<string, string | number>[];
-  chartConfig: ChartConfig;
-  chartData: { label: string; value: number; fill: string }[];
+  chartConfig?: ChartConfig;
+  chartData?: { label: string; value: number; fill: string }[];
 };
 
 const CalculatorContainer = ({
@@ -38,15 +28,7 @@ const CalculatorContainer = ({
             {fieldValues.map((fieldValue) => (
               <CalculatorField
                 key={fieldValue.fieldLable}
-                setFieldValue={fieldValue.setFieldValue}
-                fieldValue={fieldValue.fieldValue}
-                defaultFieldValue={fieldValue.defaultFieldValue}
-                step={fieldValue.step}
-                minFiledValue={fieldValue.minFieldValue}
-                maxFieldValue={fieldValue.maxFieldValue}
-                fieldLable={fieldValue.fieldLable}
-                filedUnit={fieldValue.fieldunit}
-                unitRightSide={fieldValue.unitRightSide}
+                fieldValues={fieldValue}
               />
             ))}
           </div>
@@ -71,11 +53,13 @@ const CalculatorContainer = ({
               </div>
             ))}
           </div>
-          <CalculatorChart
-            maturity={maturity ?? false}
-            chartConfig={chartConfig}
-            data={chartData}
-          />
+          {chartConfig && chartData && (
+            <CalculatorChart
+              maturity={maturity ?? false}
+              chartConfig={chartConfig}
+              data={chartData}
+            />
+          )}
         </div>
       </div>
     </div>

@@ -60,7 +60,11 @@ const RichText: React.FC<Props> = ({
           {children}
         </h4>
       ),
-      h5: ({ children }: any) => <h5 className="my-4 ">{children}</h5>,
+      h5: ({ children }: any) => (
+        <h5 className="my-2 text-base font-semibold md:text-[18px]">
+          {children}
+        </h5>
+      ),
       h6: ({ children }: any) => <h6 className="my-4 ">{children}</h6>,
       normal: ({ children }: any) => (
         <p className="mb-4 text-base leading-relaxed min-h-px">{children}</p>
@@ -124,7 +128,7 @@ const RichText: React.FC<Props> = ({
 
       styledTable: ({ value }: any) => {
         return (
-          <div className="overflow-x-scroll">
+          <div className="overflow-x-scroll custom-scrollbar">
             <table className="w-full mb-4 overflow-hidden border 0 border-gray-30 rounded-xl">
               <tbody className="">
                 {value.rows?.map((row: any, i: number) => {

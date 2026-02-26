@@ -32,7 +32,7 @@ const Calculator = ({
       <div className="max-width-container padding-container ">
         <RichText
           content={data.aboutCalculator}
-          className="prose-p:text-metallic-grey prose-ol:mt-2 prose-ul:mt-2 prose-p:mt-4 prose-p:mb-0 prose-li:text-metallic-grey prose-li:my-0! prose-h3:font-medium  prose-h4:font-medium prose-h3:text-tuatara prose-h4:text-tuatara prose-strong:text-tuatara"
+          className="prose-p:text-metallic-grey prose-ol:mt-2 prose-ul:mt-2 prose-p:mt-2 prose-p:mb-0 prose-li:text-metallic-grey prose-li:my-0! prose-h5:font-medium  prose-h4:font-medium prose-h5:text-tuatara prose-h4:text-tuatara prose-strong:text-tuatara prose-p:font-medium prose-li:font-medium prose-strong:font-medium"
         />
       </div>
     </div>

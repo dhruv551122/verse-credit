@@ -14,9 +14,9 @@ const HeroLeft = ({
 }) => {
   const latestBlogs = blogData.slice(0, 3);
   return (
-    <div className="flex flex-col gap-4 lg:py-10 lg:border-gray-300 lg:pr-8 lg:border-r">
+    <div className="flex flex-col gap-4 pt-4 lg:pb-10 lg:border-gray-300 lg:pr-8 lg:border-r">
       <Title title={title} />
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {latestBlogs.map((blog, index) => (
           <Link
             href={`/${blog.category.slug.current}/${blog.slug.current}`}
