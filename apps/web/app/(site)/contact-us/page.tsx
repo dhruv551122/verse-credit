@@ -2,8 +2,8 @@ import { ContactPageQueryResult } from "@sanity-types/*";
 import HeroBanner from "./_components/herobanner";
 import ContactForm from "./_components/contactForm";
 import { sanityFetch } from "@/sanity/lib/live";
-import { contactPageQuery } from "@/sanity/lib/query";
 import { notFound } from "next/navigation";
+import { contactPageQuery } from "@/sanity/lib/query";
 
 export const generateMetadata = async () => {
   const { data: contactPage } = await sanityFetch<
@@ -33,7 +33,7 @@ const ContactUs = async () => {
   }
 
   return (
-    <div className="mt-16.5 ">
+    <div className="pt-16.5">
       <HeroBanner contactPage={contactPage} />
       <ContactForm contactPage={contactPage} />
     </div>

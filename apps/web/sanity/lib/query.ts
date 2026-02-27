@@ -20,6 +20,10 @@ export const homePageQuery = groq`
     }
 `;
 
+export const aboutUspageQuery = groq`*[_type == 'aboutUs'][0]{
+    ...,
+}`;
+
 export const blogsByCategoryQuery = groq`
     *[_type == 'blog' && category->slug.current == $categorySlug]{
         ...,
@@ -155,6 +159,6 @@ export const siteMapQuery = groq`
             "slug": slug.current,
             "categorySlug": category->slug.current,
             _updatedAt
-        }
+        },
     }
 `;

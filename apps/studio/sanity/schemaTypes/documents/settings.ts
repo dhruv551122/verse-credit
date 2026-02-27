@@ -14,6 +14,9 @@ export const settings = defineType({
     defineField({
       name: "headerLogo",
       type: "image",
+      options: {
+        hotspot: true,
+      },
       title: "Header Logo",
       group: "header",
       fields: [
@@ -43,6 +46,9 @@ export const settings = defineType({
       name: "footerLogo",
       title: "Footer Logo",
       type: "image",
+      options: {
+        hotspot: true,
+      },
       group: "footer",
       fields: [
         defineField({
@@ -52,6 +58,13 @@ export const settings = defineType({
           validation: (Rule) => Rule.required(),
         }),
       ],
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "socialMediaLinksTitle",
+      title: "Social Media Links Title",
+      type: "string",
+      group: "footer",
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -67,6 +80,9 @@ export const settings = defineType({
               name: "logo",
               title: "Logo",
               type: "image",
+              options: {
+                hotspot: true,
+              },
               fields: [
                 defineField({
                   name: "alt",
@@ -98,6 +114,13 @@ export const settings = defineType({
           },
         },
       ],
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "footerLinksTitle",
+      title: "Footer Links Title",
+      type: "string",
+      group: "footer",
       validation: (Rule) => Rule.required(),
     }),
     defineField({

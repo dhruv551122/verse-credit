@@ -18,7 +18,7 @@ const Footer = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
         <div className="grid grid-cols-1 gap-10 mt-10 md:grid-cols-2 md:gap-20 ">
           <div className="flex flex-col gap-2 shrink-0 ">
             <h4 className="text-subtle-white text-[22px] font-medium">
-              Follow us on
+              {data.socialMediaLinksTitle}
             </h4>
             <div className="flex gap-4">
               {data.socialMediaLinks.map((link) => (
@@ -40,7 +40,7 @@ const Footer = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
           </div>
           <div className="flex flex-col gap-2">
             <h4 className="text-subtle-white text-[22px] font-medium">
-              Quick Links
+              {data.footerLinksTitle}
             </h4>
             <div className="flex flex-col gap-4">
               {data.footerLinks.map((link) => (

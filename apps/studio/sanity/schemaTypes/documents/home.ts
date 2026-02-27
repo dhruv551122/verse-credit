@@ -92,6 +92,9 @@ const home = defineType({
       name: "newsBackgroundImage",
       title: "New Background Image",
       type: "image",
+      options: {
+        hotspot: true,
+      },
       group: "news",
       fields: [
         defineField({

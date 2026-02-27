@@ -225,6 +225,57 @@ export type Calculator = {
   orderRank?: string;
 };
 
+export type AboutUs = {
+  _id: string;
+  _type: "aboutUs";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo: Seo;
+  herobannerTitle: string;
+  herobannerImage: {
+    asset: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  aboutTitle: string;
+  aboutContent: BlockContent;
+  purposeTitle: string;
+  purposeContent: BlockContent;
+  whatWeOfferTitle: string;
+  whatWeOfferItems: Array<{
+    title: string;
+    content: BlockContent;
+    image: {
+      asset: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+    _key: string;
+  }>;
+  ourPhilosophyAndVisionItems: Array<{
+    title: string;
+    content: BlockContent;
+    image: {
+      asset: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+    _key: string;
+  }>;
+  clarificationTitle: string;
+  clarificationContent: BlockContent;
+};
+
 export type TextColor = {
   _type: "textColor";
   label?: string;
@@ -343,6 +394,7 @@ export type Settings = {
     alt: string;
     _type: "image";
   };
+  socialMediaLinksTitle: string;
   socialMediaLinks: Array<{
     logo: {
       asset?: SanityImageAssetReference;
@@ -355,6 +407,7 @@ export type Settings = {
     url: Link;
     _key: string;
   }>;
+  footerLinksTitle: string;
   footerLinks: Array<
     {
       _key: string;
@@ -495,6 +548,7 @@ export type AllSanitySchemaTypes =
   | BlogAuthor
   | BlogCategory
   | Calculator
+  | AboutUs
   | TextColor
   | CalculatorPage
   | Contact_us
@@ -637,6 +691,60 @@ export type HomePageQueryResult = {
     xPostStatus?: string;
     orderRank?: string;
   }>;
+} | null;
+
+// Source: sanity/lib/query.ts
+// Variable: aboutUspageQuery
+// Query: *[_type == 'aboutUs'][0]{    ...,}
+export type AboutUspageQueryResult = {
+  _id: string;
+  _type: "aboutUs";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  seo: Seo;
+  herobannerTitle: string;
+  herobannerImage: {
+    asset: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  aboutTitle: string;
+  aboutContent: BlockContent;
+  purposeTitle: string;
+  purposeContent: BlockContent;
+  whatWeOfferTitle: string;
+  whatWeOfferItems: Array<{
+    title: string;
+    content: BlockContent;
+    image: {
+      asset: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+    _key: string;
+  }>;
+  ourPhilosophyAndVisionItems: Array<{
+    title: string;
+    content: BlockContent;
+    image: {
+      asset: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    };
+    _key: string;
+  }>;
+  clarificationTitle: string;
+  clarificationContent: BlockContent;
 } | null;
 
 // Source: sanity/lib/query.ts
@@ -859,6 +967,7 @@ export type SettingsQueryResult = {
     alt: string;
     _type: "image";
   };
+  socialMediaLinksTitle: string;
   socialMediaLinks: Array<{
     logo: {
       asset?: SanityImageAssetReference;
@@ -871,6 +980,7 @@ export type SettingsQueryResult = {
     url: Link;
     _key: string;
   }>;
+  footerLinksTitle: string;
   footerLinks: Array<
     {
       _key: string;

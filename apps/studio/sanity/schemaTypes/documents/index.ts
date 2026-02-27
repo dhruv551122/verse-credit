@@ -1,3 +1,4 @@
+import aboutUs from "./about";
 import blog from "./blog";
 import blogAuthor from "./blogAuthor";
 import blogCategory from "./blogCategory";
@@ -14,6 +15,7 @@ export const singletons = [
   blogCategoryPage,
   contactUs,
   calculatorPage,
+  aboutUs
 ];
 export const multiTypes = [calculator, blogCategory, blogAuthor, blog];
 export const documents = [...singletons, ...multiTypes];

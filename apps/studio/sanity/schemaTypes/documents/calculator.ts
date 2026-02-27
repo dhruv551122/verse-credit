@@ -29,6 +29,9 @@ export const calculator = defineType({
     defineField({
       name: "icon",
       type: "image",
+      options: {
+        hotspot: true,
+      },
       title: "Icon",
       group: "calculatorDetail",
       fields: [

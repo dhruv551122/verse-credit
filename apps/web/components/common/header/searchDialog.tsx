@@ -21,8 +21,8 @@ import {
 } from "react";
 import { BlogsByTitleSlugResult } from "@sanity-types/*";
 import Link from "next/link";
-import { blogsByTitleSlug } from "@/sanity/lib/query";
 import { sanityClient } from "@/sanity/lib/sanityClient";
+import { blogsByTitleSlug } from "@/sanity/lib/query";
 
 const SearchDialog = ({
   isMobile,
@@ -92,7 +92,7 @@ const SearchDialog = ({
     }
 
     if (!value.trim()) {
-      setResultBlogs([]); // ✅ move here
+      setResultBlogs([]);
       setInputText("");
       return;
     }

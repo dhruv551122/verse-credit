@@ -46,7 +46,7 @@ const RichText: React.FC<Props> = ({
         return (
           <h2
             id={id}
-            className="my-4 text-2xl font-semibold md:text-3xl scroll-m-20"
+            className="my-4 text-2xl font-semibold md:text-3xl"
           >
             {children}
           </h2>

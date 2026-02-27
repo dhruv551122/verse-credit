@@ -47,6 +47,9 @@ const blog = defineType({
       name: "heroImage",
       title: "Hero Image",
       type: "image",
+      options: {
+        hotspot: true,
+      },
       group: "blog",
       fields: [
         defineField({

@@ -79,7 +79,6 @@ const blockContent = defineType({
       name: "image",
       type: "image",
       options: {
-        storeOriginalFilename: true,
         hotspot: true,
       },
       validation: (Rule) => Rule.required(),
