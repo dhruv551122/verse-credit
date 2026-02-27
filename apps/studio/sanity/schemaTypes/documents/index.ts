@@ -15,7 +15,7 @@ export const singletons = [
   blogCategoryPage,
   contactUs,
   calculatorPage,
-  aboutUs
+  aboutUs,
 ];
 export const multiTypes = [calculator, blogCategory, blogAuthor, blog];
 export const documents = [...singletons, ...multiTypes];

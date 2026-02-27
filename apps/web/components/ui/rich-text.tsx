@@ -44,10 +44,7 @@ const RichText: React.FC<Props> = ({
         const text = getTextFromChildren(children);
         const id = slugify(text);
         return (
-          <h2
-            id={id}
-            className="my-4 text-2xl font-semibold md:text-3xl"
-          >
+          <h2 id={id} className="my-4 text-2xl font-semibold md:text-3xl">
             {children}
           </h2>
         );
