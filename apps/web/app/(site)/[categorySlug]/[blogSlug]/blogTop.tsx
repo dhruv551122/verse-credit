@@ -6,18 +6,18 @@ const BlogTop = ({ blog }: { blog: NonNullable<BlogBySlugQueryResult> }) => {
   return (
     <div className="max-width-container px-4 md:px-10  text-tuatara">
       <div className="flex lg:flex-row flex-col gap-8 border-b pt-4 pb-8 md:pt-8 md:pb-16 border-gray-300">
-        <div className="flex flex-1 flex-col gap-4">
-          <h4 className="text-base font-bold uppercase text-chathams-blue">
+        <div className="flex flex-1 flex-col gap-2 md:gap-4">
+          <h4 className="text-base font-bold uppercase text-chathams-blue leading-[115%]">
             {blog.category.label}
           </h4>
-          <h2 className="text-3xl sm:text-5xl text-balance font-semibold">
+          <h2 className="text-2xl md:text-4xl text-balance font-semibold leading-[115%]">
             {blog.title}
           </h2>
-          <p className="text-base md:text-xl text-balance">
+          <p className="text-base md:text-xl text-balance leading-[115%]">
             {blog.description}
           </p>
 
-          <p className="text-sm sm:text-base ">
+          <p className="text-sm leading-[115%]">
             <span className="pr-2 font-semibold border-r-2 border-gray-500">
               {blog.author.authorName}
             </span>

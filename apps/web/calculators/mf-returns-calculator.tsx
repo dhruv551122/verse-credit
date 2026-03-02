@@ -2,13 +2,15 @@
 
 import { useState } from "react";
 import CalculatorContainer from "@/components/common/calculator-common/calculator-container";
-import { Card, CardFooter, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import {
   ChartContainer,
+  ChartLegend,
+  ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { Bar, BarChart, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { capitalizeFirstLetter, formatINR } from "@/lib/utils";
 
 const DEFAULT_INVESTMENT = 10000;
@@ -62,7 +64,7 @@ const MFReturnsCalculator = () => {
     ({ year, investedAmount, totalReturn }) => ({
       year,
       investedAmount,
-      totalReturn,
+      totalReturn: totalReturn,
     }),
   );
 
@@ -145,6 +147,17 @@ const MFReturnsCalculator = () => {
     },
   };
 
+  const barChartConfig = {
+    investedAmount: {
+      label: "Invested Amount",
+      color: "#1b5183",
+    },
+    totalReturn: {
+      label: "Total Returns",
+      color: "#5ca81d",
+    },
+  };
+
   return (
     <div className="flex flex-col gap-10">
       <CalculatorContainer
@@ -156,46 +169,53 @@ const MFReturnsCalculator = () => {
       />
       <div className="w-full h-px bg-pale-silver" />
       <div className="grid items-start grid-cols-1 gap-6 lg:grid-cols-5 font-source-sans-3">
-        <Card className="order-2 w-full h-full gap-0 p-0 border rounded-md shadow-none lg:order-1 lg:col-span-3 max-h-100 border-pale-silver">
+        <Card className="order-2 w-full h-full gap-0 py-6 border rounded-md shadow-none lg:order-1 lg:col-span-3 max-h-100 border-pale-silver">
           <ChartContainer
-            config={chartConfig}
+            config={barChartConfig}
             className="max-h-90 text-gray shrink"
           >
-            <BarChart data={barChartData}>
+            <BarChart accessibilityLayer data={barChartData} barGap={0}>
+              <CartesianGrid vertical={false} />
               <XAxis
                 dataKey="year"
-                tickLine={false}
-                tickMargin={10}
-                axisLine={false}
+                tickLine={true}
+                axisLine={true}
+                tickMargin={0}
               />
+              <YAxis tickCount={10} tickLine={true} axisLine={true} />
               <ChartTooltip
                 cursor={false}
                 content={
                   <ChartTooltipContent
                     indicator="line"
-                    label={"Total Invested"}
-                    labelClassName="gap-10"
+                    hideLabel
                     labelFormatter={(label) => capitalizeFirstLetter(label)}
                   />
                 }
               />
+              <ChartLegend
+                content={<ChartLegendContent />}
+              />
               <Bar
+                display="Total Invested"
                 dataKey="investedAmount"
                 label="Total Invested"
                 fill="#1b5183"
-                radius={4}
+                radius={[4,4,0,0]}
                 maxBarSize={30}
+                isAnimationActive={true}
               />
               <Bar
                 dataKey="totalReturn"
                 label="Total Return"
                 fill="#5ca81d"
-                radius={4}
+                radius={[4,4,0,0]}
                 maxBarSize={30}
+                isAnimationActive={true}
               />
             </BarChart>
           </ChartContainer>
-          <CardFooter>
+          {/* <CardFooter>
             <CardTitle className="flex items-center justify-center w-full gap-6 text-sm text-gray-500 sm:gap-10">
               <div className="flex items-center gap-2">
                 <div
@@ -212,7 +232,7 @@ const MFReturnsCalculator = () => {
                 <span className="capitalize">Total Return</span>
               </div>
             </CardTitle>
-          </CardFooter>
+          </CardFooter> */}
         </Card>
         <div className="order-1 w-full overflow-hidden rounded-xl lg:order-2 lg:col-span-2">
           <div className="w-full overflow-auto border custom-scrollbar rounded-xl border-pale-silver max-h-100">

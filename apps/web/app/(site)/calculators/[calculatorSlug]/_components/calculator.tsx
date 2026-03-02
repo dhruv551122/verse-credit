@@ -21,9 +21,9 @@ const Calculator = ({
         {calculator && (
           <div className="bg-white shadow-xl md:rounded-2xl text-tuatara">
             <div className="flex flex-col gap-6 padding-container">
-              <h1 className="pb-4 text-xl font-medium border-b border-pale-silver">
+              <h4 className="pb-2 text-[18px] leading-[115%] md:text-xl font-medium border-b border-pale-silver">
                 {data.calculatorTitle}
-              </h1>
+              </h4>
               {calculator}
             </div>
           </div>
@@ -32,7 +32,7 @@ const Calculator = ({
       <div className="max-width-container padding-container ">
         <RichText
           content={data.aboutCalculator}
-          className="prose-p:text-metallic-grey prose-ol:mt-2 prose-ul:mt-2 prose-p:mt-2 prose-p:mb-0 prose-li:text-metallic-grey prose-li:my-0! prose-h5:font-medium  prose-h4:font-medium prose-h5:text-tuatara prose-h4:text-tuatara prose-strong:text-tuatara prose-p:font-medium prose-li:font-medium prose-strong:font-medium"
+          className="prose-p:text-metallic-grey prose-p:text-sm prose-ul:text-sm prose-ol:text-sm prose-ol:mt-2 prose-ul:mt-2 prose-p:mt-2 prose-p:mb-0 prose-li:text-metallic-grey prose-h5:font-medium  prose-h4:font-medium prose-h5:text-tuatara prose-h4:text-tuatara prose-strong:text-tuatara prose-p:font-medium prose-li:font-medium prose-strong:font-medium"
         />
       </div>
     </div>

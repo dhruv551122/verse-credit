@@ -12,7 +12,7 @@ const Herobanner = ({
     <div className="bg-linear-to-t from-casual-navy -from-10% to-80% to-bright-royal-blue">
       <div className="text-white max-width-container padding-container">
         <div className="flex flex-col gap-10">
-          <div className="flex items-center gap-2 text-teal-grey">
+          <div className="flex text-sm items-center gap-2 text-teal-grey">
             <Link href="/" className="duration-300 hover:text-gray-500">
               Home
             </Link>
@@ -32,11 +32,11 @@ const Herobanner = ({
                 height={42}
                 className="object-contain w-8 h-8 shrink-0 md:w-11 md:h-11"
               />
-              <h2 className="text-2xl font-semibold md:text-4xl leading-[100%]">
+              <h2 className="text-2xl font-semibold leading-[115%] md:text-4xl">
                 {data.calculatorName}
               </h2>
             </div>
-            <p className="text-[18px] text-teal-grey font-normal">
+            <p className="text-base md:text-[18px] leading-[115%] text-teal-grey font-normal">
               {data.description}
             </p>
           </div>

@@ -113,7 +113,7 @@ const SearchDialog = ({
           }
         }}
       >
-        <SearchIcon className="text-white duration-300 cursor-pointer hover:text-white/80" />
+        <SearchIcon className="text-white duration-300 cursor-pointer hover:text-strong-amber" />
       </DialogTrigger>
       <DialogContent
         onCloseAutoFocus={() => {
@@ -122,7 +122,7 @@ const SearchDialog = ({
         }}
         showCloseButton={false}
         className={cn(
-          "text-tuatara top-0 z-111 md:z-50 h-0 p-0 md:p-6  translate-y-0  backdrop-blur-xs rounded-none shadow-none border-none sm:max-w-none max-w-none  data-[state=open]:h-screen   w-screen  flex justify-center bg-black/50",
+          "text-tuatara top-0 z-111 md:z-50 h-0 p-0 md:p-6  translate-y-0  backdrop-blur-xs rounded-none shadow-none border-none sm:max-w-none max-w-none data-[state=open]:h-screen w-screen flex justify-center bg-black/50",
           isMobile && "rounded-none",
         )}
       >
@@ -139,7 +139,7 @@ const SearchDialog = ({
                   Search a Topic
                 </DialogTitle>
                 <DialogClose className="cursor-pointer" asChild>
-                  <X />
+                  <X className="hover:text-strong-amber duration-300"/>
                 </DialogClose>
               </div>
 
@@ -158,14 +158,14 @@ const SearchDialog = ({
             </div>
           </DialogHeader>
           {resultBlogs.length > 0 ? (
-            <div className="flex flex-col w-full gap-4 py-2 overflow-y-scroll md:mt-4 max-h-120 md:min-h-80 md:max-h-80">
+            <div className="flex flex-col w-full gap-4 py-2 overflow-y-scroll custom-scrollbar md:mt-4 max-h-120 md:min-h-80 md:max-h-80">
               {resultBlogs.map((blog, index) => (
                 <DialogClose key={blog._id} asChild>
                   <Link
                     key={blog._id}
                     href={`/${blog.category.slug.current}/${blog.slug.current}`}
                     className={cn(
-                      "flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4",
+                      "flex flex-col sm:flex-row sm:items-center group justify-between gap-4 pb-4",
                       resultBlogs.length - 1 !== index &&
                         "border-b border-gray-300",
                     )}
@@ -175,7 +175,7 @@ const SearchDialog = ({
                       title={blog.title}
                       author={blog.author.authorName}
                       date={formatDate(blog.uploadedAt || blog._updatedAt)}
-                      titleClassname="md:text-[22px] text-[18px]"
+                      titleClassname="md:text-[22px] group-hover:text-strong-amber text-[18px]"
                     />
                     <SanityImage
                       src={blog.heroImage}

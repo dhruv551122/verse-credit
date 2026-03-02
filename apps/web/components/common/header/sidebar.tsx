@@ -58,7 +58,7 @@ const Sidebar = ({
               <Link
                 href={link.url}
                 key={link._key}
-                className="flex gap-10 py-2 text-xl text-white duration-300 w-fit hover:text-white/80 group otems-center"
+                className="flex gap-10 py-2 text-base text-white duration-300 w-fit hover:text-white/80 group otems-center"
                 onClick={() => setIsSidebarOpen(false)}
               >
                 <span>{link.label}</span>

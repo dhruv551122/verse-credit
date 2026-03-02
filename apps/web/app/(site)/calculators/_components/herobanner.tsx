@@ -11,7 +11,7 @@ const Herobanner = ({
     <div className="bg-linear-to-t from-casual-navy -from-45% to-80% to-bright-royal-blue">
       <div className="text-white max-width-container padding-container">
         <div className="flex flex-col gap-10">
-          <div className="flex items-center gap-2 text-teal-grey">
+          <div className="flex items-center gap-2 text-teal-grey text-sm">
             <Link href="/" className="duration-300 hover:text-gray-500">
               Home
             </Link>

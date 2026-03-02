@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const Footer = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
   return (
-    <div className="bg-casual-navy">
+    <div className="bg-casual-navy leading-[115%]">
       <div className="max-width-container padding-container">
         <Link href="/">
           <SanityImage
@@ -16,7 +16,7 @@ const Footer = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
           />
         </Link>
         <div className="grid grid-cols-1 gap-10 mt-10 md:grid-cols-2 md:gap-20 ">
-          <div className="flex flex-col gap-2 shrink-0 ">
+          <div className="flex flex-col gap-3 shrink-0 ">
             <h4 className="text-subtle-white text-[22px] font-medium">
               {data.socialMediaLinksTitle}
             </h4>
@@ -38,11 +38,11 @@ const Footer = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
               ))}
             </div>
           </div>
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
             <h4 className="text-subtle-white text-[22px] font-medium">
               {data.footerLinksTitle}
             </h4>
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-3">
               {data.footerLinks.map((link) => (
                 <Link
                   key={link.label}

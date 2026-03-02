@@ -10,7 +10,7 @@ const OurPurpose = ({
     <div className="bg-chathams-blue">
       <div className="max-width-container padding-container">
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl md:text-4xl text-white font-semibold">
+          <h2 className="text-2xl md:text-4xl leading-[115%] text-white font-semibold">
             {data.purposeTitle}
           </h2>
           <RichText

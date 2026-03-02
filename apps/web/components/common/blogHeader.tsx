@@ -22,10 +22,10 @@ const BlogHeader = ({
   className?: string;
 }) => {
   return (
-    <div className={cn("flex flex-col gap-2", className)}>
+    <div className={cn("flex flex-col gap-1", className)}>
       <h4
         className={cn(
-          "text-base font-bold uppercase text-chathams-blue",
+          "text-base font-bold uppercase text-chathams-blue leading-[115%]",
           headingClassname,
         )}
       >
@@ -33,23 +33,23 @@ const BlogHeader = ({
       </h4>
       <h2
         className={cn(
-          "text-xl sm:text-[22px] font-semibold text-tuatara leading-6",
+          "text-[18px] sm:text-xl font-semibold text-tuatara duration-300 leading-[115%]",
           titleClassname,
         )}
       >
         {title}
       </h2>
       {author && date && (
-        <p className="text-xs sm:text-sm ">
+        <p className="text-xs  ">
           <span
             className={cn(
-              "pr-2 font-semibold text-gray-500 border-r-2 border-gray-600",
+              "pr-1.5 font-semibold text-gray-500 border-r-2 border-gray-500 leading-[115%]",
               authorClassname,
             )}
           >
             {author}
           </span>
-          <span className={cn("text-gray-400 pl-2 font-medium", dateClassname)}>
+          <span className={cn("text-gray-400 pl-1.5 font-medium leading-[115%]", dateClassname)}>
             {date}
           </span>
         </p>

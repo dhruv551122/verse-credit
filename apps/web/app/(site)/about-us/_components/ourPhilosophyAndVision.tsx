@@ -10,11 +10,11 @@ const OurPhilosophyAndVision = ({
 }) => {
   return (
     <div className="max-width-container">
-      <div className="padding-container flex flex-col gap-8 lg:px-0! lg:py-0!">
+      <div className="padding-container flex flex-col gap-8 lg:gap-0 lg:px-0! lg:py-0!">
         {data.ourPhilosophyAndVisionItems.map((item, index) => (
           <div
             key={item._key}
-            className="grid grid-cols-1 gap-6 lg:grid-cols-2 lg:gap-0 "
+            className="grid grid-cols-1 gap-4 lg:grid-cols-2 lg:gap-0 "
           >
             <SanityImage
               src={item.image}
@@ -28,16 +28,16 @@ const OurPhilosophyAndVision = ({
             />
             <div
               className={cn(
-                "flex flex-col gap-4 lg:px-6 lg:py-25",
+                "flex flex-col gap-2 lg:px-6 lg:py-25",
                 index % 2 === 0 ? "lg:order-2" : "lg:order-1",
               )}
             >
-              <h2 className="text-2xl font-semibold md:text-4xl text-tuatara">
+              <h2 className="text-2xl leading-[115%] font-semibold md:text-4xl text-tuatara">
                 {item.title}
               </h2>
               <RichText
                 content={item.content}
-                className="prose-p:mb-0 prose-ul:my-0 prose-li:my-0"
+                className="prose-p:mb-0"
               />
             </div>
           </div>

@@ -14,7 +14,7 @@ const HeroLeft = ({
 }) => {
   const latestBlogs = blogData.slice(0, 3);
   return (
-    <div className="flex flex-col gap-4 pt-4 lg:pb-10 lg:border-gray-300 lg:pr-8 lg:border-r">
+    <div className="flex flex-col gap-4 lg:pb-10 lg:border-gray-300 lg:pr-8 lg:border-r">
       <Title title={title} />
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {latestBlogs.map((blog, index) => (
@@ -32,8 +32,8 @@ const HeroLeft = ({
               category={blog.category.label}
               title={blog.title}
               titleClassname={cn(
-                "group-hover:text-chathams-blue",
-                index === 0 && "text-3xl",
+                "group-hover:text-strong-amber",
+                index === 0 && "text-2xl sm:text-3xl",
               )}
             />
             <div className="w-full overflow-hidden rounded-xl">
@@ -47,7 +47,7 @@ const HeroLeft = ({
             </div>
             {index === 0 && (
               <>
-                <p className="text-base text-gray-500">{blog.description}</p>
+                <p className="text-base text-gray-500 leading-[115%]">{blog.description}</p>
                 <div className="h-px bg-gray-300"></div>
               </>
             )}

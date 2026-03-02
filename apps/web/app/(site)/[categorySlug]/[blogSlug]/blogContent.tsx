@@ -44,7 +44,7 @@ const BlogContent = ({
         <div className="grid grid-cols-1 gap-6 md:grid-cols-6">
           <div className="md:col-span-2 ">
             <div className="sticky pb-2 border-b border-gray-300 top-20">
-              <h4 className="py-2 mb-2 text-xl font-semibold border-b border-gray-300">
+              <h4 className="pb-2 mb-2 text-xl font-semibold border-b border-gray-300">
                 Table of Content
               </h4>
               <ul className="flex flex-col gap-2 py-1 ">
@@ -55,8 +55,8 @@ const BlogContent = ({
                       key={tableIndex.id}
                       onClick={() => handleScroll(tableIndex.id)}
                       className={cn(
-                        "duration-300 hover:text-chathams-blue cursor-pointer font-medium",
-                        activeId === tableIndex.id && "text-chathams-blue",
+                        "duration-300 hover:text-strong-amber cursor-pointer font-medium",
+                        activeId === tableIndex.id && "text-strong-amber",
                       )}
                     >
                       {tableIndex.title}
@@ -65,7 +65,7 @@ const BlogContent = ({
               </ul>
             </div>
           </div>
-          <div className="md:col-span-4 md:pl-6 md:border-l md:border-gray-300">
+          <div className="md:col-span-4 md:pl-6 prose-h2:mt-8! md:border-l md:border-gray-300">
             <RichText content={blog.content} />
           </div>
         </div>

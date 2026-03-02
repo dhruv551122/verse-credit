@@ -138,8 +138,8 @@ export type Blog = {
   _updatedAt: string;
   _rev: string;
   seo: Seo;
-  slug: Slug;
   title: string;
+  slug: Slug;
   description: string;
   heroImage: {
     asset: SanityImageAssetReference;
@@ -589,8 +589,8 @@ export type HomePageQueryResult = {
     _updatedAt: string;
     _rev: string;
     seo: Seo;
-    slug: Slug;
     title: string;
+    slug: Slug;
     description: string;
     heroImage: {
       asset: SanityImageAssetReference;
@@ -655,8 +655,8 @@ export type HomePageQueryResult = {
     _updatedAt: string;
     _rev: string;
     seo: Seo;
-    slug: Slug;
     title: string;
+    slug: Slug;
     description: string;
     heroImage: {
       asset: SanityImageAssetReference;
@@ -757,8 +757,8 @@ export type BlogsByCategoryQueryResult = Array<{
   _updatedAt: string;
   _rev: string;
   seo: Seo;
-  slug: Slug;
   title: string;
+  slug: Slug;
   description: string;
   heroImage: {
     asset: SanityImageAssetReference;
@@ -804,8 +804,8 @@ export type BlogBySlugQueryResult = {
   _updatedAt: string;
   _rev: string;
   seo: Seo;
-  slug: Slug;
   title: string;
+  slug: Slug;
   description: string;
   heroImage: {
     asset: SanityImageAssetReference;
@@ -1033,8 +1033,8 @@ export type BlogCategoryPageQueryResult = {
     _updatedAt: string;
     _rev: string;
     seo: Seo;
-    slug: Slug;
     title: string;
+    slug: Slug;
     description: string;
     heroImage: {
       asset: SanityImageAssetReference;
@@ -1087,8 +1087,8 @@ export type BlogCategoryPageQueryResult = {
     _updatedAt: string;
     _rev: string;
     seo: Seo;
-    slug: Slug;
     title: string;
+    slug: Slug;
     description: string;
     heroImage: {
       asset: SanityImageAssetReference;
@@ -1177,7 +1177,7 @@ export type BlogsByTitleSlugResult = Array<{
 
 // Source: sanity/lib/query.ts
 // Variable: blogsQuery
-// Query: *[ _type == 'blog'] | order(coalesce(uploadedAt, _createdAt) desc){        ...,        author ->,        category ->     }
+// Query: *[ _type == 'blog' && defined(slug.current)] | order(coalesce(uplodedAt, _updatedAt) desc){        ...,        author ->,        category ->     }
 export type BlogsQueryResult = Array<{
   _id: string;
   _type: "blog";
@@ -1185,8 +1185,8 @@ export type BlogsQueryResult = Array<{
   _updatedAt: string;
   _rev: string;
   seo: Seo;
-  slug: Slug;
   title: string;
+  slug: Slug;
   description: string;
   heroImage: {
     asset: SanityImageAssetReference;
@@ -1220,35 +1220,6 @@ export type BlogsQueryResult = Array<{
   postedToX?: boolean;
   xPostStatus?: string;
   orderRank?: string;
-}>;
-
-// Source: sanity/lib/query.ts
-// Variable: blogsRssQuery
-// Query: *[_type == 'blog'] | order(orderrank){        title,        description,        uplodedAt,        slug,        _createdAt,        category -> ,        heroImage,    }
-export type BlogsRssQueryResult = Array<{
-  title: string;
-  description: string;
-  uplodedAt: string | null;
-  slug: Slug;
-  _createdAt: string;
-  category: {
-    _id: string;
-    _type: "blogCategory";
-    _createdAt: string;
-    _updatedAt: string;
-    _rev: string;
-    label: string;
-    slug: Slug;
-    orderRank?: string;
-  };
-  heroImage: {
-    asset: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt: string;
-    _type: "image";
-  };
 }>;
 
 // Source: sanity/lib/query.ts

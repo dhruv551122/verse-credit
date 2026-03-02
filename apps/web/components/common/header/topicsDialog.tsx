@@ -56,7 +56,7 @@ const TopicsDialog = ({
       open={isTopicsMounted}
       modal={false}
     >
-      <DialogTrigger className="text-white duration-300 cursor-pointer hover:text-white/80">
+      <DialogTrigger className="text-white duration-300 cursor-pointer hover:text-strong-amber">
         Topics
       </DialogTrigger>
       <DialogContent
@@ -93,7 +93,7 @@ const TopicsDialog = ({
               <DialogClose key={category._id} asChild>
                 <Link
                   href={`/${category.slug.current}`}
-                  className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center hover:text-chathams-blue"
+                  className="flex flex-col justify-between gap-4 sm:flex-row duration-300 sm:items-center hover:text-strong-amber"
                 >
                   {category.label}
                 </Link>

@@ -10,7 +10,7 @@ const Clarification = ({
     <div className="bg-strong-amber">
       <div className="max-width-container padding-container">
         <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-semibold text-white md:text-4xl">
+          <h2 className="text-2xl font-semibold leading-[115%] text-white md:text-4xl">
             {data.clarificationTitle}
           </h2>
           <RichText

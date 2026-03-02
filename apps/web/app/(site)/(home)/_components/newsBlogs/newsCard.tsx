@@ -20,7 +20,7 @@ const NewsCard = ({
         category={blog.category.label}
         date={formatDate(blog.uplodedAt || blog._updatedAt)}
         title={blog.title}
-        titleClassname="line-clamp-3 group-hover:text-chathams-blue duration-300"
+        titleClassname="line-clamp-3 group-hover:text-strong-amber duration-300"
       />
       <SanityImage
         src={blog.heroImage}

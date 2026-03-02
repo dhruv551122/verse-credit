@@ -1,4 +1,4 @@
-import { AArrowUp, HighlighterIcon } from "lucide-react";
+import { AArrowUp, HighlighterIcon, Superscript } from "lucide-react";
 import { defineField, defineType } from "sanity";
 
 export const commonRichFields = [
@@ -25,6 +25,14 @@ export const commonRichFields = [
         {
           title: "Strong",
           value: "strong",
+        },
+        {
+          title: 'Super Script',
+          value:'superscript',
+          icon: () => <Superscript/>,
+          component: ({ children }: { children: React.ReactNode }) => (
+            <span><sup>{children}</sup></span>
+          ),
         },
         { title: "Emphasis", value: "em" },
         {

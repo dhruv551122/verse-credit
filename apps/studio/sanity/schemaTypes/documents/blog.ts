@@ -19,7 +19,14 @@ const blog = defineType({
       group: "seo",
       validation: (Rule) => Rule.required(),
     }),
-    {
+    defineField({
+      name: "title",
+      title: "Title",
+      type: "string",
+      group: "blog",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
       name: "slug",
       title: "Slug",
       type: "slug",
@@ -27,13 +34,6 @@ const blog = defineType({
         source: "title",
         maxLength: 96,
       },
-      validation: (Rule) => Rule.required(),
-    },
-    defineField({
-      name: "title",
-      title: "Title",
-      type: "string",
-      group: "blog",
       validation: (Rule) => Rule.required(),
     }),
     defineField({

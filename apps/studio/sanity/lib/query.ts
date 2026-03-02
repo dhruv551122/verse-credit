@@ -124,22 +124,10 @@ export const blogsByTitleSlug = groq`
 `;
 
 export const blogsQuery = groq`
-    *[ _type == 'blog'] | order(coalesce(uploadedAt, _createdAt) desc){
+    *[ _type == 'blog' && defined(slug.current)] | order(coalesce(uplodedAt, _updatedAt) desc){
         ...,
         author ->,
         category -> 
-    }
-`;
-
-export const blogsRssQuery = groq`
-    *[_type == 'blog'] | order(orderrank){
-        title,
-        description,
-        uplodedAt,
-        slug,
-        _createdAt,
-        category -> ,
-        heroImage,
     }
 `;
 

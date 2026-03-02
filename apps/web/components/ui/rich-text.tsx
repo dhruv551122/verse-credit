@@ -27,15 +27,18 @@ const RichText: React.FC<Props> = ({
   className,
   highlightedTextClassName,
 }) => {
-  const combinedClassNames = cn("prose max-w-none text-tuatara ", className);
+  const combinedClassNames = cn(
+    "prose prose-li:my-0 prose-li:pl-0 max-w-none prose-h:my-2! text-tuatara prose-h5:leading-[115%] prose-h4:leading-[115%] prose-h3:leading-[115%] prose-h2:leading-[115%] prose-h1:leading-[115%] prose-p:leading-[115%] prose-ol:leading-[115%] prose-ul:leading-[115%]",
+    className,
+  );
 
   const myPortableTextComponents: any = {
     list: {
       bullet: ({ children }: { children: React.ReactNode }) => (
-        <ul className="pl-8 mb-4 list-disc">{children}</ul>
+        <ul className="pl-6 my-4 list-disc marker:text-tuatara">{children}</ul>
       ),
       number: ({ children }: { children: React.ReactNode }) => (
-        <ol className="pl-8 mb-4 list-decimal">{children}</ol>
+        <ol className="pl-8 my-4 list-decimal">{children}</ol>
       ),
     },
     block: {
@@ -44,7 +47,7 @@ const RichText: React.FC<Props> = ({
         const text = getTextFromChildren(children);
         const id = slugify(text);
         return (
-          <h2 id={id} className="my-4 text-2xl font-semibold md:text-3xl">
+          <h2 id={id} className="my-4! text-2xl font-semibold md:text-3xl">
             {children}
           </h2>
         );
@@ -64,7 +67,7 @@ const RichText: React.FC<Props> = ({
       ),
       h6: ({ children }: any) => <h6 className="my-4 ">{children}</h6>,
       normal: ({ children }: any) => (
-        <p className="mb-4 text-base leading-relaxed min-h-px">{children}</p>
+        <p className="mb-4 text-base min-h-px">{children}</p>
       ),
       center: ({ children }: any) => <p className="text-center">{children}</p>,
     },
@@ -93,6 +96,11 @@ const RichText: React.FC<Props> = ({
         value: any;
         children: React.ReactNode;
       }) => <span style={{ color: value.value }}>{children}</span>,
+      superscript: ({ children }: { children: React.ReactNode }) => (
+        <span>
+          <sup>{children}</sup>
+        </span>
+      ),
       highlightedText: ({ children }: { children: React.ReactNode }) => (
         <span
           className={cn("font-semibold! text-[22px]", highlightedTextClassName)}

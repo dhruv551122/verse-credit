@@ -75,7 +75,7 @@ const FDCalculator = () => {
       defaultFieldValue: DEFAULT_TIME_PERIOD,
       minFieldValue: MIN_TIME_PERIOD,
       maxFieldValue: MAX_TIME_PERIOD,
-      fieldLable: "timePeriod",
+      fieldLable: "Time Period",
       fieldunit: "Yr",
       unitRightSide: true,
     },
@@ -126,7 +126,7 @@ const FDCalculator = () => {
   return (
     <>
       <div className="flex flex-col gap-2">
-        <p className="font-medium">Select Interest Compounding Frequency:</p>
+        <p className="font-medium leading-[115%]">Select Interest Compounding Frequency:</p>
         <Select
           value={`${interestFrequency}`}
           onValueChange={(value) =>

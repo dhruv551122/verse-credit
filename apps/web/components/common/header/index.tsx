@@ -15,6 +15,8 @@ const Sidebar = dynamic(() => import("./sidebar"), {
 
 import TopicsDialog from "./topicsDialog";
 import SearchDialog from "./searchDialog";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const Header = ({
   data,
@@ -25,7 +27,8 @@ const Header = ({
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [screenSize, setScreenSize] = useState<number>(0);
-
+  const pathname = usePathname();
+  console.log(pathname);
   useEffect(() => {
     if (typeof document !== "undefined") {
       if (isMobileMenuOpen) {
@@ -67,9 +70,12 @@ const Header = ({
           <div className="flex gap-10">
             {data.headerLinks.map((link) => (
               <Link
-                href={`${link.url}`}
+                href={link.url}
                 key={link._key}
-                className="text-white duration-300 hover:text-white/80 "
+                className={cn(
+                  "text-white duration-300 hover:text-strong-amber",
+                  pathname.includes(link.url) && "text-strong-amber",
+                )}
               >
                 {link.label}
               </Link>

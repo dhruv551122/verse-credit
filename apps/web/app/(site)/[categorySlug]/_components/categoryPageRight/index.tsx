@@ -21,7 +21,7 @@ const CategoryPageRight = ({
               key={blog._id}
               href={`/${blog.category.slug.current}/${blog.slug.current}`}
               className={cn(
-                "flex justify-between gap-4 py-4 ",
+                "flex justify-between gap-4 py-4 group",
                 index !== categoryPage.recommandedBlogs.length - 1 &&
                   "border-b border-gray-300",
               )}
@@ -34,7 +34,7 @@ const CategoryPageRight = ({
                 headingClassname="text-sm"
                 authorClassname="text-xs"
                 dateClassname="text-xs"
-                titleClassname="group-hover:text-chathams-blue text-base!"
+                titleClassname="group-hover:text-strong-amber text-base!"
                 className="gap-1"
               />
               <SanityImage
@@ -55,7 +55,7 @@ const CategoryPageRight = ({
             <Link key={category._id} href={`/${category.slug.current}`}>
               <Button
                 variant="outline"
-                className="text-sm font-semibold duration-300 cursor-pointer md:text-base text-tuatara hover:border-chathams-blue hover:text-chathams-blue"
+                className="text-sm font-semibold duration-300 cursor-pointer md:text-base text-tuatara hover:border-strong-amber hover:text-strong-amber"
               >
                 <span>{category.label}</span>
                 <span className="px-2 bg-gray-200 rounded-sm">

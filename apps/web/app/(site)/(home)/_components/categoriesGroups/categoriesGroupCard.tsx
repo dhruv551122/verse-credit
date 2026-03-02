@@ -28,7 +28,7 @@ const CategoriesGroupCard = ({
         date={formatDate(blog.uplodedAt || blog._updatedAt)}
         category={blog.category.label}
         title={blog.title}
-        titleClassname="group-hover:text-chathams-blue"
+        titleClassname="group-hover:text-strong-amber"
       />
     </Link>
   );

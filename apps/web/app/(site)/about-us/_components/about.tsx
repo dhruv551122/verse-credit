@@ -5,7 +5,7 @@ const About = ({ data }: { data: NonNullable<AboutUspageQueryResult> }) => {
   return (
     <div className="max-width-container padding-container">
       <div className="flex flex-col gap-4">
-        <h2 className="text-2xl md:text-4xl text-tuatara font-semibold">
+        <h2 className="text-2xl md:text-4xl text-tuatara leading-[115%] font-semibold">
           {data.aboutTitle}
         </h2>
         <RichText

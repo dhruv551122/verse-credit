@@ -11,7 +11,7 @@ const HeroRight = ({
   homePage: NonNullable<HomePageQueryResult>;
 }) => {
   return (
-    <div className="flex flex-col gap-6 pt-10 lg:pt-4 lg:pb-10">
+    <div className="flex flex-col gap-6 pt-6 lg:pt-0 lg:pb-10">
       <Title title={homePage.heroRightTitle} />
       <div className="flex flex-col gap-4">
         {homePage.heroRightBlogs.map((blog, index) => (
@@ -30,7 +30,7 @@ const HeroRight = ({
               category={blog.category.label}
               title={blog.title}
               className="sm:col-span-4"
-              titleClassname="group-hover:text-chathams-blue"
+              titleClassname="group-hover:text-strong-amber"
             />
             <div className="sm:col-span-2">
               <SanityImage

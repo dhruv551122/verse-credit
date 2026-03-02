@@ -20,10 +20,10 @@ const CalculatorCard = ({
         className="object-contain"
       />
       <div className="flex flex-col gap-2">
-        <p className="text-2xl font-semibold">
+        <p className="text-2xl font-semibold leading-[115%]">
           {calculatorDetail.calculatorName}
         </p>
-        <p className="text-sm font-medium text-metallic-grey">
+        <p className="text-sm font-medium text-metallic-grey leading-[115%]">
           {calculatorDetail.description}
         </p>
       </div>
