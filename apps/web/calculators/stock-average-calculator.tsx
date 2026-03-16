@@ -138,17 +138,15 @@ const StockAverageCalculator = () => {
                   }}
                 />
               </div>
-              {i > 1 ? (
+              {i > 1 ?
                 <Button
                   variant="outline"
                   onClick={() => deletePurchase(i)}
-                  className="cursor-pointer duration-300 hover:border-strong-amber self-end max-lg:absolute relative max:right-0 max-lg:top-4"
+                  className="cursor-pointer duration-300 hover:border-deep-bright-red self-end max-lg:absolute relative max:right-0 max-lg:top-4"
                 >
                   <Trash2 />
                 </Button>
-              ) : (
-                <div className="min-w-10.5" />
-              )}
+              : <div className="min-w-10.5" />}
             </div>
           </div>
         ))}

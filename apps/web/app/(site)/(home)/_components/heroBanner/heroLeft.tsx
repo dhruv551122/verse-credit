@@ -32,7 +32,7 @@ const HeroLeft = ({
               category={blog.category.label}
               title={blog.title}
               titleClassname={cn(
-                "group-hover:text-strong-amber",
+                "group-hover:text-deep-bright-red",
                 index === 0 && "text-2xl sm:text-3xl",
               )}
             />
@@ -47,7 +47,9 @@ const HeroLeft = ({
             </div>
             {index === 0 && (
               <>
-                <p className="text-base text-gray-500 leading-[115%]">{blog.description}</p>
+                <p className="text-base text-gray-500 leading-[115%]">
+                  {blog.description}
+                </p>
                 <div className="h-px bg-gray-300"></div>
               </>
             )}

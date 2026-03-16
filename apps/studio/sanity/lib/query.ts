@@ -124,7 +124,7 @@ export const blogsByTitleSlug = groq`
 `;
 
 export const blogsQuery = groq`
-    *[ _type == 'blog' && defined(slug.current)] | order(coalesce(uplodedAt, _updatedAt) desc){
+    *[ _type == 'blog' ] | order(coalesce(uplodedAt, _updatedAt) desc){
         ...,
         author ->,
         category -> 

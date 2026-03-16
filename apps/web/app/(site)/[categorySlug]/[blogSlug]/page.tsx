@@ -4,7 +4,6 @@ import Link from "next/link";
 import BlogContent from "./blogContent";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import RecommandedBlogs from "./recommandedBlog";
 import { blogBySlugQuery, blogsQuery } from "@/sanity/lib/query";
 import { sanityFetch } from "@/sanity/lib/live";
 import { client } from "@/sanity/lib/client";

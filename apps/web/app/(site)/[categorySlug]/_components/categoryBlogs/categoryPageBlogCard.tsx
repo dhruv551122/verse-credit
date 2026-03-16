@@ -25,7 +25,7 @@ const CategoryPageBlogCard = ({
           category={blog.category.label}
           title={blog.title}
           headingClassname="mb-2"
-          titleClassname="group-hover:text-strong-amber"
+          titleClassname="group-hover:text-deep-bright-red"
         />
         <p>{blog.description}</p>
         <p className="text-xs sm:text-sm ">

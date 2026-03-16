@@ -71,7 +71,7 @@ const ContactForm = ({
   return (
     <div className="max-width-container padding-container py-0! -translate-y-20">
       <div className="p-8 bg-white shadow-2xl rounded-2xl text-tuatara flex flex-col gap-6">
-        <h2 className="flex text-chathams-blue items-center gap-2 text-2xl font-semibold">
+        <h2 className="flex text-deep-bright-red items-center gap-2 text-2xl font-semibold">
           <MessageCircleHeartIcon />
           <span>{contactPage.formTitle}</span>
         </h2>

@@ -12,7 +12,7 @@ const CategoriesGroupCard = ({
   return (
     <Link
       href={`/${blog.category.slug.current}/${blog.slug.current}`}
-      className=" duration-300  group"
+      className="duration-300 group"
     >
       <div className="w-full mb-6">
         <SanityImage
@@ -28,7 +28,7 @@ const CategoriesGroupCard = ({
         date={formatDate(blog.uplodedAt || blog._updatedAt)}
         category={blog.category.label}
         title={blog.title}
-        titleClassname="group-hover:text-strong-amber"
+        titleClassname="group-hover:text-deep-bright-red"
       />
     </Link>
   );

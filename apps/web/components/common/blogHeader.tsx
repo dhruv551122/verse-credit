@@ -25,7 +25,7 @@ const BlogHeader = ({
     <div className={cn("flex flex-col gap-1", className)}>
       <h4
         className={cn(
-          "text-base font-bold uppercase text-chathams-blue leading-[115%]",
+          "text-base font-bold uppercase text-deep-bright-red leading-[115%]",
           headingClassname,
         )}
       >
@@ -49,7 +49,12 @@ const BlogHeader = ({
           >
             {author}
           </span>
-          <span className={cn("text-gray-400 pl-1.5 font-medium leading-[115%]", dateClassname)}>
+          <span
+            className={cn(
+              "text-gray-400 pl-1.5 font-medium leading-[115%]",
+              dateClassname,
+            )}
+          >
             {date}
           </span>
         </p>

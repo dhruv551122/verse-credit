@@ -32,7 +32,7 @@ const WhatWeOffer = ({
                 index % 2 === 0 ? "text-left" : "text-right",
               )}
             >
-              <h3 className="text-xl font-semibold md:text-2xl text-chathams-blue">
+              <h3 className="text-xl font-semibold md:text-2xl text-deep-bright-red">
                 {item.title}
               </h3>
               <RichText

@@ -55,8 +55,8 @@ const BlogContent = ({
                       key={tableIndex.id}
                       onClick={() => handleScroll(tableIndex.id)}
                       className={cn(
-                        "duration-300 hover:text-strong-amber cursor-pointer font-medium",
-                        activeId === tableIndex.id && "text-strong-amber",
+                        "duration-300 hover:text-deep-bright-red cursor-pointer font-medium",
+                        activeId === tableIndex.id && "text-deep-bright-red",
                       )}
                     >
                       {tableIndex.title}

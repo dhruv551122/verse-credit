@@ -30,7 +30,7 @@ const HeroRight = ({
               category={blog.category.label}
               title={blog.title}
               className="sm:col-span-4"
-              titleClassname="group-hover:text-strong-amber"
+              titleClassname="group-hover:text-deep-bright-red"
             />
             <div className="sm:col-span-2">
               <SanityImage

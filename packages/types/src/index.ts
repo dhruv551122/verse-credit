@@ -1177,7 +1177,7 @@ export type BlogsByTitleSlugResult = Array<{
 
 // Source: sanity/lib/query.ts
 // Variable: blogsQuery
-// Query: *[ _type == 'blog' && defined(slug.current)] | order(coalesce(uplodedAt, _updatedAt) desc){        ...,        author ->,        category ->     }
+// Query: *[ _type == 'blog' ] | order(coalesce(uplodedAt, _updatedAt) desc){        ...,        author ->,        category ->     }
 export type BlogsQueryResult = Array<{
   _id: string;
   _type: "blog";

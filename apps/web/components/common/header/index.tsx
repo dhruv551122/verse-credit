@@ -3,6 +3,7 @@
 import { SanityImage } from "@/sanity/sanityImage";
 import {
   BlogCategoriesQueryResult,
+  BlogsQueryResult,
   SettingsQueryResult,
 } from "@sanity-types/sanity.types";
 import Link from "next/link";
@@ -21,9 +22,11 @@ import { cn } from "@/lib/utils";
 const Header = ({
   data,
   categoriesData,
+  blogs,
 }: {
   data: NonNullable<SettingsQueryResult>;
   categoriesData: NonNullable<BlogCategoriesQueryResult>;
+  blogs: NonNullable<BlogsQueryResult>;
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [screenSize, setScreenSize] = useState<number>(0);
@@ -55,7 +58,7 @@ const Header = ({
   const isMobile = screenSize <= 768;
 
   return (
-    <div className="fixed top-0 left-0 w-full z-100 bg-chathams-blue">
+    <div className="fixed top-0 left-0 w-full z-100 bg-casual-navy">
       <div className="flex items-center justify-between p-4 max-width-container md:px-10 text-sandstone ">
         <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
           <SanityImage
@@ -73,8 +76,8 @@ const Header = ({
                 href={link.url}
                 key={link._key}
                 className={cn(
-                  "text-white duration-300 hover:text-strong-amber",
-                  pathname.includes(link.url) && "text-strong-amber",
+                  "text-white duration-300 hover:text-deep-bright-red",
+                  pathname.includes(link.url) && "text-deep-bright-red",
                 )}
               >
                 {link.label}
@@ -93,6 +96,7 @@ const Header = ({
             isMobile={isMobile}
             isMobileMenuOpen={isMobileMenuOpen}
             setIsMobileMenuOpen={setIsMobileMenuOpen}
+            blogs={blogs}
           />
           {isMobile && (
             <Sidebar

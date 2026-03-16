@@ -34,7 +34,7 @@ function CategoryBlogs({
                 date={formatDate(blog.uplodedAt || blog._updatedAt)}
                 category={blog.category.label}
                 title={blog.title}
-                titleClassname="group-hover:text-strong-amber"
+                titleClassname="group-hover:text-deep-bright-red"
               />
               <SanityImage
                 src={blog.heroImage}

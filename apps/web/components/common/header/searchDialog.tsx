@@ -16,26 +16,24 @@ import {
   ChangeEvent,
   SetStateAction,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
-import { BlogsByTitleSlugResult } from "@sanity-types/*";
+import { BlogsByTitleSlugResult, BlogsQueryResult } from "@sanity-types/*";
 import Link from "next/link";
-import { sanityClient } from "@/sanity/lib/sanityClient";
-import { blogsByTitleSlug } from "@/sanity/lib/query";
 
 const SearchDialog = ({
   isMobile,
   isMobileMenuOpen,
   setIsMobileMenuOpen,
+  blogs,
 }: {
   isMobile: boolean;
   isMobileMenuOpen: boolean;
   setIsMobileMenuOpen: React.Dispatch<SetStateAction<boolean>>;
+  blogs: NonNullable<BlogsQueryResult>;
 }) => {
-  const [resultBlogs, setResultBlogs] = useState<
-    NonNullable<BlogsByTitleSlugResult>
-  >([]);
   const [inputText, setInputText] = useState<string>("");
   const [isSearchMounted, setIsSearchMounted] = useState<boolean>(false);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
@@ -65,24 +63,18 @@ const SearchDialog = ({
     }
   }, [isSearchMounted]);
 
-  useEffect(() => {
-    if (!inputText.trim()) return;
+  const searchResult: NonNullable<BlogsQueryResult> = useMemo(() => {
+    const searchQuery = inputText.trim().toLowerCase();
+    if (!searchQuery) {
+      return [];
+    }
+    const result = blogs.filter((blog) =>
+      blog.title.toLowerCase().match(searchQuery),
+    );
 
-    const timeoutId = setTimeout(async () => {
-      try {
-        const blogs = await sanityClient.fetch<
-          NonNullable<BlogsByTitleSlugResult>
-        >(blogsByTitleSlug, { titleSlug: inputText });
-
-        setResultBlogs(blogs);
-      } catch (error) {
-        console.error(error);
-      }
-    }, 400);
-
-    return () => clearTimeout(timeoutId);
-  }, [inputText]);
-
+    return result;
+  }, [inputText, blogs]);
+  console.log(searchResult);
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
   ) => {
@@ -92,13 +84,14 @@ const SearchDialog = ({
     }
 
     if (!value.trim()) {
-      setResultBlogs([]);
       setInputText("");
       return;
     }
 
     timerRef.current = setTimeout(() => setInputText(e.target.value), 300);
   };
+
+  console.log(inputText);
 
   return (
     <Dialog
@@ -113,12 +106,11 @@ const SearchDialog = ({
           }
         }}
       >
-        <SearchIcon className="text-white duration-300 cursor-pointer hover:text-strong-amber" />
+        <SearchIcon className="text-white duration-300 cursor-pointer hover:text-deep-bright-red" />
       </DialogTrigger>
       <DialogContent
         onCloseAutoFocus={() => {
           setInputText("");
-          setResultBlogs([]);
         }}
         showCloseButton={false}
         className={cn(
@@ -132,14 +124,14 @@ const SearchDialog = ({
             isSearchOpen && "translate-y-0",
           )}
         >
-          <DialogHeader className="gap-4 text-left h-fit">
-            <div className="pb-2 border-b border-gray-300">
+          <DialogHeader className="gap-4 mb-4 text-left h-fit">
+            <div className="pb-2">
               <div className="flex items-center justify-between">
-                <DialogTitle className="text-2xl font-semibold text-chathams-blue">
+                <DialogTitle className="text-2xl font-semibold text-deep-bright-red">
                   Search a Topic
                 </DialogTitle>
                 <DialogClose className="cursor-pointer" asChild>
-                  <X className="hover:text-strong-amber duration-300"/>
+                  <X className="duration-300 hover:text-deep-bright-red" />
                 </DialogClose>
               </div>
 
@@ -148,25 +140,28 @@ const SearchDialog = ({
                 looking for.
               </DialogDescription>
             </div>
-            <div className="flex items-center gap-2 border-b border-gray-300">
-              <SearchIcon size={isMobile ? 20 : 30} />
+            <div className="relative">
+              <SearchIcon
+                size={isMobile ? 18 : 20}
+                className="absolute text-gray-400 -translate-y-1/2 left-2 top-1/2"
+              />
               <Input
                 onChange={(e) => handleInputChange(e)}
                 placeholder="Write here...."
-                className="border-none outline-none ring-0 focus-visible:ring-0 p-0 text-base md:text-[20px]!"
+                className="shadow-none outline-none p-0 text-base md:text-[18px]! pl-8 py-3"
               />
             </div>
           </DialogHeader>
-          {resultBlogs.length > 0 ? (
-            <div className="flex flex-col w-full gap-4 py-2 overflow-y-scroll custom-scrollbar md:mt-4 max-h-120 md:min-h-80 md:max-h-80">
-              {resultBlogs.map((blog, index) => (
+          {searchResult.length > 0 ?
+            <div className="flex flex-col w-full gap-4 pb-10 overflow-y-scroll custom-scrollbar md:mt-4 max-h-120 md:min-h-80 md:max-h-80 no-scrollbar">
+              {searchResult.map((blog, index) => (
                 <DialogClose key={blog._id} asChild>
                   <Link
                     key={blog._id}
                     href={`/${blog.category.slug.current}/${blog.slug.current}`}
                     className={cn(
                       "flex flex-col sm:flex-row sm:items-center group justify-between gap-4 pb-4",
-                      resultBlogs.length - 1 !== index &&
+                      searchResult.length - 1 !== index &&
                         "border-b border-gray-300",
                     )}
                   >
@@ -174,8 +169,9 @@ const SearchDialog = ({
                       category={blog.category.label}
                       title={blog.title}
                       author={blog.author.authorName}
-                      date={formatDate(blog.uploadedAt || blog._updatedAt)}
-                      titleClassname="md:text-[22px] group-hover:text-strong-amber text-[18px]"
+                      date={formatDate(blog.uplodedAt || blog._updatedAt)}
+                      headingClassname="text-sm"
+                      titleClassname="md:text-[18px] group-hover:text-deep-bright-red text-base"
                     />
                     <SanityImage
                       src={blog.heroImage}
@@ -188,11 +184,10 @@ const SearchDialog = ({
                 </DialogClose>
               ))}
             </div>
-          ) : (
-            <div className="h-full mt-4 md:max-h-80 md:min-h-80">
+          : <div className="h-full mt-4 md:max-h-80 md:min-h-80">
               <p>No match found.</p>
             </div>
-          )}
+          }
         </div>
       </DialogContent>
     </Dialog>

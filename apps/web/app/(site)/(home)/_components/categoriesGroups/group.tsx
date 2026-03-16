@@ -33,7 +33,7 @@ const Group = ({
                   variant="outline"
                   className={cn(
                     category.label === selectedCategory?.label &&
-                      "border-chathams-blue text-chathams-blue",
+                      "border-deep-bright-red text-deep-bright-red",
                   )}
                   onClick={() => setSelectedCategory(category)}
                 >

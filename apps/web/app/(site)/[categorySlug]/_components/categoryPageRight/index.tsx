@@ -34,7 +34,7 @@ const CategoryPageRight = ({
                 headingClassname="text-sm"
                 authorClassname="text-xs"
                 dateClassname="text-xs"
-                titleClassname="group-hover:text-strong-amber text-base!"
+                titleClassname="group-hover:text-deep-bright-red text-base!"
                 className="gap-1"
               />
               <SanityImage
@@ -55,7 +55,7 @@ const CategoryPageRight = ({
             <Link key={category._id} href={`/${category.slug.current}`}>
               <Button
                 variant="outline"
-                className="text-sm font-semibold duration-300 cursor-pointer md:text-base text-tuatara hover:border-strong-amber hover:text-strong-amber"
+                className="text-sm font-semibold duration-300 cursor-pointer md:text-base text-tuatara hover:border-deep-bright-red hover:text-deep-bright-red"
               >
                 <span>{category.label}</span>
                 <span className="px-2 bg-gray-200 rounded-sm">

@@ -47,7 +47,7 @@ const Footer = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
                 <Link
                   key={link.label}
                   href={`/${link.url}`}
-                  className="text-subtle-white shrink-0 text-[18px] hover:text-subtle-white/80"
+                  className="text-subtle-white shrink-0 text-[18px] hover:text-deep-bright-red duration-300"
                 >
                   {link.label}
                 </Link>

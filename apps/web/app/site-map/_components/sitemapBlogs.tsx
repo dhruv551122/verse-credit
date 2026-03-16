@@ -7,7 +7,7 @@ const SitemapBlogs = ({ data }: { data: NonNullable<SiteMapQueryResult> }) => {
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 text-tuatara">
       {data.map((category) => (
         <div key={category._id} className="flex flex-col gap-2">
-          <h4 className="pb-2 text-base font-bold uppercase border-b border-gray-300 text-chathams-blue">
+          <h4 className="pb-2 text-base font-bold uppercase border-b border-gray-300 text-deep-bright-red">
             {category.title}
           </h4>
           <div className="flex flex-col gap-2">
@@ -15,7 +15,7 @@ const SitemapBlogs = ({ data }: { data: NonNullable<SiteMapQueryResult> }) => {
               <Link
                 href={`/${blog.categorySlug}/${blog.slug}`}
                 key={blog.slug}
-                className="flex items-center gap-2 duration-300 cursor-pointer text-tuatara hover:text-strong-amber group w-fit"
+                className="flex items-center gap-2 duration-300 cursor-pointer text-tuatara hover:text-deep-bright-red group w-fit"
               >
                 <ArrowRight className="duration-300 shrink-0 group-hover:translate-x-1" />
                 <span className="font-medium">{blog.title}</span>

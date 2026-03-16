@@ -1,9 +1,14 @@
 import Footer from "@/components/common/footer";
 import Header from "@/components/common/header";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
-import { blogCategoriesQuery, settingsQuery } from "@/sanity/lib/query";
+import {
+  blogCategoriesQuery,
+  blogsQuery,
+  settingsQuery,
+} from "@/sanity/lib/query";
 import {
   BlogCategoriesQueryResult,
+  BlogsQueryResult,
   SettingsQueryResult,
 } from "@sanity-types/*";
 
@@ -22,9 +27,17 @@ const SiteLayout = async ({
     query: blogCategoriesQuery,
   });
 
+  const { data: blogs } = await sanityFetch<NonNullable<BlogsQueryResult>>({
+    query: blogsQuery,
+  });
+
   return (
     <div className="font-poppins">
-      <Header data={settingsData} categoriesData={categoriesData} />
+      <Header
+        data={settingsData}
+        categoriesData={categoriesData}
+        blogs={blogs}
+      />
       {children}
       <Footer data={settingsData} />
       <SanityLive />
