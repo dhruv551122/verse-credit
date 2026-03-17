@@ -8,7 +8,7 @@ import { BlogsQueryResult, HomePageQueryResult } from "@sanity-types/*";
 import { useState } from "react";
 import CategoriesGroupCard from "./categoriesGroupCard";
 import { CarouselItem } from "@/components/ui/carousel";
-import BlogCardCarousel from "../../../../../components/common/blogCardCarousel";
+import CardCarousel from "../../../../../components/common/cardCarousel";
 
 const Group = ({
   group,
@@ -46,7 +46,7 @@ const Group = ({
       </div>
       <div>
         {selectedCategory && (
-          <BlogCardCarousel>
+          <CardCarousel>
             {blogs
               .filter((blog) => blog.category.label === selectedCategory.label)
               .slice(0, 7)
@@ -60,7 +60,7 @@ const Group = ({
                   </CarouselItem>
                 </div>
               ))}
-          </BlogCardCarousel>
+          </CardCarousel>
         )}
       </div>
     </>

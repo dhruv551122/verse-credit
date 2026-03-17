@@ -31,7 +31,6 @@ const Header = ({
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [screenSize, setScreenSize] = useState<number>(0);
   const pathname = usePathname();
-  console.log(pathname);
   useEffect(() => {
     if (typeof document !== "undefined") {
       if (isMobileMenuOpen) {

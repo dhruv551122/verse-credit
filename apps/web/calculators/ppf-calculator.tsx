@@ -23,7 +23,6 @@ const PPFCalculator = () => {
 
   const [timePeriod, setTimePeriod] = useState<number>(DEFAULT_TIME_PERIOD);
   const interestRate = returnRate / 100;
-  console.log(interestRate);
   const maturityValue =
     investment *
     (((1 + interestRate) ** timePeriod - 1) / interestRate) *

@@ -2,7 +2,7 @@ import { HomePageQueryResult } from "@sanity-types/*";
 import NewsCard from "./newsCard";
 import { SanityImage } from "@/sanity/sanityImage";
 import { CarouselItem } from "@/components/ui/carousel";
-import BlogCardCarousel from "@/components/common/blogCardCarousel";
+import BlogCardCarousel from "@/components/common/cardCarousel";
 
 const NewsBlogs = ({
   homePage,

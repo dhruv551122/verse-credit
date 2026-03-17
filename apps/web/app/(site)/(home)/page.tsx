@@ -1,10 +1,19 @@
 import HeroBanner from "./_components/heroBanner";
 import CategoriesGroup from "./_components/categoriesGroups";
-import { BlogsQueryResult, HomePageQueryResult } from "@sanity-types/*";
+import {
+  BlogsQueryResult,
+  CalculatorsQueryResult,
+  HomePageQueryResult,
+} from "@sanity-types/*";
 import NewsBlogs from "./_components/newsBlogs";
 import { sanityFetch } from "@/sanity/lib/live";
-import { blogsQuery, homePageQuery } from "@/sanity/lib/query";
+import {
+  blogsQuery,
+  calculatorsQuery,
+  homePageQuery,
+} from "@/sanity/lib/query";
 import { notFound } from "next/navigation";
+import CalculatorCarousel from "./_components/calculatorCarousel";
 
 export const generateMetadata = async () => {
   const { data: homePage } = await sanityFetch<
@@ -37,10 +46,15 @@ const HomePage = async () => {
     query: blogsQuery,
   });
 
+  const { data: calculators } = await sanityFetch<
+    NonNullable<CalculatorsQueryResult>
+  >({ query: calculatorsQuery });
+
   return (
     <div className="pt-16.75">
       <HeroBanner homePage={homePage} blogData={blogsData} />
       <CategoriesGroup homePage={homePage} blogData={blogsData} />
+      <CalculatorCarousel calculators={calculators} />
       <NewsBlogs homePage={homePage} />
     </div>
   );

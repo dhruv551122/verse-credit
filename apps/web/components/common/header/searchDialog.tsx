@@ -74,7 +74,6 @@ const SearchDialog = ({
 
     return result;
   }, [inputText, blogs]);
-  console.log(searchResult);
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>,
   ) => {
@@ -90,8 +89,6 @@ const SearchDialog = ({
 
     timerRef.current = setTimeout(() => setInputText(e.target.value), 300);
   };
-
-  console.log(inputText);
 
   return (
     <Dialog
