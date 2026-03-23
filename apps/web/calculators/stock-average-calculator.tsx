@@ -138,7 +138,7 @@ const StockAverageCalculator = () => {
                   }}
                 />
               </div>
-              {i > 1 ?
+              {i > 1 ? (
                 <Button
                   variant="outline"
                   onClick={() => deletePurchase(i)}
@@ -146,7 +146,9 @@ const StockAverageCalculator = () => {
                 >
                   <Trash2 />
                 </Button>
-              : <div className="min-w-10.5" />}
+              ) : (
+                <div className="min-w-10.5" />
+              )}
             </div>
           </div>
         ))}

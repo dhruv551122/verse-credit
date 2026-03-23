@@ -149,7 +149,7 @@ const SearchDialog = ({
               />
             </div>
           </DialogHeader>
-          {searchResult.length > 0 ?
+          {searchResult.length > 0 ? (
             <div className="flex flex-col w-full gap-4 pb-10 overflow-y-scroll custom-scrollbar md:mt-4 max-h-120 md:min-h-80 md:max-h-80 no-scrollbar">
               {searchResult.map((blog, index) => (
                 <DialogClose key={blog._id} asChild>
@@ -181,10 +181,11 @@ const SearchDialog = ({
                 </DialogClose>
               ))}
             </div>
-          : <div className="h-full mt-4 md:max-h-80 md:min-h-80">
+          ) : (
+            <div className="h-full mt-4 md:max-h-80 md:min-h-80">
               <p>No match found.</p>
             </div>
-          }
+          )}
         </div>
       </DialogContent>
     </Dialog>

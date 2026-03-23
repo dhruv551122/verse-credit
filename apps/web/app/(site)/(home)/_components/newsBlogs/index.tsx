@@ -3,6 +3,7 @@ import NewsCard from "./newsCard";
 import { SanityImage } from "@/sanity/sanityImage";
 import { CarouselItem } from "@/components/ui/carousel";
 import BlogCardCarousel from "@/components/common/cardCarousel";
+import Title from "@/components/common/title";
 
 const NewsBlogs = ({
   homePage,
@@ -11,16 +12,14 @@ const NewsBlogs = ({
 }) => {
   return (
     <div className="relative">
-      <SanityImage
+      {/* <SanityImage
         src={homePage.newsBackgroundImage}
         alt={homePage.newsBackgroundImage.alt}
         fill
         className="object-cover -z-1"
-      />
-      <div className="max-width-container padding-container">
-        <h2 className="pb-4 text-3xl font-semibold text-gray-200">
-          {homePage.newsTitle}
-        </h2>
+      /> */}
+      <div className="max-width-container padding-container pb-4! md:pb-6!">
+        <Title title={homePage.newsTitle} />
       </div>
       <div>
         <BlogCardCarousel>

@@ -12,10 +12,10 @@ const NewsCard = ({
   return (
     <Link
       href={`/${blog.category.slug.current}/${blog.slug.current}`}
-      className="flex flex-col rounded-xl group overflow-hidden "
+      className="flex flex-col overflow-hidden group "
     >
       <BlogHeader
-        className="p-4 sm:p-6 bg-white h-44 sm:h-50"
+        className="pb-4 bg-white sm:pb-6 h-30 sm:h-36"
         author={blog.author.authorName}
         category={blog.category.label}
         date={formatDate(blog.uplodedAt || blog._updatedAt)}
@@ -27,7 +27,7 @@ const NewsCard = ({
         alt={blog.heroImage.alt}
         width={100}
         height={100}
-        className="w-full h-56 object-cover"
+        className="object-cover w-full h-56 rounded-xl"
       />
     </Link>
   );

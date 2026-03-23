@@ -4,6 +4,7 @@ import { SanityImage } from "@/sanity/sanityImage";
 import {
   BlogCategoriesQueryResult,
   BlogsQueryResult,
+  CalculatorsQueryResult,
   SettingsQueryResult,
 } from "@sanity-types/sanity.types";
 import Link from "next/link";
@@ -18,15 +19,18 @@ import TopicsDialog from "./topicsDialog";
 import SearchDialog from "./searchDialog";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
+import CalculatorsDialog from "./calculatorsDialog";
 
 const Header = ({
   data,
   categoriesData,
   blogs,
+  calculatorsData,
 }: {
   data: NonNullable<SettingsQueryResult>;
   categoriesData: NonNullable<BlogCategoriesQueryResult>;
   blogs: NonNullable<BlogsQueryResult>;
+  calculatorsData: NonNullable<CalculatorsQueryResult>;
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [screenSize, setScreenSize] = useState<number>(0);
@@ -82,6 +86,12 @@ const Header = ({
                 {link.label}
               </Link>
             ))}
+            {!isMobile && (
+              <CalculatorsDialog
+                isMobile={isMobile}
+                CalculatorsData={calculatorsData}
+              />
+            )}
             {!isMobile && (
               <TopicsDialog
                 categoriesData={categoriesData}

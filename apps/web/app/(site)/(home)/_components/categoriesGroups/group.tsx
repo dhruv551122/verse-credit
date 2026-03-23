@@ -53,7 +53,7 @@ const Group = ({
               .map((blog) => (
                 <div
                   key={blog._id}
-                  className="min-w-60 max-w-60 sm:min-w-100 sm:max-w-100"
+                  className=" min-w-60 max-w-60 sm:min-w-100 sm:max-w-100"
                 >
                   <CarouselItem>
                     <CategoriesGroupCard blog={blog} />

@@ -1,0 +1,113 @@
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
+import {
+  BlogCategoriesQueryResult,
+  CalculatorsQueryResult,
+} from "@sanity-types/*";
+import { X } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+
+const CalculatorsDialog = ({
+  isMobile,
+  CalculatorsData,
+}: {
+  isMobile: boolean;
+  CalculatorsData: NonNullable<CalculatorsQueryResult>;
+}) => {
+  const [isTopicsOpen, setIsTopicsOpen] = useState<boolean>(false);
+  const [isTopicsMounted, setIsTopicsMounted] = useState<boolean>(false);
+
+  const topicsDialogTimeRef = useRef<NodeJS.Timeout>(undefined);
+
+  useEffect(() => {
+    if (typeof document !== "undefined") {
+      if (isTopicsMounted) {
+        document.body.style.overflow = "hidden";
+      } else {
+        document.body.style.overflow = "auto";
+      }
+    }
+  }, [isTopicsMounted]);
+  if (isMobile) {
+    setIsTopicsMounted(false);
+  }
+
+  useEffect(() => {
+    if (topicsDialogTimeRef.current) {
+      clearTimeout(topicsDialogTimeRef.current);
+    }
+
+    if (isTopicsMounted) {
+      topicsDialogTimeRef.current = setTimeout(() => setIsTopicsOpen(true), 10);
+    } else {
+      topicsDialogTimeRef.current = setTimeout(() => setIsTopicsOpen(false));
+    }
+  }, [isTopicsMounted]);
+
+  return (
+    <Dialog
+      onOpenChange={setIsTopicsMounted}
+      open={isTopicsMounted}
+      modal={false}
+    >
+      <DialogTrigger className="text-white duration-300 cursor-pointer hover:text-deep-bright-red">
+        Calculators
+      </DialogTrigger>
+      <DialogContent
+        showCloseButton={false}
+        className={cn(
+          "text-tuatara top-0 z-50 h-0 translate-y-0 backdrop-blur-xs rounded-none shadow-none border-none sm:max-w-none max-w-none  data-[state=open]:h-screen   w-screen  flex justify-center bg-black/50 ",
+          isMobile && "rounded-none",
+        )}
+      >
+        <div
+          className={cn(
+            "p-4 bg-white rounded-lg shadow-lg md:w-2/3 lg:w-1/2 md:p-6 h-fit mt-14 -translate-y-full duration-300",
+            isTopicsOpen && "translate-y-0",
+          )}
+        >
+          <DialogHeader className="gap-4 text-left h-fit">
+            <div className="pb-2 border-b border-gray-300">
+              <div className="flex items-center justify-between">
+                <DialogTitle className="text-2xl font-semibold text-deep-bright-red">
+                  All Calculators
+                </DialogTitle>
+                <DialogClose className="cursor-pointer" asChild>
+                  <X />
+                </DialogClose>
+              </div>
+
+              <DialogDescription className="text-gray-500">
+                Calculate anything instantly with a wide range of powerful
+                tools.
+              </DialogDescription>
+            </div>
+          </DialogHeader>
+          <div className="grid grid-cols-3 gap-4 py-2 mt-4 ">
+            {CalculatorsData.map((calculator) => (
+              <DialogClose key={calculator._id} asChild>
+                <Link
+                  href={`/calculators/${calculator.slug.current}`}
+                  className="flex flex-col justify-between gap-4 duration-300 sm:flex-row sm:items-center hover:text-deep-bright-red"
+                >
+                  {calculator.calculatorName}
+                </Link>
+              </DialogClose>
+            ))}
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default CalculatorsDialog;

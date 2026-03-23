@@ -20,7 +20,7 @@ const Sidebar = ({
   return (
     <>
       <div>
-        {isSidebarOpen ?
+        {isSidebarOpen ? (
           <X
             role="button"
             onClick={() => {
@@ -32,7 +32,8 @@ const Sidebar = ({
             }}
             className="text-white duration-300 cursor-pointer hover:text-white/80"
           />
-        : <Menu
+        ) : (
+          <Menu
             role="button"
             onClick={() => {
               if (timerRef.current) {
@@ -43,7 +44,7 @@ const Sidebar = ({
             }}
             className="text-white duration-300 cursor-pointer hover:text-white/80"
           />
-        }
+        )}
       </div>
       {isMounted && (
         <div

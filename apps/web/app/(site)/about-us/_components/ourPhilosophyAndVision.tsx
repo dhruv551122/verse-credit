@@ -35,10 +35,7 @@ const OurPhilosophyAndVision = ({
               <h2 className="text-2xl leading-[115%] font-semibold md:text-4xl text-tuatara">
                 {item.title}
               </h2>
-              <RichText
-                content={item.content}
-                className="prose-p:mb-0"
-              />
+              <RichText content={item.content} className="prose-p:mb-0" />
             </div>
           </div>
         ))}

@@ -4,11 +4,13 @@ import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import {
   blogCategoriesQuery,
   blogsQuery,
+  calculatorsQuery,
   settingsQuery,
 } from "@/sanity/lib/query";
 import {
   BlogCategoriesQueryResult,
   BlogsQueryResult,
+  CalculatorsQueryResult,
   SettingsQueryResult,
 } from "@sanity-types/*";
 
@@ -31,9 +33,14 @@ const SiteLayout = async ({
     query: blogsQuery,
   });
 
+  const { data: calculators } = await sanityFetch<
+    NonNullable<CalculatorsQueryResult>
+  >({ query: calculatorsQuery });
+
   return (
     <div className="font-poppins">
       <Header
+        calculatorsData={calculators}
         data={settingsData}
         categoriesData={categoriesData}
         blogs={blogs}

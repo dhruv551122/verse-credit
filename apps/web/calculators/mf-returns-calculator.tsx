@@ -193,15 +193,13 @@ const MFReturnsCalculator = () => {
                   />
                 }
               />
-              <ChartLegend
-                content={<ChartLegendContent />}
-              />
+              <ChartLegend content={<ChartLegendContent />} />
               <Bar
                 display="Total Invested"
                 dataKey="investedAmount"
                 label="Total Invested"
                 fill="#1b5183"
-                radius={[4,4,0,0]}
+                radius={[4, 4, 0, 0]}
                 maxBarSize={30}
                 isAnimationActive={true}
               />
@@ -209,7 +207,7 @@ const MFReturnsCalculator = () => {
                 dataKey="totalReturn"
                 label="Total Return"
                 fill="#5ca81d"
-                radius={[4,4,0,0]}
+                radius={[4, 4, 0, 0]}
                 maxBarSize={30}
                 isAnimationActive={true}
               />

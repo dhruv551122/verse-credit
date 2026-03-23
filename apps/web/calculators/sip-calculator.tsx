@@ -23,7 +23,7 @@ const SIPCalculator = () => {
   const [returnRate, setReturnRate] = useState<number>(DEFAULT_RETURN_RATE);
   const [tenure, setTenure] = useState<number>(DEFAULT_TENURE_YEARS);
 
-  const monthlyInterestRate = (1 + returnRate/100) ** (1 / 12) - 1;
+  const monthlyInterestRate = (1 + returnRate / 100) ** (1 / 12) - 1;
   const months = tenure * 12;
   let estimatedReturn;
   if (monthlyInterestRate === 0) {

@@ -1,18 +1,21 @@
 import BlogHeader from "@/components/common/blogHeader";
-import { formatDate } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { SanityImage } from "@/sanity/sanityImage";
 import { BlogsQueryResult } from "@sanity-types/*";
 import Link from "next/link";
+import { HTMLProps } from "react";
 
 const CategoriesGroupCard = ({
   blog,
+  className,
 }: {
   blog: NonNullable<BlogsQueryResult>[number];
+  className?: HTMLProps<HTMLElement>["className"];
 }) => {
   return (
     <Link
       href={`/${blog.category.slug.current}/${blog.slug.current}`}
-      className="duration-300 group"
+      className={cn("duration-300 group", className)}
     >
       <div className="w-full mb-6">
         <SanityImage

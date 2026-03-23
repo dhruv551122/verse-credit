@@ -126,7 +126,9 @@ const FDCalculator = () => {
   return (
     <>
       <div className="flex flex-col gap-2">
-        <p className="font-medium leading-[115%]">Select Interest Compounding Frequency:</p>
+        <p className="font-medium leading-[115%]">
+          Select Interest Compounding Frequency:
+        </p>
         <Select
           value={`${interestFrequency}`}
           onValueChange={(value) =>

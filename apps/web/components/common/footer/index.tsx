@@ -1,5 +1,8 @@
+import FacebookIcon from "@/icons/facebookIcon";
+import InstagramIcon from "@/icons/instagramIcon";
 import { SanityImage } from "@/sanity/sanityImage";
 import { SettingsQueryResult } from "@sanity-types/*";
+import { Instagram } from "lucide-react";
 import Link from "next/link";
 
 const Footer = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
@@ -20,22 +23,13 @@ const Footer = ({ data }: { data: NonNullable<SettingsQueryResult> }) => {
             <h4 className="text-subtle-white text-[22px] font-medium">
               {data.socialMediaLinksTitle}
             </h4>
-            <div className="flex gap-4">
-              {data.socialMediaLinks.map((link) => (
-                <Link
-                  key={link.url.label}
-                  href={link.url.url}
-                  target={link.url.openInNewTab ? "_blank" : "_self"}
-                >
-                  <SanityImage
-                    src={link.logo}
-                    alt={link.logo.alt}
-                    width={20}
-                    height={20}
-                    className="object-contain w-auto h-6"
-                  />
-                </Link>
-              ))}
+            <div className="flex items-center gap-4">
+              <Link href="https://www.instagram.com/" target="_blank">
+                <InstagramIcon className="duration-300 fill-white hover:fill-deep-bright-red" />
+              </Link>
+              <Link href="https://www.facebook.com/" target="_blank">
+                <FacebookIcon className="duration-300 fill-white hover:fill-deep-bright-red" />
+              </Link>
             </div>
           </div>
           <div className="flex flex-col gap-3">
