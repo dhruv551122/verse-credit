@@ -24,14 +24,12 @@ const NewsBlogs = ({
       <div>
         <BlogCardCarousel>
           {homePage.newsBlogs.map((blog) => (
-            <div
+            <CarouselItem
               key={blog._id}
-              className="min-w-60 max-w-60 sm:max-w-80 sm:min-w-80 "
+              className="basis-2/3 sm:basis-2/5 md:basis-2/7 lg:basis-4/13"
             >
-              <CarouselItem>
-                <NewsCard blog={blog} />
-              </CarouselItem>
-            </div>
+              <NewsCard blog={blog} />
+            </CarouselItem>
           ))}
         </BlogCardCarousel>
       </div>

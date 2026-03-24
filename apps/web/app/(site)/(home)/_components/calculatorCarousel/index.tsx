@@ -23,32 +23,30 @@ const CalculatorCarousel = ({
       <div>
         <CardCarousel>
           {calculators.map((calculator) => (
-            <div key={calculator._id} className="basis-1/5">
-              <CarouselItem className="">
-                <Link
-                  href={`/calculators/${calculator.slug.current}`}
-                  className="duration-300 group"
-                >
-                  <div className="w-full mb-6">
-                    <SanityImage
-                      src={calculator.icon}
-                      alt={calculator.icon.alt}
-                      width={50}
-                      height={100}
-                      className="object-contain"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-2">
-                    <h2 className="text-[18px] sm:text-xl font-semibold group-hover:text-deep-bright-red text-white duration-300 leading-[115%]">
-                      {calculator.calculatorName}
-                    </h2>
-                    <p className="text-white text-sm sm:text-base font-medium leading-[115%]">
-                      {calculator.description}
-                    </p>
-                  </div>
-                </Link>
-              </CarouselItem>
-            </div>
+            <CarouselItem key={calculator._id} className="basis-2/3 sm:basis-2/5 md:basis-2/7 lg:basis-1/5">
+              <Link
+                href={`/calculators/${calculator.slug.current}`}
+                className="duration-300 group"
+              >
+                <div className="w-full mb-4 sm:mb-6">
+                  <SanityImage
+                    src={calculator.icon}
+                    alt={calculator.icon.alt}
+                    width={50}
+                    height={100}
+                    className="object-contain w-auto sm:h-12 h-10"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <h2 className="text-[18px] sm:text-xl font-semibold group-hover:text-deep-bright-red text-white duration-300 leading-[115%]">
+                    {calculator.calculatorName}
+                  </h2>
+                  <p className="text-white text-sm sm:text-base font-medium leading-[115%]">
+                    {calculator.description}
+                  </p>
+                </div>
+              </Link>
+            </CarouselItem>
           ))}
         </CardCarousel>
       </div>

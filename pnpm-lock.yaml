@@ -106,6 +106,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@getbrevo/brevo':
+        specifier: ^5.0.1
+        version: 5.0.1
       '@hookform/resolvers':
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.71.2(react@19.2.1))
@@ -1264,6 +1267,10 @@ packages:
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
+
+  '@getbrevo/brevo@5.0.1':
+    resolution: {integrity: sha512-GRi70hv8obJsTnNkDlw0NfFezmx/jnuOL26ljKo/6J1AAw4D+7Jg9TX4+pau0uL5Fo9fEJy13ZsJtmARGt4E1A==}
+    engines: {node: '>=18.0.0'}
 
   '@hello-pangea/dnd@18.0.1':
     resolution: {integrity: sha512-xojVWG8s/TGrKT1fC8K2tIWeejJYTAeJuj36zM//yEm/ZrnZUSFGS15BpO+jGZT1ybWvyXmeDJwPYb4dhWlbZQ==}
@@ -9016,6 +9023,8 @@ snapshots:
       react-dom: 19.2.4(react@19.2.4)
 
   '@floating-ui/utils@0.2.10': {}
+
+  '@getbrevo/brevo@5.0.1': {}
 
   '@hello-pangea/dnd@18.0.1(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
     dependencies:

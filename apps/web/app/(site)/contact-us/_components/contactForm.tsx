@@ -10,11 +10,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { ContactPageQueryResult } from "@sanity-types/*";
-import { MessageCircleHeartIcon } from "lucide-react";
+import { MessagesSquareIcon } from "lucide-react";
 import { FieldValues, useForm } from "react-hook-form";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 const contactFormSchema = z.object({
   firstName: z
@@ -50,10 +51,13 @@ const ContactForm = ({
     resolver: zodResolver(contactFormSchema),
   });
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   const { handleSubmit, control } = form;
 
   const onSubmit = async (data: FieldValues) => {
     try {
+      setIsSubmitting(true);
       const res = await fetch("/api/send-email", {
         body: JSON.stringify(data),
         method: "POST",
@@ -66,13 +70,16 @@ const ContactForm = ({
     } catch (error) {
       console.error(error);
     }
+    finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
     <div className="max-width-container padding-container py-0! -translate-y-20">
       <div className="p-8 bg-white shadow-2xl rounded-2xl text-tuatara flex flex-col gap-6">
         <h2 className="flex text-deep-bright-red items-center gap-2 text-2xl font-semibold">
-          <MessageCircleHeartIcon />
+          <MessagesSquareIcon />
           <span>{contactPage.formTitle}</span>
         </h2>
         <Form {...form}>
@@ -85,7 +92,7 @@ const ContactForm = ({
               control={control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>First Name</FormLabel>
+                  <FormLabel>First Name*</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -98,7 +105,7 @@ const ContactForm = ({
               control={control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Last Name</FormLabel>
+                  <FormLabel>Last Name*</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -111,7 +118,7 @@ const ContactForm = ({
               control={control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Email*</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -124,7 +131,7 @@ const ContactForm = ({
               control={control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Phone No.</FormLabel>
+                  <FormLabel>Phone No*</FormLabel>
                   <FormControl>
                     <Input {...field} />
                   </FormControl>
@@ -142,7 +149,7 @@ const ContactForm = ({
                     <Input
                       as="textarea"
                       {...field}
-                      className="max-h-30 min-h-15"
+                      className="max-h-40 min-h-30"
                     />
                   </FormControl>
                   <FormMessage />
@@ -150,7 +157,7 @@ const ContactForm = ({
               )}
             />
             <div className="md:col-span-2">
-              <Button className="cursor-pointer">Submit</Button>
+              <Button disabled={isSubmitting}>{isSubmitting ? "Submitting..." : "Submit"}</Button>
             </div>
           </form>
         </Form>

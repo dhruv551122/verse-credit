@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
+import { BrevoClient } from "@getbrevo/brevo";
 
-const resend = new Resend(process.env.RESEND_API_KEY || "");
+const brevo = new BrevoClient({ apiKey: process.env.BREVO_API_KEY || "" });
 
 export const POST = async (req: NextRequest) => {
   try {
@@ -13,8 +13,8 @@ export const POST = async (req: NextRequest) => {
       );
     }
     const { firstName, lastName, email, phoneNo, message } = formData;
-    const from = process.env.RESEND_MAIL_FROM;
-    const to = process.env.RESEND_MAIL_TO;
+    const from = process.env.BREVO_MAIL_FROM;
+    const to = process.env.BREVO_MAIL_TO;
 
     if (!from?.trim() || !to?.trim()) {
       return NextResponse.json(
@@ -26,12 +26,21 @@ export const POST = async (req: NextRequest) => {
       );
     }
 
-    const { error } = await resend.emails.send({
-      from: from,
-      to: [to],
+    const { messageId } = await brevo.transactionalEmails.sendTransacEmail({
+      sender: {
+        email: from,
+        name: "Verse Credit",
+      },
+      to: [{
+        email: to,
+        name: "Verse Credit",
+      }],
       subject: "Contact form submission",
-      replyTo: email,
-      html: `<div className="font-mono">
+      replyTo: {
+        email: from,
+        name: "Verse Credit",
+      },
+      htmlContent: `<div className="font-mono">
       <h2>Contact form submission</h2>
       <div className="flex items-center gap-2">
         <strong>First Name:</strong>
@@ -56,9 +65,9 @@ export const POST = async (req: NextRequest) => {
     </div>`,
     });
 
-    if (error?.message) {
+    if (!messageId) {
       return NextResponse.json(
-        { success: false, message: error?.message },
+        { success: false, message: "Failed to send email" },
         { status: 500 },
       );
     }
